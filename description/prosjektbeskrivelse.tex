@@ -32,16 +32,20 @@ Oppgavens tittel: 	& Side-channel attacks on cryptographic implementations \\
 Oppgavens beskrivelse: 	& \\
 \end{tabular}
 
-In late 2013, a team of researchers managed to extract a full 4096 bit RSA key using low-bandwidth
-acoustic noise as a side channel. In 2014, Daniel Genkin, Adi Shamir and Eran Tromer presented
-their work in the paper titled RSA Key Extraction via Low-Bandwidth Acoustic Cryptanalysis.
+Genkin et al. claim to be able to extract the 4096 bits private key from an RSA decryption computation, 
+by method of chosen cipher-text and analyzing the side channel of acoustic noise from the computer [1].
+The general claim is that CPU operations and input bits can be distinguished by frequency domain analysis
+of the ultrasound emanating from the CPU.
 
-In this project, we aim to verify the results from the original research. We will verify the existence of
-the acoustic side channel, and analyse the acoustic fingerprint resulting from a computer executing
-microinstructions. We will do this by building our own experimental setup, and verify its capability of
-identifying these fingerprints.
+This project aims to verify these surprising research results by repeating the experiments reported in [1].
+First verify the existence and characteristics of acoustic side channels of computer devices. 
+Then analyse the acoustic fingerprints found, and attempt to relate them to machine instructions,
+register values, and other states of the computer, in particular with respect to cryptographic computations and keys.
+The project will require innovative instrumentation and experimental setup,
+which must be considered a significant challenge in itself.
 
-After verifying the existence of the side channel we will try to apply some of the techniques described in the original research and exploit the information leakage to obtain information about ongoing processes in various target computers.
+[1] Daniel Genkin, Adi Shamir and Eran Tromer.  RSA Key Extraction via Low-Bandwidth Acoustic Cryptanalysis.
+Crypto 2014. Springer Verlag LNCS 8616, pp. 444/461, 2014.
 
 \begin{tabular}{@{}p{5cm}l}
 Utf\o{}rt ved:	& Institutt for telematikk \\
