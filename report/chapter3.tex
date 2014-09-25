@@ -6,16 +6,32 @@ intro..
 \section{Microphone selection}\label{sec:microphone_selection}
 
 Our experimental setup uses the Zoom H4n Handy Recorder. 
-The recorder is able to record WAV files with a sampling frequency of 96kHz and a quantization of 24 bit. We were also able to plug it directly into a computer, thus using it as the standard sound input device. 
-However this limited the operating sampling frequency to 48kHz.
+The recorder is able to record WAV files with a sampling frequency \( {F_{s}} \) of 96kHz and a quantization of 24 bit. We were also able to plug it directly into a computer, thus using it as the standard sound input device. 
+However this limited the operating sampling frequency \( {F_{s}} \) to 48kHz.
 
 Since a lot of the information we are looking for is in a frequency range far above the hearing range of the human ear, we require a microphone that can capture these frequencies. 
 The frequencies we are able to observe are limited to the Nyqyust frequency.
 
-\subsection{Subsection}\label{sec:first_ssection}
+\begin{equation}\label{eq:nyquist_frequency}
+F_{nc} = \frac{F_{s}}{2}
+\end{equation}
+
+This means that we are able to study the frequency response up to frequencies of 48kHz using the setup.
+In original research, it is claimed that there is information for fingerprinting in this frequency range, thus we should be able to observe the phenomenons.
+
+\subsection{Zoom H4n Configuration}\label{sec:zoom_H4n_configuration}
+
+The Zoom H4n Handy Recorder is set to Sterio Mode.
+Further, the sampling frequency is set to 96 kHz and the analog to digital converstion is set to the maximum which is 24 bit.
+Further the recorder provides a 237 Hz low cut filter, which is enabled.
+These low-frequency frequency responses are not providing information that is critical for looking at the fingerprints and [TODO: citation paper; Look at explanation from the original paper] 
+Additionally the input setting MONO MIX is set to on, making the recorder mix the sterio recording to a mono file. [TODO: Verify functionality]
 
 
 \section{Processing and signal extraction}\label{sec:processing_signal_extraction}
 
+The captured sound is stored in a WAV file.
+This file is processed in our self written software, which utilizes libraries such as FFTW [TODO: citation here] and libsndfile [TODO: citation here].
+The samples are devided into windows \( W \), where \( \lvert W \rvert = 2^{n} \) where \( n \) is an integer.
 
 \section{Capturing audio fingerprint}\label{sec:capturing_audio_fingerprint}
