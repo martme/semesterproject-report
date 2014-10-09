@@ -26,7 +26,10 @@ Further, the sampling frequency is set to 96 kHz and the analog to digital conve
 Further the recorder provides a 237 Hz low cut filter, which is enabled.
 These low-frequency frequency responses are not providing information that is critical for looking at the fingerprints and \todo{citation paper; Look at explanation from the original paper} \todo{Low cut filter not working??? Cannot be observed in plots ...} 
 
-Since we do not have a remote controll for the recorder, we have to manually click the record button to start and stop our recordings. This means that we are touching the recording device, thus impacting the samples when the contact is happening. This is not critical for our setup, as we are recording a time interval of several seconds; only the samples in the timeframe when we are activly starting and stopping the recording are affected by the physical contact. However this makes it harder for us to do multiple recordings with the recorder in the exact same place, as touching the device will inevitably cause some slight displacement.
+Since we do not have a remote controll for the recorder, we have to manually click the record button to start and stop our recordings. 
+This means that we are touching the recording device, thus impacting the samples when the contact is happening. 
+This is not critical for our setup, as we are recording a time interval of several seconds; only the samples in the timeframe when we are activly starting and stopping the recording are affected by the physical contact. 
+However this makes it harder for us to do multiple recordings with the recorder in the exact same place, as touching the device will inevitably cause some slight displacement.
 
 \section{Processing and signal extraction}\label{sec:processing_signal_extraction}
 
@@ -34,8 +37,10 @@ The captured sound is stored in a WAV file.
 This file is processed in our self written software, which utilizes libraries such as FFTW \todo{citation here} and libsndfile \todo{citation here}.
 The samples are devided into windows \( W \), where \( \lvert W \rvert = 2^{n} \) where \( n \) is a non-zero positive integer.
 
-The WAV file contains a sterio signal, but since our audio source is hardly a sterio source, we only need one of the channels for our furter processing. \todo{Reasoning about why we only need mono} In the WAV format, frames representing each sample is stored subsequently, such that the sample \( s_{f,c} \) represents the PCM \todo{Pulse-code modulation abbrevation} response for frame \( f \) channel \( c \). Since we have a stereo signal, we have that \( f \in \left [ 1, 2 \right ]  \), and thus the samples are ordered  \( s_{0,0}, s_{0,1}, s_{1,0}, s_{1,1}, ... , s_{n,0}, s_{n,1} \). To obtain a mono signal we simply ignore all frames where \( f \neq 0 \).
-
+The WAV file contains a sterio signal, but since our audio source is hardly a sterio source, we only need one of the channels for our furter processing. \todo{Reasoning about why we only need mono} 
+In the WAV format, frames representing each sample is stored subsequently, such that the sample \( s_{f,c} \) represents the PCM \todo{Pulse-code modulation abbrevation} response for frame \( f \) channel \( c \). 
+Since we have a stereo signal, we have that \( f \in \left [ 1, 2 \right ]  \), and thus the samples are ordered  \( s_{0,0}, s_{0,1}, s_{1,0}, s_{1,1}, ... , s_{n,0}, s_{n,1} \). 
+To obtain a mono signal we simply ignore all frames where \( f \neq 0 \).
 
 
 \section{Capturing audio fingerprint}\label{sec:capturing_audio_fingerprint}
