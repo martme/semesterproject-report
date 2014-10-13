@@ -1,16 +1,16 @@
 \chapter{Analyzing Audio Fingerprint}
 \label{chp:analyzing} 
 
-\section{CPU microinstruction setup}\label{sec:cpu_microinstruction_setup}
+\section{CPU microinstruction setup}\label{sec:ch4_cpu_microinstruction_setup}
 Before jumping at RSA key extraction, we want to verify that we are able to distinguish the audio fingerprint created by a computer repreating microinstructions. 
 The idea is that repeating the same microinstruction over a period of time should produce a distinct audio fingerprint identifying that microinstruction. 
 However, the fingerprint is heavily dependent on the targeted hardware configuration. 
-For this reason, we got our hands on a Lenovo ThinkPad T60p laptop computer, which is fairly similar in terms of how the computer is built and hwat hardware is used, so we expect there to be a higher probability of observing the suggested phenomenons using this computer.
+For this reason, we got our hands on a Lenovo ThinkPad T60p laptop computer, which is fairly similar in terms of how the computer is built and what hardware is used, so we expect there to be a higher probability of observing the suggested phenomenons using this computer.
+\todo{Get a Evo N200!!!, see section 3 in paper}
 
 The laptop is running Linux Mint 17, and starting out we compile and run the following program to repeat the microinstructions 
 
-
-\begin{lstlisting}[language=C]
+\begin{lstlisting}[language=C, caption={Simple Microinstruction Loop}]
 // see http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 // \lstinputlisting[language=C]{loop_operations.c}
 int main() {
@@ -19,14 +19,17 @@ int main() {
 \end{lstlisting}
 
 
-\section{Looking at microinstructions}\label{sec:microinstructions}
+\section{Looking at microinstructions}\label{sec:ch4_microinstructions}
 Initially, we did were repeating the instructions \( NOP\), \( MUL\) and \( ADD\).
 As previously mentioned, our sampling rate of \( 96kHz\) limited our ability to observe the frequency spectrum of the signal to frequencies less than \( 48kHz\).
 In this interval we were unable to emirically distinguish the spectrums representing the intervals in time corresponding to the different instructions.
-This is not surprising, as \todo{Refer to Figure 7 in the long paper}. the original research shows that there is no obvious visible difference in the frequency response of these three instructions in the frequency range we are observing.
+This is not surprising, as the original research shows that there is no obvious visible difference in the frequency response of these three instructions in the frequency range we are observing, even on the laptop with the most rich acoustic leakage.\todo{Refer to Figure 7 in the long paper} 
+
+On the other hand, the paper suggests that looking at HLT compared to NOP and MEM should produce a significant distinguisability even in the frequency range we are working with, given that the instructions are executed on an Evo N200 laptop.
+The problem with this is that the HLT instruction must be run in kernel space.
+For that reason we choose to focus on distinguishing between MEM and NOP, to be able to keep utilizing our simple setup, and avoid the troubles of kernel space programming.
+
+\section{analyze.c}\label{sec:ch4_analyse}
 
 
-\section{analyze.c}\label{sec:analyse}
-
-
-\section{Results}\label{sec:results}
+\section{Results}\label{sec:ch4_results}
