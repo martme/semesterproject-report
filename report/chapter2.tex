@@ -9,72 +9,86 @@
 %    - 
 Side-channel attacks is not the kind of standard attack like brute-force attack where you try every single combination to crack a cryptographic algorithm, or like a theoretical weakness that you can take advatage of in cryptographic implementations. 
 Side-channel attack exploits the physical implementation to gain information about a cryptosystem.
-Characteristics a side-channel attack might exploit can be the power consumption, timing information, electromagnetic radiation, information obtained from a storage after deletion or even sound leakage from the target machine. 
+Characteristics a side-channel attack might exploit can be the power consumption, timing information, electromagnetic radiation, information obtained from a storage after deletion or even sound leakage from the target machine.
 
-Covert-channel.. 
-http://en.wikipedia.org/wiki/Side\_channel\_attack
+Covert-channel attack allows the adversary to communicate with two objects in a physical matter that is not supposed to be allowed. An attack like this is useful when the adversary is able to get inside a computer, but not able to communicate with others what he finds. 
+If the adversary knows about a channel, he can use this to transfer the knowledge he has learned.
+This channel can be a hardware device that is apparently leaking sound in a frequency that humans cannot hear.
 
 
 \section{Related work}\label{sec:related_work}
 
 \subsection{Acoustic cryptanalysis}\label{sec:acoustic_cryptanalysis}
 
-Here goes related work to aucustic cryptanlysis
+Acoustic cryptanalysis is done by listening to sound that is emitted by computers. 
+Computers leaks sound from Hz to several hundred kHz. 
+\todo{Write something more.. general stuff about acoustic cryptanalysis}
 
-Sarah Yang: Researchers recover typed text using audio recording of keystrokes 
-http://www.berkeley.edu/news/media/releases/2005/09/14\_key.shtml
+But there are other ways to do acoustic cryptanalysis. In 2005, some researchers at Berkeley did a research\cite{keystrokes} on recognizing keystrokes on a keyboard by sound. 
+This is possible because each key has its own distinct sound. 
+After separating the different keystrokes, they used a statistical frequency method to find out which key belonged to which letter. 
+To determine the letters, they only had to listen for 10 minutes, i.e. on a typical user that types about 300 characters each minute. 
+One method to take advantage of this attack is to create a mobilephone application that enables the microphone and analyses the keystrokes. 
 
+Its also proven that phones and ATMs with mechanical keyboards can be vulnerable for acoustic attacks\cite{KybdEmanation}.
+
+In 2014, a research team at the Tel Aviv University was able to do a full RSA Key (4096-bit) extraction using acoustic cryptanalysis. 
+This research explained in detail at section \ref{sec:original_research}.
 
 \subsection{Data remanence}\label{sec:data_remanence}
 
-Here goes related work to data remanence
+Data remanence is remaining representation if digital bits after attempts of deletion or removal of data. 
+The recovery of these bits may be due to the technique used to delete or the physical characteristics of the storage media. 
+The problem of data remanence was first observed in magnetic media, when it was proven that data could be restored after several times of overwriting. 
+This proof is however just a theortical proof. 
+Nobody has ever proven to restore bits after been overwrited. 
+\todo{Write something more.. general stuff about data remanence}
 
-http://en.wikipedia.org/wiki/Data\_remanence
+Earlier it has been shown that for some UV EPROM, EEPROM and Flash devices, information can still be recovered after 100 erase cycles\cite{data_remanence_flash}.
 
-Sergei Skorobogatov: Data Remanence in Flash Memory Devices
-https://www.cl.cam.ac.uk/~sps32/DataRem\_CHES2005.pdf
 
 \subsection{Differential fault analysis}\label{sec:differential_fault_analysis}
 
-Here goes related work to differential fault analysis
+Differential fault analysis is cryptanalysis based on interpreting fault outputs from a processor exposed to different kinds of environmental exposure like high voltage or current, strong elektromagnetic fields or as simple as high temprature. 
+The processor might give fault outputs an adversary can use to find knowledge about the processor state or similar information.
 
-Guo, et al (2012): Invariance-based concurrent error detection for advanced encryption standard
-http://dl.acm.org/citation.cfm?id=2228463
 
-Giraud (2003): DFA on AES
-http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.12.1030
+Guo, et al (2012): Invariance-based concurrent error detection for advanced encryption standard\cite{dfa_guo}
+\todo{Is this paper something to write about?}
+
+Giraud (2003): DFA on AES\cite{dfa_aes}
+\todo{Is this paper something to write about?}
 
 \subsection{Electromagnetic attacks}\label{sec:electromagnetic_attacks}
 
-Here goes related work to electromagnetic attacks
-
-NSA: TEMPEST (code name for project)
-http://en.wikipedia.org/wiki/Tempest\_\%28codename\%29
+An adversary can, if located within range, intercept electromagnetic signal emitted by all electronic devices. 
+It is not possible to detect this attack, and therefore hard to prevent. 
+One of the known attacks is extracting the electromagnetid signals from a computer monitor to reproduce the screen output.
+These signals originates from the electron gun that manipulates each pixel\cite{tempest_sans}. 
+The stronger a pixel is, the stronger the signal.
+PGP includes a secure viewer that prevents exactly these high frequency signals by making softned edges in the fonts.
+However, it is said to be very difficult, thus expensive to extract the signals emitted by a computer monitor. 
 
 \subsection{Power analysis}\label{sec:power_analysis}
 
-Here goes related work to power analysis
+Electronic devices leaks information about what they are processing through their power consumption.
+This leakage can be used to extract secret information like keys used to encryption using differential power analysis (DPA). 
 
-SPA vs DPA
-Simple power analysis (SPA) involves visually interpreting power traces, or graphs of electrical activity over time. 
-Differential power analysis (DPA) is a more advanced form of power analysis which can allow an attacker to compute the intermediate values within cryptographic computations by statistically analyzing data collected from multiple cryptographic operations.
+Simple power analysis (SPA) is simply interpreting the power consumption measurements during cryptographioc operations\cite{dpa_kocher}. 
 
-Paul Kocher: Differential power analysis
-http://www.cryptography.com/public/pdf/DPA.pdf
+DPA is a more complex way to interpret the power consumption. \todo{write something fancy about DPA}
+Paul Kocher: Differential power analysis \cite{dpa_kocher}
+
 \subsection{Timing attacks}\label{sec:timing_attacks}
 
 Here goes related work to timing attacks
 
-D. Boneh and D. Brumley: Remote timing attacks are practical:
-http://crypto.stanford.edu/~dabo/abstracts/ssl-timing.html
-
-Paul Kocher: Timing attacks on implementations of Diffie-Hellman, RSA, DSS and other systems:
-http://www.cryptography.com/public/pdf/TimingAttacks.pdf
+SSL Timing attack \cite{ssl_timing_attack}
+Timing attack Diffie-Hellman \cite{timing_attack_kocher}
 
 \section{Original research - Acoustic Cryptanalysis}\label{sec:original_research}
 
-Tromer, et al: RSA Key Extraction via Low-Bandwidth Acoustic Cryptanalysis
-http://cs.tau.ac.il/~tromer/acoustic/
+Original paper \cite{original_paper}
 
 \subsection{Lab setup}\label{sec:lab_setup}
 \subsection{Acustic leakage}\label{sec:acustic_leakage}

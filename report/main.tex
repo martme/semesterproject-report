@@ -3,8 +3,21 @@
 % this package is just to generate text for demo-purposes
 \usepackage{blindtext}
 \usepackage{mathtools} % math packages
+\usepackage{circuitikz}
 \usepackage{todonotes}
-
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	stepnumber=1, 
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	basicstyle=\footnotesize, 
+	numberstyle=\footnotesize, 
+	tabsize=2, 
+	breaklines=true,
+	captionpos=b,}
 
 \title{Side-channel attacks on cryptographic implementations} % The title of your assignement; NB use \newlinetitle to start a newline
 \author{Martin Kirkholt Melhus \& Haakon Garseg Mørk} % Your firstname and lastname
@@ -88,11 +101,14 @@
 \include{chapter6}
 \include{chapter7}
 \include{conclusion}
+
 %% include here the other chapters
 
-\renewcommand*{\bibname}{References}
-\bibliographystyle{alpha}
-\bibliography{main}
+%% References
+\include{references}
+%\renewcommand*{\bibname}{References}
+%\bibliographystyle{alpha}
+%\bibliography{main}
 
 %% Uncomment the following if you have any appendix
 % \appendix
