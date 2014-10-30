@@ -1,5 +1,26 @@
-\chapter{Analyzing Audio Fingerprint}
-\label{chp:analyzing} 
+\chapter{Predictable Execution and Software for Analysiz}\label{chp:analyzing} 
+Need reliable CPU activity to be able to relate acoustic fingerprint to CPU activity.
+In this chapter we will discuss how we achieve this criteria while looking at multiple modes of operation for the microprocessor.
+We will also look at how this setup is tailored to different architectures to achieve comparable results.
+
+\section{Selection of Test Cases}
+Introduction writing about the different test cases and reasoning behind choise
+Write about how the test case functionality is wrapped in a deterministic pattern that can be analyzed in the time domain
+Write about the content of the following sections (detailed proof of predictability in the cases, and expectations from the recorded audio fingerprint)
+
+\section{CPU load}
+Write about the cpuburn program and the shell wrapper program
+
+\section{Microinstructions}
+Write about the nop mem mul add loop util.
+The implementation details for the ARM and x86 architectures
+
+\subsection{Memory Access and Predictable Cache Miss}
+
+
+\section{Decryption}
+Write about the decryption util
+
 
 \section{CPU microinstruction setup}\label{sec:ch4_cpu_microinstruction_setup}
 Before jumping at RSA key extraction, we want to verify that we are able to distinguish the audio fingerprint created by a computer repreating microinstructions. 
@@ -19,7 +40,7 @@ int main() {
 \end{lstlisting}
 
 
-\section{Looking at microinstructions}\label{sec:ch4_microinstructions}
+\subsection{Looking at microinstructions}\label{sec:ch4_microinstructions}
 Initially, we did were repeating the instructions \( NOP\), \( MUL\) and \( ADD\).
 As previously mentioned, our sampling rate of \( 96kHz\) limited our ability to observe the frequency spectrum of the signal to frequencies less than \( 48kHz\).
 In this interval we were unable to emirically distinguish the spectrums representing the intervals in time corresponding to the different instructions.
@@ -28,37 +49,3 @@ This is not surprising, as the original research shows that there is no obvious 
 On the other hand, the paper suggests that looking at HLT compared to NOP and MEM should produce a significant distinguisability even in the frequency range we are working with, given that the instructions are executed on an Evo N200 laptop.
 The problem with this is that the HLT instruction must be run in kernel space.
 For that reason we choose to focus on distinguishing between MEM and NOP, to be able to keep utilizing our simple setup, and avoid the troubles of kernel space programming.
-
-\section{analyze.c}\label{sec:ch4_analyse}
-
-
-\section{Results}\label{sec:ch4_results}
-
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_eps_micro.png}
-    \caption{Acoustic recording (5 sec, 0-100kHz) of the Lenovo T60p when performing NOP, MEM, MUL and ADD with external power supply. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_eps_micr}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_decrypt.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when performing 3 times RSA 4096-bit key decryption with internal power supply (i.e. battery) and 1 second sleep inbetween. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_decrypt}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_decrypt_2.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when performing 6 times RSA 4096-bit key decryption with internal power supply (i.e. battery) and 1 second sleep between the 1st and 2nd, 2nd and 3rd, then 4 subsequence decryptions. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_decrypt_2}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_nothing.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when idle with internal power supply (i.e. battery). The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_nothing}
-\end{figure}
