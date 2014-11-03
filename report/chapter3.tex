@@ -40,9 +40,11 @@ The microphone is connected to a 4.5V battery and directly in to Analog Input 0 
 The myDAQ device has a buildt in gain of ?? \todo{find out how much}, which is enough for us to enterpretate the signals.
 
 \begin{circuitikz} 
-  \draw (3,0) node[op amp] (opamp1) {}
-  (opamp1.+) node[left ] {1-40mV $v_+$}
-  (opamp1.-) node[left ] {$v_-$};
+  \draw 
+  (0,0) node[op amp] (opamp1) {}
+  (opamp1.+) node[left ] {\textasciitilde40mV $v_+$}
+  (opamp1.-) node[left ] {$v_-$}(1,0)
+  (1,0) to[voltmeter, l=2<\volt>] (4,0);
 \end{circuitikz}
 
 
@@ -50,7 +52,7 @@ The myDAQ device has a buildt in gain of ?? \todo{find out how much}, which is e
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.3]{knowles_microphone.png}
-    \caption{Knowles Ultrasonic SPU0410LR5H}
+    \caption{Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec}}
     \label{fig:knowles_microphone}
 \end{figure}
 
@@ -67,3 +69,13 @@ Since we have a stereo signal, we have that \( f \in \left [ 1, 2 \right ]  \), 
 To obtain a mono signal we simply ignore all frames where \( f \neq 0 \).
 
 \section{Capturing audio fingerprint}\label{sec:ch3_capturing_audio_fingerprint}
+
+Our guess, based on the original paper~\cite{original_paper}, is that the sound derives much likely from some coil whine around the CPU. 
+Therefore we are positioning the microphones as close to the CPU as possible. 
+When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in Figure~\ref{fig:T60p_knowles_position}. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=2in]{T60p_knowles_position.JPG}
+    \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
+    \label{fig:T60p_knowles_position}
+\end{figure}
