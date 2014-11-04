@@ -47,8 +47,6 @@ The myDAQ device has a buildt in gain of ?? \todo{find out how much}, which is e
   (1,0) to[voltmeter, l=2<\volt>] (4,0);
 \end{circuitikz}
 
-
-
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.3]{knowles_microphone.png}
@@ -56,6 +54,11 @@ The myDAQ device has a buildt in gain of ?? \todo{find out how much}, which is e
     \label{fig:knowles_microphone}
 \end{figure}
 
+\subsection{Brüel\&Kjær 4191 Configuration}\label{sec:ch3_bruel_kjaer_configuration}
+
+Much like one of the lab setups~\ref{sec:lab_setup} from the original paper we use a Brüel\&Kjær 4191 microphone that is able to do precise measurements up to frequencies around 40kHz~\cite{bk4191_spec}.
+The microphone is then connected to a preamplifier \todo{write about the preamp we used in the experiment} which is then connected to a Brüel\&Kjær 5935 microphone power supply and amplifier.
+The output signal is then led into the NI myDAQ and further in to our computer, i.e. the adversary in this case.
 
 \section{Processing and signal extraction}\label{sec:ch3_processing_signal_extraction}
 
@@ -72,10 +75,56 @@ To obtain a mono signal we simply ignore all frames where \( f \neq 0 \).
 
 Our guess, based on the original paper~\cite{original_paper}, is that the sound derives much likely from some coil whine around the CPU. 
 Therefore we are positioning the microphones as close to the CPU as possible. 
-When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in Figure~\ref{fig:T60p_knowles_position}. 
+When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in figure~\ref{fig:T60p_knowles_position}. 
 \begin{figure}[h]
     \centering
     \includegraphics[width=2in]{T60p_knowles_position.JPG}
     \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
     \label{fig:T60p_knowles_position}
 \end{figure}
+
+\section{Experimental plan}\label{sec:ch3_experimental_plan}
+
+Our experimental plan consists of different test cases on different subjects with different microphone setups. Each test case is performed with all microphone setups and with all test subjects. 
+
+To calibrate each microphone, we are using a tweeter to play a sinus wave from a tone generator. 
+The frequencies that will be generated are 10kHz, 20kHz, 30kHz and 40kHz.
+
+After calibration, we will record the ambient noise where we are doing the experiment.
+This is to eliminate other sources of noise when we are doing the experiments.
+
+\subsection{Test cases}
+First we will record when the CPU is idle. 
+We are doing this to find out what the CPU possibly might leak when doing nothing. 
+Then we perform a CPU load, microinstructions and finally decryptions.
+
+\subsubsection{CPU load}
+Exposing the CPU from low to high load.
+Read more about how we do the CPU load in chapter~\ref{chp:analyzing}.
+
+\subsubsection{Micro instructions}
+Read more about how we do the micro instructions in chapter~\ref{chp:analyzing}.
+
+\subsubsection{Decryption}
+As stated in the original paper, we should be able to detect when the CPU is doing a RSA decryption. 
+For this we decrypt an encrypted file with a RSA 4096-bit key using GnuPG v1.4.15~\cite{GnuPG_1.4.15}
+
+\subsection{Test subjects}
+On all test subjects, we are planning to record as close as possible to the CPU. 
+The following devices is tested:
+
+\begin{itemize}[topsep=-1em,parsep=0em,itemsep=0em]
+ \item Lenovo T60p
+ \item Raspberry PI
+ \item Dell Latitude D430
+ \item Dell Latitude D400
+\end{itemize}
+
+\subsection{Microphones}
+The microphones we use during our experments:
+
+\begin{itemize}[topsep=-1em,parsep=0em,itemsep=0em]
+ \item Knowles Ultrasonic SPU0410LR5H described in section~\ref{sec:ch3_knowles_configuration}
+ \item Zoom H4n described in section~\ref{sec:ch3_zoom_H4n_configuration}
+ \item Brüel\&Kjær 4191 described in section~\ref{sec:ch3_bruel_kjaer_configuration}
+\end{itemize}
