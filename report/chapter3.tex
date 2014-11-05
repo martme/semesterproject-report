@@ -34,25 +34,37 @@ This is not critical for our setup, as we are recording a time interval of sever
 However this makes it harder for us to do multiple recordings with the recorder in the exact same place, as touching the device will inevitably cause some slight displacement.
 \subsection{Knowles Ultrasonic SPU0410LR5H Configuration}\label{sec:ch3_knowles_configuration}
 
-The Knowles Ultrasonic SPU0410LR5H microphone is able to detect sound up to 80kHz with a -4dB sensitivity\cite{knowles_spec}. 
-To be able to record frequencies up to 100kHz, we need the National Instuments myDAQ to sample the sound at a \( {F_{s}} \) of 200kHz.
-The microphone is connected to a 4.5V battery and directly in to Analog Input 0 on the myDAQ device. 
-The myDAQ device has a buildt in gain of ?? \todo{find out how much}, which is enough for us to enterpretate the signals.
-
-\begin{circuitikz} 
-  \draw 
-  (0,0) node[op amp] (opamp1) {}
-  (opamp1.+) node[left ] {\textasciitilde40mV $v_+$}
-  (opamp1.-) node[left ] {$v_-$}(1,0)
-  (1,0) to[voltmeter, l=2<\volt>] (4,0);
-\end{circuitikz}
-
-\begin{figure}[h]
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \vspace{-20pt}
     \centering
     \includegraphics[scale=0.3]{knowles_microphone.png}
+    \vspace{-20pt}
     \caption{Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec}}
+    \vspace{-20pt}
     \label{fig:knowles_microphone}
+\end{wrapfigure}
+
+The Knowles Ultrasonic SPU0410LR5H microphone in figure~\ref{fig:knowles_microphone} is able to detect sound at least up to 80kHz with a -4dB sensitivity\cite{knowles_spec}. 
+To be able to record frequencies up to 100kHz, we need the National Instuments (NI) myDAQ~\cite{NI_myDAQ} to sample the sound at a \( {F_{s}} \) of 200kHz.
+The microphone is connected to a 4.5V battery and directly in to Analog Input 0 on the myDAQ device. 
+
+The myDAQ device has a built in an amplifier (OPA1642) seen in the hardware block diagram at page 4 in the myDAQ user guide~\cite{NI_myDAQ_userguide}. 
+The OPA1642 has a gain of 60 dB at 10kHz and 40 dB at 100kHz seen in figure 5 at page 5 in the OPA1642 specification~\cite{TI_opa1642}.
+With an input vaoltage of +-10mV, the nominal output is +-1V as illustrated in figure~\ref{fig:op_amp_illustration}
+\todo{check this with Tim Cat Netland}
+
+\begin{figure}[h]
+  \begin{circuitikz} 
+    \draw 
+    (0,0) node[op amp] (opamp1) {}
+    (opamp1.+) node[left ] {10mV @100kHz $v_+$}
+    (opamp1.-) node[left ] {$v_-$}(1,0)
+    (1,0) to[voltmeter, l=1<\volt>] (4,0);
+  \end{circuitikz}
+  \caption{Op Amp illustration}
+  \label{fig:op_amp_illustration}
 \end{figure}
+
 
 \subsection{Brüel\&Kjær 4191 Configuration}\label{sec:ch3_bruel_kjaer_configuration}
 
@@ -76,38 +88,42 @@ To obtain a mono signal we simply ignore all frames where \( f \neq 0 \).
 Our guess, based on the original paper~\cite{original_paper}, is that the sound derives much likely from some coil whine around the CPU. 
 Therefore we are positioning the microphones as close to the CPU as possible. 
 When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in figure~\ref{fig:T60p_knowles_position}. 
-\begin{figure}[h]
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \vspace{-20pt}
     \centering
     \includegraphics[width=2in]{T60p_knowles_position.JPG}
+    \vspace{-20pt}
     \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
+    \vspace{-20pt}
     \label{fig:T60p_knowles_position}
-\end{figure}
+\end{wrapfigure}
+
 
 \section{Experimental plan}\label{sec:ch3_experimental_plan}
 
-Our experimental plan consists of different test cases on different subjects with different microphone setups. Each test case is performed with all microphone setups and with all test subjects. 
+Our experimental plan consists of different test cases on different subjects with different microphone setups. 
+Each test case is performed with all microphone setups and with all test subjects. 
 
 To calibrate each microphone, we are using a tweeter to play a sinus wave from a tone generator. 
 The frequencies that will be generated are 10kHz, 20kHz, 30kHz and 40kHz.
-
 After calibration, we will record the ambient noise where we are doing the experiment.
 This is to eliminate other sources of noise when we are doing the experiments.
+We will also do the experiments in an anechoic chamber, which will eliminate close to all other sound sources.
 
 \subsection{Test cases}
-First we will record when the CPU is idle. 
-We are doing this to find out what the CPU possibly might leak when doing nothing. 
-Then we perform a CPU load, microinstructions and finally decryptions.
 
-\subsubsection{CPU load}
-Exposing the CPU from low to high load.
-Read more about how we do the CPU load in chapter~\ref{chp:analyzing}.
 
-\subsubsection{Micro instructions}
-Read more about how we do the micro instructions in chapter~\ref{chp:analyzing}.
-
-\subsubsection{Decryption}
-As stated in the original paper, we should be able to detect when the CPU is doing a RSA decryption. 
-For this we decrypt an encrypted file with a RSA 4096-bit key using GnuPG v1.4.15~\cite{GnuPG_1.4.15}
+\begin{enumerate}
+  \item[CPU idle] Record when the CPU is idle. 
+  We are doing this to find out what the CPU possibly might leak when doing nothing. 
+  Then we perform a CPU load, micro instructions and finally decryptions.
+  \item[CPU load] Exposing the CPU from low to high load.
+  Read more about how we do the CPU load in chapter~\ref{chp:analyzing}.
+  \item[Micro instructions] Read more about how we do the micro instructions in chapter~\ref{chp:analyzing}.
+  \item[Decryption] As stated in the original paper, we should be able to detect when the CPU is doing a RSA decryption. 
+  For this we decrypt an encrypted file with a RSA 4096-bit key using GnuPG v1.4.15~\cite{GnuPG_1.4.15}
+\end{enumerate}
 
 \subsection{Test subjects}
 On all test subjects, we are planning to record as close as possible to the CPU. 
