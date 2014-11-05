@@ -19,9 +19,9 @@ However, if the user executes a program that will make all cores on the CPU work
 To achieve this, we installed the cpuburn collection which can be installed using the debian package manager using
 apt-get install cpuload. 
 
-To be able to relate this to the time domain, we will execute the following sequence.
+To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm descibed in \autoref{lst:cpuburn_loop_utility}.
 
-\begin{lstlisting}[language=BASH, caption={CPU Burn Utility}]
+\begin{lstlisting}[language=BASH, caption={CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
 for i in {1..3}
 do
 	# burn all cores for 1 second
@@ -35,10 +35,52 @@ This simple loop will let us search for distinct one second intervals in the aco
 By recoring whilest executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
 
 \section{Microinstructions}
-Write about the nop mem mul add loop util.
-The implementation details for the ARM and x86 architectures
+With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
+The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguisable acoustic fingerprint for each instruction.
+Thus we want an utility that lets us repeat this experiment. 
+
+Since we are using sampling frequencies in the kHz-range and processors operate on frequencies in the GHz-range, it is futile to try to capture the fingerprint of a single clock cycle representing the execution of a spesific microinstruction. 
+This limitation can be dealt with by repeating the same instruction for a longer timespan, such that every \(\Delta t\) seconds, a new instruction will start executing.
+With \(n\) different instructions, one pass through all instructions will take \(T = n \times \Delta t\) seconds, and we want to repeat the loop more than once, so that we can look not only for a change from one lastingly stable signal every \(\Delta t\) seconds, but also a repeating pattern every \(T\) seconds.
+
+The microinstruction repetition pattern used in this utility is described in detail in \autoref{lst:microinstruction_loop_utility}
+
+\begin{lstlisting}[language=BASH, caption={Microinstruction loop utility}, label={lst:microinstruction_loop_utility}]
+for i in {1..3}
+do
+	for j in {1..n}
+	do
+		# run instruction j for 0.33 seconds
+	done
+done
+\end{lstlisting}
+
+The CPU operation will will loop are the MUL, ADD and NOP microinstructions as well as memory access with forced L1 and L2 cache miss. 
+The following subsections will go into further detail on how timely and predictable execution was achieved in all four cases for both ARM and x86 architectures.
 
 \subsection{Memory Access and Predictable Cache Miss}
+
+The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
+If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM.
+\todo{cite DataGK book}
+We want to achieve is a program where the CPU constantly has to go all the way to the RAM to fetch values.
+This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
+This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
+
+Luckily the existance of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution.
+\todo{cite something}
+
+We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
+During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
+If this condition holds, we can argue that the program \(A\) adds \(n\) cache misses and thus reliably executes the MEM operation. 
+
+[Figure] \todo{create an example with a figure showing results from a run of both programs}
+
+We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
+The results are given in Figure XX\todo{Make figure, fix xref}. Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
+
+\subsection{MUL, ADD and NOP execution on Different Architectures}
+
 
 \section{Decryption}
 Write about the decryption util
