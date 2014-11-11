@@ -1,64 +1,120 @@
-\chapter{Analyzing Audio Fingerprint}
-\label{chp:analyzing} 
+\chapter{Predictable Execution and Software for Analysis}\label{chp:analyzing} 
+A prerequisite to analysis of acoustinc fingerprints is that you have some idea of what you are recording, and thus be able to look at the correlation between what is observed, and what was going on at the time.
+In our case this means that we need to know what is going on in the CPU during the timespan of our recordings.
+If we possess this knowledge, we should be more able draw conclusions regarding the correlation between what is observed in the acoustic fingerprint and distinct CPU activity.
+This chapter will describe how we force predictable CPU activity, and also how we tailor the software run during the recordings for different architectures to achieve comparable results.
 
-\section{CPU microinstruction setup}\label{sec:ch4_cpu_microinstruction_setup}
-Before jumping at RSA key extraction, we want to verify that we are able to distinguish the audio fingerprint created by a computer repreating microinstructions. 
-The idea is that repeating the same microinstruction over a period of time should produce a distinct audio fingerprint identifying that microinstruction. 
-However, the fingerprint is heavily dependent on the targeted hardware configuration. 
-For this reason, we got our hands on a Lenovo ThinkPad T60p laptop computer, which is fairly similar in terms of how the computer is built and what hardware is used, so we expect there to be a higher probability of observing the suggested phenomenons using this computer.
-\todo{Get a Evo N200!!!, see section 3 in paper}
+\section{Selection of Test Cases}
+We will use several test cases, where the aim is to gradually record more and more subtle variations in CPU activity, and use this as a basis for our acoustic analysis.
+We will start by oscilating between unnaturally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
 
-The laptop is running Linux Mint 17, and starting out we compile and run the following program to repeat the microinstructions 
+The following sections will in detail describe the different utilities we use to inflict this CPU behaviour, and how we wrap the different tokens of predictable executions in a deterministicly looped pattern to be used in later analysis, thus relating the CPU behaviour to the time domain. 
+Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
 
-\begin{lstlisting}[language=C, caption={Simple Microinstruction Loop}]
-// see http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
-// \lstinputlisting[language=C]{loop_operations.c}
-int main() {
-	return 0;
-}
+\section{CPU load}
+Our first choise of distinguisable CPU activity is in the form of a CPU burn utility. 
+The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
+However, if the user executes a program that will make all cores on the CPU work at close to their full capacity, the internal activity of the CPU will change drastically as a consequence of the increased load.
+
+To achieve this, we installed the cpuburn collection which can be installed using the debian package manager using
+apt-get install cpuload. 
+
+To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm descibed in \autoref{lst:cpuburn_loop_utility}.
+
+\begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
+for i in {1..3}
+do
+	# burn all cores for 2 seconds
+	sleep 1
+	# stop burn on all cores
+	sleep 1
+done
 \end{lstlisting}
 
+This simple loop will let us search for distinct one second intervals in the acoustic fingerprints, as the CPU will operate at close to full capacity, then sleep for a second each, representing the heavy load state and the idle state.
+By recoring whilest executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
 
-\section{Looking at microinstructions}\label{sec:ch4_microinstructions}
-Initially, we did were repeating the instructions \( NOP\), \( MUL\) and \( ADD\).
-As previously mentioned, our sampling rate of \( 96kHz\) limited our ability to observe the frequency spectrum of the signal to frequencies less than \( 48kHz\).
-In this interval we were unable to emirically distinguish the spectrums representing the intervals in time corresponding to the different instructions.
-This is not surprising, as the original research shows that there is no obvious visible difference in the frequency response of these three instructions in the frequency range we are observing, even on the laptop with the most rich acoustic leakage.\todo{Refer to Figure 7 in the long paper} 
+For the Raspberry Pi, we used the used the sysbench package to generate cpu load. 
+This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. \todo{wiki.gentoo.org/wiki/Sysbench}
 
-On the other hand, the paper suggests that looking at HLT compared to NOP and MEM should produce a significant distinguisability even in the frequency range we are working with, given that the instructions are executed on an Evo N200 laptop.
-The problem with this is that the HLT instruction must be run in kernel space.
-For that reason we choose to focus on distinguishing between MEM and NOP, to be able to keep utilizing our simple setup, and avoid the troubles of kernel space programming.
+\section{Microinstructions}
+With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
+The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguisable acoustic fingerprint for each instruction.
+Thus we want an utility that lets us repeat this experiment. 
 
-\section{analyze.c}\label{sec:ch4_analyse}
+Since we are using sampling frequencies in the kHz-range and processors operate on frequencies in the GHz-range, it is futile to try to capture the fingerprint of a single clock cycle representing the execution of a spesific microinstruction. 
+This limitation can be dealt with by repeating the same instruction for a longer timespan, such that every \(\Delta t\) seconds, a new instruction will start executing.
+With \(n\) different instructions, one pass through all instructions will take \(T = n \times \Delta t\) seconds, and we want to repeat the loop more than once, so that we can look not only for a change from one lastingly stable signal every \(\Delta t\) seconds, but also a repeating pattern every \(T\) seconds.
 
+The microinstruction repetition pattern used in this utility is described in detail in \autoref{lst:microinstruction_loop_utility}
 
-\section{Results}\label{sec:ch4_results}
+\begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: Microinstruction loop utility.}, label={lst:microinstruction_loop_utility}]
+for i in {1..3}
+do
+	for j in {1..n}
+	do
+		# run instruction j for 0.33 seconds
+	done
+done
+\end{lstlisting}
 
+The CPU operation will will loop are the MUL, ADD and NOP microinstructions as well as memory access with forced L1 and L2 cache miss. 
+The following subsections will go into further detail on how timely and predictable execution was achieved in all four cases for both ARM and x86 architectures.
+
+\subsection{Memory Access and Predictable Cache Miss}
+
+The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
+If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM.
+\todo{cite DataGK book}
+We want to achieve is a program where the CPU constantly has to go all the way to the RAM to fetch values.
+This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
+This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
+
+Luckily the existance of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution. These can be accessed on linux by installing the linux-tools-common package.
+\todo{cite something}
+
+We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
+During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
+If this condition holds, we can argue that the program \(A\) adds \(n\) cache misses and thus reliably executes the MEM operation. 
+
+[Figure] \todo{create an example with a figure showing results from a run of both programs}
+
+We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
+The results are given in Figure XX\todo{Make figure, fix xref}. Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
+
+\subsection{MUL, ADD and NOP execution on Different Architectures}
+
+The three native microinstructions that we look at are \(MUL\), \(ADD\), and \(NOP\). 
+To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in each loop pass, thus reducing the impact from the microinstructions used to perform the actuall loop. 
+This way we can know that our targeted instruction is what is actually executed by our program, and that the count of other instructions occuring is only a fraction of the count of the instruction whom we are trying to force.
+
+\newsavebox{\MEMfigure}
+	\begin{lrbox}{\MEMfigure}%store first listing
+	\begin{lstlisting}[language={[x86masm]Assembler}]
+		mov $0, %eax;
+		mov $1, $ebx;
+		mul %eax;
+	\end{lstlisting}
+\end{lrbox}
+
+\newsavebox{\ADDfigure}
+	\begin{lrbox}{\ADDfigure}%store first listing
+	\begin{lstlisting}[language={[x86masm]Assembler}]
+		mov $0, %eax;
+		mov $1, $ebx;
+		add %ebx, %eax;
+	\end{lstlisting}
+\end{lrbox}
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_eps_micro.png}
-    \caption{Acoustic recording (5 sec, 0-100kHz) of the Lenovo T60p when performing NOP, MEM, MUL and ADD with external power supply. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_eps_micr}
+	\subfloat[NOP]{\usebox{\MEMfigure}} \hfill
+	\subfloat[ADD]{\usebox{\ADDfigure}}
+	\caption{The setup code for the NOP and MEM instructions. The instruction on line number 3 is repeated \(1000\) times.}
+	\label{lst:x86_add_mem}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_decrypt.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when performing 3 times RSA 4096-bit key decryption with internal power supply (i.e. battery) and 1 second sleep inbetween. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_decrypt}
-\end{figure}
+The NOP instruction was simply rep; nop; repeated \(1000\) times; for the MEM and ADD instructions, see \autoref{lst:x86_add_mem} 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_decrypt_2.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when performing 6 times RSA 4096-bit key decryption with internal power supply (i.e. battery) and 1 second sleep between the 1st and 2nd, 2nd and 3rd, then 4 subsequence decryptions. The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_decrypt_2}
-\end{figure}
+\section{Decryption}
+Write about the decryption util
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5in]{T60p_battery_nothing.png}
-    \caption{Acoustic recording (7 sec, 0-100kHz) of the Lenovo T60p when idle with internal power supply (i.e. battery). The recording was made using the Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone with the NI myDAQ. }
-    \label{fig:T60p_battery_nothing}
-\end{figure}
