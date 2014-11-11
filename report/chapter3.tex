@@ -21,7 +21,7 @@ F_{nc} = \frac{F_{s}}{2}
 This means that we are able to study the frequency response up to frequencies of 48kHz using the setup.
 In original research, it is claimed that there is information for fingerprinting in this frequency range, thus we should be able to observe the phenomenons.
 
-\subsection{Zoom H4n Configuration}\label{sec:ch3_zoom_H4n_configuration}
+\subsection{Zoom H4n Configuration}\label{sec:ch3_zoom_H4n_configuration}\todo{Redundant section?}
 
 The Zoom H4n Handy Recorder is set to Sterio Mode.
 Further, the sampling frequency is set to 96 kHz and the analog to digital converstion is set to the maximum which is 24 bit.
@@ -32,6 +32,7 @@ Since we do not have a remote controll for the recorder, we have to manually cli
 This means that we are touching the recording device, thus impacting the samples when the contact is happening. 
 This is not critical for our setup, as we are recording a time interval of several seconds; only the samples in the timeframe when we are activly starting and stopping the recording are affected by the physical contact. 
 However this makes it harder for us to do multiple recordings with the recorder in the exact same place, as touching the device will inevitably cause some slight displacement.
+
 \subsection{Knowles Ultrasonic SPU0410LR5H Configuration}\label{sec:ch3_knowles_configuration}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -44,13 +45,13 @@ However this makes it harder for us to do multiple recordings with the recorder 
     \label{fig:knowles_microphone}
 \end{wrapfigure}
 
-The Knowles Ultrasonic SPU0410LR5H microphone in figure~\ref{fig:knowles_microphone} is able to detect sound at least up to 80kHz with a -4dB sensitivity\cite{knowles_spec}. 
-To be able to record frequencies up to 100kHz, we need the National Instuments (NI) myDAQ~\cite{NI_myDAQ} to sample the sound at a \( {F_{s}} \) of 200kHz.
+The Knowles Ultrasonic SPU0410LR5H microphone in \autoref{fig:knowles_microphone} is able to detect sound at least up to 80kHz with a -4dB sensitivity\cite{knowles_spec}.
+To be able to record frequencies up to 100kHz, we need the National Instuments (NI) myDAQ~\cite{NI_myDAQ} to sample the sound at a sampling frequency \(F_{s}\) of 200kHz.
 The microphone is connected to a 4.5V battery and directly in to Analog Input 0 on the myDAQ device. 
 
 The myDAQ device has a built in an amplifier (OPA1642) seen in the hardware block diagram at page 4 in the myDAQ user guide~\cite{NI_myDAQ_userguide}. 
 The OPA1642 has a gain of 60 dB at 10kHz and 40 dB at 100kHz seen in figure 5 at page 5 in the OPA1642 specification~\cite{TI_opa1642}.
-With an input vaoltage of +-10mV, the nominal output is +-1V as illustrated in figure~\ref{fig:op_amp_illustration}
+With an input vaoltage of +-10mV, the nominal output is +-1V as illustrated in \autoref{fig:op_amp_illustration}
 \todo{check this with Tim Cat Netland}
 
 \begin{figure}[h]
@@ -100,7 +101,7 @@ When listening to the Lenovo T60p, we unmounted the keyboard letting us position
 \end{wrapfigure}
 
 
-\section{Experimental plan}\label{sec:ch3_experimental_plan}
+\section{Experimental plan}\label{sec:ch3_experimental_plan}\todo{Put this in appendix}
 
 Our experimental plan consists of different test cases on different subjects with different microphone setups. 
 Each test case is performed with all microphone setups and with all test subjects. 
