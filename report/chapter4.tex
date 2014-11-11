@@ -107,8 +107,16 @@ This way we can know that our targeted instruction is what is actually executed 
 \end{lrbox}
 
 \begin{figure}[h]
-	\subfloat[NOP]{\usebox{\MEMfigure}} \hfill
-	\subfloat[ADD]{\usebox{\ADDfigure}}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \usebox{\MEMfigure}
+        \caption{MEM}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \usebox{\ADDfigure}
+        \caption{ADD}
+    \end{subfigure}
 	\caption{The setup code for the NOP and MEM instructions. The instruction on line number 3 is repeated \(1000\) times.}
 	\label{lst:x86_add_mem}
 \end{figure}
