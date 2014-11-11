@@ -33,7 +33,7 @@ One method to take advantage of this attack is to create a mobilephone applicati
 Its also proven that phones and ATMs with mechanical keyboards can be vulnerable for acoustic attacks\cite{KybdEmanation}.
 
 In 2014, a research team at the Tel Aviv University was able to do a full RSA Key (4096-bit) extraction using acoustic cryptanalysis. 
-This research explained in detail at section \ref{sec:original_research}.
+This research is explained in detail at section \ref{sec:original_research}.
 
 \subsection{Data remanence}\label{sec:data_remanence}
 
@@ -41,7 +41,7 @@ Data remanence is remaining representation if digital bits after attempts of del
 The recovery of these bits may be due to the technique used to delete or the physical characteristics of the storage media. 
 The problem of data remanence was first observed in magnetic media, when it was proven that data could be restored after several times of overwriting. 
 This proof is however just a theortical proof. 
-Nobody has ever proven to restore bits after been overwrited. 
+Nobody has ever proven to restore bits after been overwritten. 
 \todo{Write something more.. general stuff about data remanence}
 
 Earlier it has been shown that for some UV EPROM, EEPROM and Flash devices, information can still be recovered after 100 erase cycles\cite{data_remanence_flash}.
@@ -83,13 +83,34 @@ Paul Kocher: Differential power analysis \cite{dpa_kocher}
 
 Here goes related work to timing attacks
 
-SSL Timing attack \cite{ssl_timing_attack}
-Timing attack Diffie-Hellman \cite{timing_attack_kocher}
+SSL Timing attack~\cite{ssl_timing_attack}
+Timing attack Diffie-Hellman~\cite{timing_attack_kocher}
 
 \section{Original research - Acoustic Cryptanalysis}\label{sec:original_research}
 
-Original paper \cite{original_paper}
+The original research that we are referring to in this paper, is the RSA Key Extraction via Low-Bandwidth Acoustic Cyptanalysis~\cite{original_paper}, done by Daniel Genkin, Adi Shamir and Eran Tromer.
+Their claim is that many computers leaks acoustic noise from its electronic components due to vibration, i.e. coil whine (noise).
+Vital components like the CPU requires power dependent on what it is computing.
+Hence the theory is that some CPUs leaks acoustic noise about what it is doing.
+They use this information to extract a 4096-bit RSA key.
 
 \subsection{Lab setup}\label{sec:lab_setup}
+
+The noise they are trying to record and interpretate is found in different and high frequencies, thus high sensitivity microphones is required. 
+They use 3 different microphones from Brüel\&Kjær showed in figure~\ref{fig:bruel_kjaer_mics}
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=0.4\textwidth]{bruel_kjaer_mics.png}
+    \caption{Brüel\&Kjær 4145 (up to 21kHz), 4190 (up to 40kHz) and 4939 (up to 350kHz)~\cite{original_paper}.}
+    \label{fig:bruel_kjaer_mics}
+\end{figure}
+
+
+
+
 \subsection{Acustic leakage}\label{sec:acustic_leakage}
+
+
 \subsection{RSA key extraction}\label{sec:rsa_key_extraction}
+
