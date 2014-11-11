@@ -87,20 +87,36 @@ a,b,c
 6,4,1
 \end{filecontents*}
 
-\begin{tikzpicture}
-    \begin{axis}
-    \addplot table [x=a, y=b, col sep=comma] {data.csv};
-    \addplot table [x=a, y=c, col sep=comma] {data.csv};
-    \end{axis}
-\end{tikzpicture}
+\begin{figure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}
+                \addplot table [x=a, y=b, col sep=comma] {data.csv};
+                \addplot table [x=a, y=c, col sep=comma] {data.csv};
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Graph from Lenovo T60p}
+        %\label{fig:subfig1}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}
+                \addplot table [x=a, y=b, col sep=comma] {data.csv};
+                \addplot table [x=a, y=c, col sep=comma] {data.csv};
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Graph from Dell Latitude}
+        %\label{fig:subfig2}
+    \end{subfigure}
+    \caption{Number of cache misses during execution, comparing deterministic and random access in memory}
+\end{figure}
 
-\begin{tikzpicture}
-    \begin{axis}
-    \addplot table [x=a, y=b, col sep=comma] {data.csv};
-    \addplot table [x=a, y=c, col sep=comma] {data.csv};
-    \end{axis}
-\end{tikzpicture}
-[Figure] \todo{create an example with a figure showing results from a run of both programs}
 
 We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
 The results are given in Figure XX\todo{Make figure, fix xref}. Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
