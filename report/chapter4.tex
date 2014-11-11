@@ -77,6 +77,29 @@ We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an a
 During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
 If this condition holds, we can argue that the program \(A\) adds \(n\) cache misses and thus reliably executes the MEM operation. 
 
+\begin{filecontents*}{data.csv}
+a,b,c
+1,4,5
+2,3,4
+3,4,2
+4,1,6
+5,3,4
+6,4,1
+\end{filecontents*}
+
+\begin{tikzpicture}
+    \begin{axis}
+    \addplot table [x=a, y=b, col sep=comma] {data.csv};
+    \addplot table [x=a, y=c, col sep=comma] {data.csv};
+    \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{axis}
+    \addplot table [x=a, y=b, col sep=comma] {data.csv};
+    \addplot table [x=a, y=c, col sep=comma] {data.csv};
+    \end{axis}
+\end{tikzpicture}
 [Figure] \todo{create an example with a figure showing results from a run of both programs}
 
 We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
