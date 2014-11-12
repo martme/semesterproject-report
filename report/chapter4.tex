@@ -77,24 +77,34 @@ We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an a
 During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
 If this condition holds, we can argue that the program \(A\) adds \(n\) cache misses and thus reliably executes the MEM operation. 
 
-\begin{filecontents*}{data.csv}
-a,b,c
-1,4,5
-2,3,4
-3,4,2
-4,1,6
-5,3,4
-6,4,1
-\end{filecontents*}
+% \begin{filecontents*}{data.csv}
+% a,b,c
+% 1,4,5
+% 2,3,4
+% 3,4,2
+% 4,1,6
+% 5,3,4
+% 6,4,1
+% \end{filecontents*}
 
 \begin{figure}
     \begin{subfigure}{0.5\textwidth}
         \centering
         \resizebox{\linewidth}{!}{
             \begin{tikzpicture}
-                \begin{axis}
-                \addplot table [x=a, y=b, col sep=comma] {data.csv};
-                \addplot table [x=a, y=c, col sep=comma] {data.csv};
+                \begin{axis}[
+                    xlabel={iteration},
+                    ylabel={\# cache misses},
+                    grid=major,
+                    ymin=0, ymax=1000,
+                    compat=newest,
+                    %title={Something},
+                    ]
+                    \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
+                    \addlegendentry{Case 1}
+
+                    \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
+                    \addlegendentry{Case 2}
                 \end{axis}
             \end{tikzpicture}
         }
@@ -105,9 +115,9 @@ a,b,c
         \centering
         \resizebox{\linewidth}{!}{
             \begin{tikzpicture}
-                \begin{axis}
-                \addplot table [x=a, y=b, col sep=comma] {data.csv};
-                \addplot table [x=a, y=c, col sep=comma] {data.csv};
+                \begin{axis}[xlabel={iteration},ylabel={\# cache misses}]
+                \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
+                \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
                 \end{axis}
             \end{tikzpicture}
         }
