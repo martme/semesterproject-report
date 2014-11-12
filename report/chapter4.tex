@@ -11,7 +11,9 @@ We will start by oscillating between unnaturally high CPU loads and a minimal lo
 The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
 Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
 
+
 \section{CPU load}\label{chp4:cpu_load}
+
 Our first choice of distinguishable CPU activity is in the form of a CPU burn utility. 
 The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
 However, if the user executes a program that will make all cores on the CPU work at close to their full capacity, the internal activity of the CPU will change drastically as a consequence of the increased load.
@@ -36,6 +38,7 @@ For the Raspberry Pi, we used the used the sysbench\cite{url:sysbench_wiki} pack
 This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. 
 
 \section{Microinstructions}\label{chp4:microinstructions}
+
 With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
 The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each instruction.
 Thus we want an utility that lets us repeat this experiment. 
