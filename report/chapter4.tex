@@ -26,8 +26,6 @@ for i in {1..3}
 do
 	# burn all cores for 2 seconds
 	sleep 1
-	# stop burn on all cores
-	sleep 1
 done
 \end{lstlisting}
 
@@ -62,6 +60,7 @@ The CPU operation will will loop are the MUL, ADD and NOP microinstructions as w
 The following subsections will go into further detail on how timely and predictable execution was achieved in all four cases for both ARM and x86 architectures.
 
 \subsection{Memory Access and Predictable Cache Miss}
+\label{subsec:MEM_operation}
 
 The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
 If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM.
@@ -75,48 +74,16 @@ Luckily the existance of hardware performance counters allow us to evaluate our 
 
 We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
 During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
-If this condition holds, we can argue that the program \(A\) adds \(n\) cache misses and thus reliably executes the MEM operation. 
+If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
 
-% \begin{filecontents*}{data.csv}
-% a,b,c
-% 1,4,5
-% 2,3,4
-% 3,4,2
-% 4,1,6
-% 5,3,4
-% 6,4,1
-% \end{filecontents*}
-
+\todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
 \begin{figure}
-    % \begin{subfigure}{0.5\textwidth}
-    %     \centering
-    %     \resizebox{\linewidth}{!}{
-    %         \begin{tikzpicture}
-    %             \begin{axis}[
-    %                 xlabel={iteration},
-    %                 ylabel={\# cache misses},
-    %                 grid=major,
-    %                 ymin=0, ymax=1000,
-    %                 compat=newest,
-    %                 %title={Something},
-    %                 ]
-    %                 \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
-    %                 \addlegendentry{Case 1}
-
-    %                 \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
-    %                 \addlegendentry{Case 2}
-    %             \end{axis}
-    %         \end{tikzpicture}
-    %     }
-    %     \caption{Graph from Lenovo T60p}
-    %     %\label{fig:subfig1}
-    % \end{subfigure}
     \centering
     %\resizebox{\linewidth}{!}{
         \begin{tikzpicture}
             \begin{axis}[
                 title={Cache Miss Probability Distribution},
-                xlabel={$n$},
+                xlabel={$\Delta C$},
                 ylabel={$p$},
                 legend pos=south east,
                 legend style={font=\tiny},
@@ -125,25 +92,36 @@ If this condition holds, we can argue that the program \(A\) adds \(n\) cache mi
                 ymode=log,
                 %ymin=0, ymax=1,
             ]
-            \addplot table [ mark=none, y=p, x=D430, col sep=comma] {data/mem-benchmark-cdf.csv};
+            \addplot table [smooth, dotted, mark=none, y=p, x=D430, col sep=comma] {data/mem-benchmark-cdf.csv};
             \addlegendentry{Dell Latitude D430}
             \addplot table [dashed, mark=none, y=p, x=T60p, col sep=comma] {data/mem-benchmark-cdf.csv};
             \addlegendentry{Lenovo Thinkpad T60p}
             \end{axis}
         \end{tikzpicture}
     %}
-    \caption{Probability \(p\) of getting less than \(n\) cache misses.}
+    \caption{Probability \(p\) of observing less than \(\Delta C\) cache misses when running the random lookup procedure.}
     \label{fig:mem_benchmark}
 \end{figure}
 
+% \begin{tikzpicture}
+%         \begin{axis}
+%                 \addplot[smooth,mark=o,dotted]
+%                         plot coordinates {(1,1) (2,2) (3,2)};
+%                 \addplot[mark=o]
+%                         plot coordinates {(1,2) (2,3) (3,5)};
+%         \end{axis}
+% \end{tikzpicture} 
 
-We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
-The results are given in \autoref{fig:mem_benchmark}. 
-Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
+
+We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\).
+Then we look at the difference in cache misses \(\Delta C_i = c_{A_i} - c_{B_i}\) for every run \(i \in [1, 1000]\). 
+The results are given in \autoref{fig:mem_benchmark}, and clearly show that the probability of observing the expected \(\Delta C\) close to \(1000\) is about \(90\%\), thus our condition holds.
+Our MEM utility program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
 
 \subsection{MUL, ADD and NOP execution on Different Architectures}
+\label{subsec:MUL_ADD_NOP_instructions}
 
-The three native microinstructions that we look at are \(MUL\), \(ADD\), and \(NOP\). 
+The three native microinstructions that we look at are MUL, ADD, and NOP. 
 To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in each loop pass, thus reducing the impact from the microinstructions used to perform the actuall loop. 
 This way we can know that our targeted instruction is what is actually executed by our program, and that the count of other instructions occuring is only a fraction of the count of the instruction whom we are trying to force.
 
@@ -180,7 +158,16 @@ This way we can know that our targeted instruction is what is actually executed 
 	\label{lst:x86_add_mem}
 \end{figure}
 
-The NOP instruction was simply rep; nop; repeated \(1000\) times; for the MEM and ADD instructions, see \autoref{lst:x86_add_mem} 
+The NOP instruction was simply rep; nop; repeated \(1000\) times; for the MEM and ADD instructions, see \autoref{lst:x86_add_mem}. 
+
+
+\subsection{Expectations regarding acoustic fingerprints}
+
+Our finished utility is combining the MEM operation, as described in \autoref{subsec:MEM_operation} and the MUL, ADD and NOP-loops which are described in \autoref{subsec:MUL_ADD_NOP_instructions}.
+Executing the four operations in the pattern given in \autoref{lst:microinstruction_loop_utility}, we are able to look for for repeating patterns in the acoustic fingerprint of the CPUs executing the utility.
+More precively, we will look for periodic patterns that represent an interval in time \(t\) of \(0.33\) seconds. 
+If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to destinguish between such low level operations based purely on the acoustic fingerprint. 
+
 
 \section{Decryption}
 Write about the decryption util
