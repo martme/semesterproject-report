@@ -88,48 +88,58 @@ If this condition holds, we can argue that the program \(A\) adds \(n\) cache mi
 % \end{filecontents*}
 
 \begin{figure}
-    \begin{subfigure}{0.5\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    xlabel={iteration},
-                    ylabel={\# cache misses},
-                    grid=major,
-                    ymin=0, ymax=1000,
-                    compat=newest,
-                    %title={Something},
-                    ]
-                    \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
-                    \addlegendentry{Case 1}
+    % \begin{subfigure}{0.5\textwidth}
+    %     \centering
+    %     \resizebox{\linewidth}{!}{
+    %         \begin{tikzpicture}
+    %             \begin{axis}[
+    %                 xlabel={iteration},
+    %                 ylabel={\# cache misses},
+    %                 grid=major,
+    %                 ymin=0, ymax=1000,
+    %                 compat=newest,
+    %                 %title={Something},
+    %                 ]
+    %                 \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
+    %                 \addlegendentry{Case 1}
 
-                    \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
-                    \addlegendentry{Case 2}
-                \end{axis}
-            \end{tikzpicture}
-        }
-        \caption{Graph from Lenovo T60p}
-        %\label{fig:subfig1}
-    \end{subfigure}
-    \begin{subfigure}{0.5\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[xlabel={iteration},ylabel={\# cache misses}]
-                \addplot table [x=a, y=b, col sep=comma] {data/dummy.csv};
-                \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
-                \end{axis}
-            \end{tikzpicture}
-        }
-        \caption{Graph from Dell Latitude}
-        %\label{fig:subfig2}
-    \end{subfigure}
-    \caption{Number of cache misses during execution, comparing deterministic and random access in memory}
+    %                 \addplot table [x=a, y=c, col sep=comma] {data/dummy.csv};
+    %                 \addlegendentry{Case 2}
+    %             \end{axis}
+    %         \end{tikzpicture}
+    %     }
+    %     \caption{Graph from Lenovo T60p}
+    %     %\label{fig:subfig1}
+    % \end{subfigure}
+    \centering
+    %\resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+            \begin{axis}[
+                title={Cache Miss Probability Distribution},
+                xlabel={$n$},
+                ylabel={$p$},
+                legend pos=south east,
+                legend style={font=\tiny},
+                grid style=dashed,
+                ymajorgrids=true,
+                ymode=log,
+                %ymin=0, ymax=1,
+            ]
+            \addplot table [ mark=none, y=p, x=D430, col sep=comma] {data/mem-benchmark-cdf.csv};
+            \addlegendentry{Dell Latitude D430}
+            \addplot table [dashed, mark=none, y=p, x=T60p, col sep=comma] {data/mem-benchmark-cdf.csv};
+            \addlegendentry{Lenovo Thinkpad T60p}
+            \end{axis}
+        \end{tikzpicture}
+    %}
+    \caption{Probability \(p\) of getting less than \(n\) cache misses.}
+    \label{fig:mem_benchmark}
 \end{figure}
 
 
 We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\) and calculated the difference in cache misses \(C = c_A - c_B\). 
-The results are given in Figure XX\todo{Make figure, fix xref}. Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
+The results are given in \autoref{fig:mem_benchmark}. 
+Since the value is in fact close to \(n = 1000\), our condition holds, and the program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
 
 \subsection{MUL, ADD and NOP execution on Different Architectures}
 
