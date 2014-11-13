@@ -1,18 +1,18 @@
 \chapter{Predictable Execution and Software for Analysis}\label{chp:analyzing} 
-A prerequisite to analysis of acoustinc fingerprints is that you have some idea of what you are recording, and thus be able to look at the correlation between what is observed, and what was going on at the time.
+A prerequisite to analysis of acoustic fingerprints is that you have some idea of what you are recording, and thus be able to look at the correlation between what is observed, and what was going on at the time.
 In our case this means that we need to know what is going on in the CPU during the timespan of our recordings.
 If we possess this knowledge, we should be more able draw conclusions regarding the correlation between what is observed in the acoustic fingerprint and distinct CPU activity.
 This chapter will describe how we force predictable CPU activity, and also how we tailor the software run during the recordings for different architectures to achieve comparable results.
 
 \section{Selection of Test Cases}
 We will use several test cases, where the aim is to gradually record more and more subtle variations in CPU activity, and use this as a basis for our acoustic analysis.
-We will start by oscilating between unnaturally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
+We will start by oscillating between unnaturally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
 
-The following sections will in detail describe the different utilities we use to inflict this CPU behaviour, and how we wrap the different tokens of predictable executions in a deterministicly looped pattern to be used in later analysis, thus relating the CPU behaviour to the time domain. 
+The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
 Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
 
 \section{CPU load}
-Our first choise of distinguisable CPU activity is in the form of a CPU burn utility. 
+Our first choice of distinguishable CPU activity is in the form of a CPU burn utility. 
 The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
 However, if the user executes a program that will make all cores on the CPU work at close to their full capacity, the internal activity of the CPU will change drastically as a consequence of the increased load.
 
@@ -30,17 +30,17 @@ done
 \end{lstlisting}
 
 This simple loop will let us search for distinct one second intervals in the acoustic fingerprints, as the CPU will operate at close to full capacity, then sleep for a second each, representing the heavy load state and the idle state.
-By recoring whilest executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
+By recording while executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
 
 For the Raspberry Pi, we used the used the sysbench package to generate cpu load. 
 This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. \todo{wiki.gentoo.org/wiki/Sysbench}
 
 \section{Microinstructions}
 With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
-The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguisable acoustic fingerprint for each instruction.
+The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each instruction.
 Thus we want an utility that lets us repeat this experiment. 
 
-Since we are using sampling frequencies in the kHz-range and processors operate on frequencies in the GHz-range, it is futile to try to capture the fingerprint of a single clock cycle representing the execution of a spesific microinstruction. 
+Since we are using sampling frequencies in the kHz-range and processors operate on frequencies in the GHz-range, it is futile to try to capture the fingerprint of a single clock cycle representing the execution of a specific microinstruction. 
 This limitation can be dealt with by repeating the same instruction for a longer timespan, such that every \(\Delta t\) seconds, a new instruction will start executing.
 With \(n\) different instructions, one pass through all instructions will take \(T = n \times \Delta t\) seconds, and we want to repeat the loop more than once, so that we can look not only for a change from one lastingly stable signal every \(\Delta t\) seconds, but also a repeating pattern every \(T\) seconds.
 
@@ -69,7 +69,7 @@ We want to achieve is a program where the CPU constantly has to go all the way t
 This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
 This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
 
-Luckily the existance of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution. These can be accessed on linux by installing the linux-tools-common package.
+Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution. These can be accessed on linux by installing the linux-tools-common package.
 \todo{cite something}
 
 We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
@@ -122,8 +122,8 @@ Our MEM utility program is successfully bypassing the CPUs best efforts of hardw
 \label{subsec:MUL_ADD_NOP_instructions}
 
 The three native microinstructions that we look at are MUL, ADD, and NOP. 
-To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in each loop pass, thus reducing the impact from the microinstructions used to perform the actuall loop. 
-This way we can know that our targeted instruction is what is actually executed by our program, and that the count of other instructions occuring is only a fraction of the count of the instruction whom we are trying to force.
+To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in each loop pass, thus reducing the impact from the microinstructions used to perform the actual loop. 
+This way we can know that our targeted instruction is what is actually executed by our program, and that the count of other instructions occurring is only a fraction of the count of the instruction whom we are trying to force.
 
 \newsavebox{\MEMfigure}
 	\begin{lrbox}{\MEMfigure}%store first listing
@@ -165,8 +165,8 @@ The NOP instruction was simply rep; nop; repeated \(1000\) times; for the MEM an
 
 Our finished utility is combining the MEM operation, as described in \autoref{subsec:MEM_operation} and the MUL, ADD and NOP-loops which are described in \autoref{subsec:MUL_ADD_NOP_instructions}.
 Executing the four operations in the pattern given in \autoref{lst:microinstruction_loop_utility}, we are able to look for for repeating patterns in the acoustic fingerprint of the CPUs executing the utility.
-More precively, we will look for periodic patterns that represent an interval in time \(t\) of \(0.33\) seconds. 
-If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to destinguish between such low level operations based purely on the acoustic fingerprint. 
+More precisely, we will look for periodic patterns that represent an interval in time \(t\) of \(0.33\) seconds. 
+If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to distinguish between such low level operations based purely on the acoustic fingerprint. 
 
 
 \section{Decryption}
