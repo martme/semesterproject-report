@@ -32,8 +32,8 @@ done
 This simple loop will let us search for distinct one second intervals in the acoustic fingerprints, as the CPU will operate at close to full capacity, then sleep for a second each, representing the heavy load state and the idle state.
 By recording while executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
 
-For the Raspberry Pi, we used the used the sysbench package to generate cpu load. 
-This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. \todo{wiki.gentoo.org/wiki/Sysbench}
+For the Raspberry Pi, we used the used the sysbench\cite{url:sysbench_wiki} package to generate cpu load. 
+This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. 
 
 \section{Microinstructions}
 With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
@@ -69,8 +69,7 @@ We want to achieve is a program where the CPU constantly has to go all the way t
 This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
 This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
 
-Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution. These can be accessed on linux by installing the linux-tools-common package.
-\todo{cite something}
+Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution\cite{url:perf_wiki}.
 
 We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
 During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
