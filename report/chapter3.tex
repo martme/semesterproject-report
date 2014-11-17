@@ -90,15 +90,15 @@ Our guess, based on the original paper~\cite{original_paper}, is that the sound 
 Therefore we are positioning the microphones as close to the CPU as possible. 
 When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in figure~\ref{fig:T60p_knowles_position}. 
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-    \vspace{-20pt}
-    \centering
-    \includegraphics[width=2in]{T60p_knowles_position.JPG}
-    \vspace{-20pt}
-    \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
-    \vspace{-20pt}
-    \label{fig:T60p_knowles_position}
-\end{wrapfigure}
+% \begin{wrapfigure}{r}{0.5\textwidth}
+%     \vspace{-20pt}
+%     \centering
+%     \includegraphics[width=2in]{T60p_knowles_position.JPG}
+%     \vspace{-20pt}
+%     \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
+%     \vspace{-20pt}
+%     \label{fig:T60p_knowles_position}
+% \end{wrapfigure}
 
 
 \section{Experimental plan}\label{sec:ch3_experimental_plan}\todo{Put this in appendix}
@@ -120,8 +120,8 @@ We will also do the experiments in an anechoic chamber, which will eliminate clo
   We are doing this to find out what the CPU possibly might leak when doing nothing. 
   Then we perform a CPU load, micro instructions and finally decryptions.
   \item[CPU load] Exposing the CPU from low to high load.
-  Read more about how we do the CPU load in chapter~\ref{chp:analyzing}.
-  \item[Micro instructions] Read more about how we do the micro instructions in chapter~\ref{chp:analyzing}.
+  Read more about how we do the CPU load in chapter~\ref{chp:predictable_execution}.
+  \item[Micro instructions] Read more about how we do the micro instructions in chapter~\ref{chp:predictable_execution}.
   \item[Decryption] As stated in the original paper, we should be able to detect when the CPU is doing a RSA decryption. 
   For this we decrypt an encrypted file with a RSA 4096-bit key using GnuPG v1.4.15~\cite{GnuPG_1.4.15}
 \end{enumerate}

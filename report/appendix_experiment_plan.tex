@@ -1,0 +1,35 @@
+\chapter{Experiment Plan}\label{apx:experiment_plan}
+This appendix will present our experiment plan, and the planning done prior to the execution of the recording experiments.
+
+\section{Requirements}
+
+We will perform recordings on the following target computers, prepared with programs tailored for this experiment\footnote{The computers are running all our utilities, as described in \autoref{chp:predictable_execution}}.
+\begin{description}
+	\item[Lenovo Thinkpad T60p] The casing will be partially removed, to allow for recordings closer to the CPU. We will experiment with the distances $0.5$ cm and $30$ cm from the CPU, and we will record while the computer is running both with a power adapter, and on battery power. All permutations of these two parameters add up to four configurations for us to experiment with.
+	\item[Dell Latitude D430] For this computer we will record through the CPU fan exhaust, at an approximate distance from the CPU of $2$ cm.
+	\item[Raspberry Pi model B] We will record with emphasis on three different positions: the CPU, the $3.3V$ regulator, and the area around the $1.8V$ and $2.8V$ regulators\footnote{The Raspberry Pi model B layout is described in this figure \url{http://upload.wikimedia.org/wikipedia/commons/a/af/Raspberrypi_pcb_overview_v04.svg} (Accessed 17-Nov 2014)}.
+\end{description}
+
+Further we will use the following equipment:
+\begin{description}
+	\item[Microphone] Brüel \& Kjær 4190, with microphone stand
+	\item[Preamplifier] Norsonic type 336 (S/N 20626)
+	\item[Filter] Krohn-Hite Corporation Model 3945 (S/N 005133)
+	\item[Configuration] Ribbon Tweeter Banddiskant D8C, Kenwood FG-275 Function Generator.
+	\item[Miscellaneous] Power chords, Camera for documentation, notebook
+\end{description}
+
+All recordings will be done twice: in an office environment, with unpredictable sources of background noise; and in an anechoic chamber, with minimal levels of background noise.
+
+\section{Experiments}
+
+The following experiments will be performed on all of the target computers, for all configurations, as given in the previous section.
+Everything will take place first in the office environment, and then repeated in the anechoic chamber. The following cases are recorded in this order for the three computers, with all the configurations listed\footnote{All recordings are repeated five times to help distinguish between phenomenons caused by chance, and actual phenomenons caused by the activity we force on the CPU.}.
+
+\begin{enumerate}
+	\item A reference recording of a sinusoid produced by the Ribbon Tweeter and the Function Generator, to verify that our setup is in fact recording and working as intended.
+	\item Reference recordings of the target computer in idle state for $5$ seconds.
+	\item Recordings of the CPU load, running the code described in \autoref{chp4:cpu_load}.
+	\item Recordings of different microinstructions, running the microinstruction loop described in \autoref{chp4:microinstructions}.
+	\item Recordings of the computer doing decryption, as described in \autoref{chp4:decryption}. 
+\end{enumerate}
