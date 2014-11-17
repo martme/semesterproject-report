@@ -9,6 +9,9 @@
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{wrapfig}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+\usepackage{url}
 
 \lstset{
 	numbers=left,
@@ -109,10 +112,11 @@
 %% include here the other chapters
 
 %% References
-\include{references}
-%\renewcommand*{\bibname}{References}
+%\include{references}
+\renewcommand*{\bibname}{References}
+\bibliographystyle{ieeetr}
 %\bibliographystyle{alpha}
-%\bibliography{main}
+\bibliography{main}
 
 %% Uncomment the following if you have any appendix
 % \appendix
