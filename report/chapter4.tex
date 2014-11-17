@@ -171,6 +171,35 @@ More precisely, we will look for periodic patterns that represent an interval in
 If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to distinguish between such low level operations based purely on the acoustic fingerprint. 
 
 
-\section{Decryption}\label{chp4:decryption}
-Write about the decryption util
 
+\section{Decryption}\label{chp4:decryption}
+
+The original research clearly states that it is possible to distinguish when a decryption with a 4096-bit RSA key is used, and also differentiate between when the CPU is using \(p\) and \(q\).
+At first glance we want to distinguish when a decryption is done, and hopefully when \(p\) and \(q\) are used. 
+We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as the original paper exploits some vulnerabilities found in GnuPG versions up to 1.4.15. 
+
+Before our decryption is done, we are encrypting a \(sound.wav\) file of the size 4.2MB with a 4096-bit RSA key, seen in \autoref{lst:encryption_rsakey}. The key is generated in the Thunderbird extension Enigmail and is related to an email account.
+Our choice of encryption/decryption method, key-size and key generation is due to the chosen cipher text attack related to the original research, see 1.1 Chosen Chiphertexts by e-mail in~\cite{DBLP:conf/crypto/GenkinST14}. 
+\begin{lstlisting}[
+language=BASH, 
+caption={Encryption with a 4096-bit RSA key.}, 
+label={lst:encryption_rsakey}]
+gpg --output sound.gpg --encrypt --recipient bmanharry@gmail.com sound.wav
+\end{lstlisting}
+
+To be able to relate the decryption to the time domain, we will execute the decryption according to the algorithm described in \autoref{lst:decryption_loop_utility}
+
+\begin{lstlisting}[
+language=BASH, 
+caption={Mapping execution to the time domain: Decryption loop utility.}, 
+label={lst:decryption_loop_utility}]
+for i in {1..3}
+do
+    sleep 1
+    gpg --output tmp/sound.wav --decrypt sound.gpg
+done
+\end{lstlisting}
+>>>>>>> ref: fixed references, chp4: added info about decryption
+
+The loop in our decryption utility will easily let us search for a pattern; one second sleep followed by a decryption. 
+The decryption of the \(sound.gpg\) file will probably extend over a different amount of time on different computer, i.e. different CPU. 
