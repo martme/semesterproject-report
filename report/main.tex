@@ -1,6 +1,7 @@
 \documentclass{MScthesisITEM}
 
 % this package is just to generate text for demo-purposes
+
 \usepackage{blindtext}
 \usepackage{mathtools} % math packages
 \usepackage[siunitx]{circuitikz}
@@ -94,9 +95,9 @@
 % \cleardoublepage
 % \glsaddall[]
 
-%% include if relevant
-% \printglossary[title=List of Acronyms,type=\acronymtype] % prints just the list of acronyms
-% \cleardoublepage
+% include if relevant
+\printglossary[title=List of Acronyms,type=\acronymtype] % prints just the list of acronyms
+\cleardoublepage
 
 \pagenumbering{arabic}
 \pagestyle{ruled}
@@ -118,15 +119,15 @@
 %\bibliographystyle{alpha}
 \bibliography{main}
 
-%% Uncomment the following if you have any appendix
-% \appendix
-% \addtocontents{toc}{%
-%  \protect\vspace{1em}% 
-%  \protect\noindent \bfseries \appendixtocname\protect\par
-%  \protect\vspace{-.5em}%
-% }
-% \renewcommand{\chaptername}{\appendixname}
-%% include below possible appendices (chapters)
-
+% Uncomment the following if you have any appendix
+\appendix
+\addtocontents{toc}{%
+ \protect\vspace{1em}%
+ \protect\noindent \bfseries \appendixtocname\protect\par
+ \protect\vspace{-.5em}%
+}
+\renewcommand{\chaptername}{\appendixname}
+% include below possible appendices (chapters)
+\include{appendix_experiment_plan}
 
 \end{document} 
