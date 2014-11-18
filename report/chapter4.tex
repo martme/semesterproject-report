@@ -11,7 +11,9 @@ We will start by oscillating between unnaturally high CPU loads and a minimal lo
 The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
 Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
 
+
 \section{CPU load}\label{chp4:cpu_load}
+
 Our first choice of distinguishable CPU activity is in the form of a CPU burn utility. 
 The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
 However, if the user executes a program that will make all cores on the CPU work at close to their full capacity, the internal activity of the CPU will change drastically as a consequence of the increased load.
@@ -36,6 +38,7 @@ For the Raspberry Pi, we used the used the sysbench\cite{url:sysbench_wiki} pack
 This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. 
 
 \section{Microinstructions}\label{chp4:microinstructions}
+
 With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
 The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each instruction.
 Thus we want an utility that lets us repeat this experiment. 
@@ -168,6 +171,34 @@ More precisely, we will look for periodic patterns that represent an interval in
 If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to distinguish between such low level operations based purely on the acoustic fingerprint. 
 
 
-\section{Decryption}\label{chp4:decryption}
-Write about the decryption util
 
+\section{Decryption}\label{chp4:decryption}
+
+The original research clearly states that it is possible to distinguish when a decryption with a 4096-bit RSA key is used, and also differentiate between when the CPU is using \(p\) and \(q\).
+At first glance we want to distinguish when a decryption is done, and hopefully when \(p\) and \(q\) are used. 
+We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as the original paper exploits some vulnerabilities found in GnuPG versions up to 1.4.15. 
+
+Before our decryption is done, we are encrypting a \(sound.wav\) file of the size 4.2MB with a 4096-bit RSA key, seen in \autoref{lst:encryption_rsakey}. The key is generated in the Thunderbird extension Enigmail and is related to an email account.
+Our choice of encryption/decryption method, key-size and key generation is due to the chosen cipher text attack related to the original research, see 1.1 Chosen Chiphertexts by e-mail in~\cite{DBLP:conf/crypto/GenkinST14}. 
+\begin{lstlisting}[
+language=BASH, 
+caption={Encryption with a 4096-bit RSA key.}, 
+label={lst:encryption_rsakey}]
+gpg --output sound.gpg --encrypt --recipient bmanharry@gmail.com sound.wav
+\end{lstlisting}
+
+To be able to relate the decryption to the time domain, we will execute the decryption according to the algorithm described in \autoref{lst:decryption_loop_utility}
+
+\begin{lstlisting}[
+language=BASH, 
+caption={Mapping execution to the time domain: Decryption loop utility.}, 
+label={lst:decryption_loop_utility}]
+for i in {1..3}
+do
+    sleep 1
+    gpg --output tmp/sound.wav --decrypt sound.gpg
+done
+\end{lstlisting}
+
+The loop in our decryption utility will easily let us search for a pattern; one second sleep followed by a decryption. 
+The decryption of the \(sound.gpg\) file will probably extend over a different amount of time on different computer, i.e. different CPU. 

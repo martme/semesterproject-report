@@ -24,13 +24,13 @@ Acoustic cryptanalysis is done by listening to sound that is emitted by computer
 Computers leaks sound from Hz to several hundred kHz. 
 \todo{Write something more.. general stuff about acoustic cryptanalysis}
 
-But there are other ways to do acoustic cryptanalysis. In 2005, some researchers at Berkeley did a research\cite{keystrokes} on recognizing keystrokes on a keyboard by sound. 
+But there are other ways to do acoustic cryptanalysis. In 2005, some researchers at Berkeley did a research\cite{url:keystrokes} on recognizing keystrokes on a keyboard by sound. 
 This is possible because each key has its own distinct sound. 
 After separating the different keystrokes, they used a statistical frequency method to find out which key belonged to which letter. 
 To determine the letters, they only had to listen for 10 minutes, i.e. on a typical user that types about 300 characters each minute. 
 One method to take advantage of this attack is to create a mobilephone application that enables the microphone and analyses the keystrokes. 
 
-Its also proven that phones and ATMs with mechanical keyboards can be vulnerable for acoustic attacks\cite{KybdEmanation}.
+Its also proven that phones and ATMs with mechanical keyboards can be vulnerable for acoustic attacks\cite{DBLP:conf/sp/AsonovA04}.
 
 In 2014, a research team at the Tel Aviv University was able to do a full RSA Key (4096-bit) extraction using acoustic cryptanalysis. 
 This research is explained in detail at section \ref{sec:original_research}.
@@ -44,7 +44,7 @@ This proof is however just a theortical proof.
 Nobody has ever proven to restore bits after been overwritten. 
 \todo{Write something more.. general stuff about data remanence}
 
-Earlier it has been shown that for some UV EPROM, EEPROM and Flash devices, information can still be recovered after 100 erase cycles\cite{data_remanence_flash}.
+Earlier it has been shown that for some UV EPROM, EEPROM and Flash devices, information can still be recovered after 100 erase cycles\cite{DBLP:conf/ches/Skorobogatov05}.
 
 
 \subsection{Differential fault analysis}\label{sec:differential_fault_analysis}
@@ -53,10 +53,10 @@ Differential fault analysis is cryptanalysis based on interpreting fault outputs
 The processor might give fault outputs an adversary can use to find knowledge about the processor state or similar information.
 
 
-Guo, et al (2012): Invariance-based concurrent error detection for advanced encryption standard\cite{dfa_guo}
+Guo, et al (2012): Invariance-based concurrent error detection for advanced encryption standard\cite{DBLP:journals/iacr/GuoK13}
 \todo{Is this paper something to write about?}
 
-Giraud (2003): DFA on AES\cite{dfa_aes}
+Giraud (2003): DFA on AES\cite{DBLP:journals/iacr/Giraud03}
 \todo{Is this paper something to write about?}
 
 \subsection{Electromagnetic attacks}\label{sec:electromagnetic_attacks}
@@ -64,7 +64,7 @@ Giraud (2003): DFA on AES\cite{dfa_aes}
 An adversary can, if located within range, intercept electromagnetic signal emitted by all electronic devices. 
 It is not possible to detect this attack, and therefore hard to prevent. 
 One of the known attacks is extracting the electromagnetid signals from a computer monitor to reproduce the screen output.
-These signals originates from the electron gun that manipulates each pixel\cite{tempest_sans}. 
+These signals originates from the electron gun that manipulates each pixel\cite{url:tempest_sans}. 
 The stronger a pixel is, the stronger the signal.
 PGP includes a secure viewer that prevents exactly these high frequency signals by making softned edges in the fonts.
 However, it is said to be very difficult, thus expensive to extract the signals emitted by a computer monitor. 
@@ -74,21 +74,21 @@ However, it is said to be very difficult, thus expensive to extract the signals 
 Electronic devices leaks information about what they are processing through their power consumption.
 This leakage can be used to extract secret information like keys used to encryption using differential power analysis (DPA). 
 
-Simple power analysis (SPA) is simply interpreting the power consumption measurements during cryptographioc operations\cite{dpa_kocher}. 
+Simple power analysis (SPA) is simply interpreting the power consumption measurements during cryptographioc operations\cite{DBLP:conf/crypto/KocherJJ99}. 
 
 DPA is a more complex way to interpret the power consumption. \todo{write something fancy about DPA}
-Paul Kocher: Differential power analysis \cite{dpa_kocher}
+Paul Kocher: Differential power analysis \cite{DBLP:conf/crypto/KocherJJ99}
 
 \subsection{Timing attacks}\label{sec:timing_attacks}
 
 Here goes related work to timing attacks
 
-SSL Timing attack~\cite{ssl_timing_attack}
-Timing attack Diffie-Hellman~\cite{timing_attack_kocher}
+SSL Timing attack~\cite{DBLP:conf/esorics/BrumleyT11}
+Timing attack Diffie-Hellman~\cite{DBLP:conf/crypto/Kocher96}
 
 \section{Original research - Acoustic Cryptanalysis}\label{sec:original_research}
 
-The original research that we are referring to in this paper, is the RSA Key Extraction via Low-Bandwidth Acoustic Cyptanalysis~\cite{original_paper}, done by Daniel Genkin, Adi Shamir and Eran Tromer.
+The original research that we are referring to in this paper, is the RSA Key Extraction via Low-Bandwidth Acoustic Cyptanalysis~\cite{DBLP:conf/crypto/GenkinST14}, done by Daniel Genkin, Adi Shamir and Eran Tromer.
 Their claim is that many computers leaks acoustic noise from its electronic components due to vibration, i.e. coil whine (noise).
 Vital components like the CPU requires power dependent on what it is computing.
 Hence the theory is that some CPUs leaks acoustic noise about what it is doing.
@@ -102,7 +102,7 @@ They use 3 different microphones from Brüel\&Kjær showed in figure~\ref{fig:br
 \begin{figure}[h]
 	\centering
     \includegraphics[width=0.4\textwidth]{bruel_kjaer_mics.png}
-    \caption{Brüel\&Kjær 4145 (up to 21kHz), 4190 (up to 40kHz) and 4939 (up to 350kHz)~\cite{original_paper}.}
+    \caption{Brüel\&Kjær 4145 (up to 21kHz), 4190 (up to 40kHz) and 4939 (up to 350kHz)~\cite{DBLP:conf/crypto/GenkinST14}.}
     \label{fig:bruel_kjaer_mics}
 \end{figure}
 

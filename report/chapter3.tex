@@ -28,17 +28,17 @@ A small microphone also enables the possibility to hide the whole setup inside t
     \centering
     \includegraphics[scale=0.3]{knowles_microphone.png}
     \vspace{-20pt}
-    \caption{Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec}}
+    \caption{Knowles Ultrasonic SPU0410LR5H~\cite{url:knowles_spec}}
     \vspace{-20pt}
     \label{fig:knowles_microphone}
 \end{wrapfigure}
 
-The Knowles Ultrasonic SPU0410LR5H microphone in \autoref{fig:knowles_microphone} is able to detect sound at least up to 80kHz with a -4dB sensitivity\cite{knowles_spec}.
-To be able to record frequencies up to 100kHz, we need the National Instuments (NI) myDAQ~\cite{NI_myDAQ} to sample the sound at a sampling frequency \(F_{s}\) of 200kHz.
+The Knowles Ultrasonic SPU0410LR5H microphone in \autoref{fig:knowles_microphone} is able to detect sound at least up to 80kHz with a -4dB sensitivity\cite{url:knowles_spec}.
+To be able to record frequencies up to 100kHz, we need the National Instuments (NI) myDAQ~\cite{url:NI_myDAQ} to sample the sound at a sampling frequency \(F_{s}\) of 200kHz.
 The microphone is connected to a 4.5V battery and directly in to Analog Input 0 on the myDAQ device. 
 
-The myDAQ device has a built in an amplifier (OPA1642) seen in the hardware block diagram at page 4 in the myDAQ user guide~\cite{NI_myDAQ_userguide}. 
-The OPA1642 has a gain of 60 dB at 10kHz and 40 dB at 100kHz seen in figure 5 at page 5 in the OPA1642 specification~\cite{TI_opa1642}.
+The myDAQ device has a built in an amplifier (OPA1642) seen in the hardware block diagram at page 4 in the myDAQ user guide~\cite{url:NI_myDAQ_userguide}. 
+The OPA1642 has a gain of 60 dB at 10kHz and 40 dB at 100kHz seen in figure 5 at page 5 in the OPA1642 specification~\cite{url:TI_opa1642}.
 With an input voltage of +-10mV, the nominal output is +-1V as illustrated in \autoref{fig:op_amp_illustration}
 \todo{check this with Tim Cat Netland}
 
@@ -57,7 +57,7 @@ With an input voltage of +-10mV, the nominal output is +-1V as illustrated in \a
 
 \subsection{Brüel\&Kjær 4191 Configuration}\label{sec:ch3_bruel_kjaer_configuration}
 
-Much like one of the lab setups~\ref{sec:lab_setup} from the original paper we use a Brüel\&Kjær 4191 microphone that is able to do precise measurements up to frequencies around 40kHz~\cite{bk4191_spec}.
+Much like one of the lab setups~\ref{sec:lab_setup} from the original paper we use a Brüel\&Kjær 4191 microphone that is able to do precise measurements up to frequencies around 40kHz~\cite{url:bk4191_spec}.
 The microphone is then connected to a preamplifier \todo{write about the preamp we used in the experiment} which is then connected to a Brüel\&Kjær 5935 microphone power supply and amplifier.
 The output signal is then led into the NI myDAQ and further in to our computer, i.e. the adversary in this case.
 
@@ -76,7 +76,7 @@ The captured sound file is Fourier transformed using a window size of 4096 sampl
 
 \section{Capturing audio fingerprint}\label{sec:ch3_capturing_audio_fingerprint}
 
-Our guess, based on the original paper~\cite{original_paper}, is that the sound derives much likely from some coil whine around the CPU. 
+Our guess, based on the original paper~\cite{DBLP:conf/crypto/GenkinST14}, is that the sound derives much likely from some coil whine around the CPU. 
 Therefore we are positioning the microphones as close to the CPU as possible. 
 When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in figure~\ref{fig:T60p_knowles_position}. 
 
