@@ -16,8 +16,8 @@ The original paper \todo{cite} suggests that we should be be able to observe dis
 F_{nc} = \frac{F_{s}}{2}
 \end{equation}
 
-There are interesting implications of this setup; the the microphone itself is very small as well as being very cheap, costing only a few dollars\cite{butikken}. 
-Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, in for instance a side channel attack against a vulnerable RSA implementation, as suggested in \cite{paper}.
+There are interesting implications of this setup; the the microphone itself is very small as well as being very cheap, costing only a few dollars. 
+Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, in for instance a side channel attack against a vulnerable RSA implementation, as suggested in~\cite{DBLP:conf/crypto/GenkinST14}.
 The low cost of the parts used, less the myDAQ, also makes it disposable.
 A small microphone also enables the possibility to hide the whole setup inside the casing of a desktop computer or a server, thus possibly making side channel attacks easier due to a better signal-to-noise ration due to the reduced distance between the source and the microphone.
 
@@ -67,7 +67,7 @@ After the filtering, the signal will be led in to the \gls{NI} myDAQ and further
 \section{Processing and signal extraction}\label{ch3:sec:processing_signal_extraction}
 
 The captured sound is stored in a WAV file.
-This file is processed in our self written software, which utilizes libraries such as FFTW \cite{url:fftw} and libsndfile \cite{url:libsndfile}.
+This file is processed in our self written software, which utilizes libraries such as FFTW~\cite{url:fftw} and libsndfile~\cite{url:libsndfile}.
 The samples are divided into windows \( W \), where \( \lvert W \rvert = 2^{n} \) where \( n \) is a non-zero positive integer.
 
 The WAV file contains a mono signal. In the WAV format, frames representing each sample is stored subsequently, such that the sample \( s_{f,c} \) represents the \gls{PCM} response for frame \( f \) channel \( c \). 
@@ -82,13 +82,10 @@ Our guess, based on the original paper~\cite{DBLP:conf/crypto/GenkinST14}, is th
 Therefore we are positioning the microphones as close to the CPU as possible. 
 When listening to the Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling element for the CPU as illustrated in figure~\ref{fig:T60p_knowles_position}. 
 
-% \begin{wrapfigure}{r}{0.5\textwidth}
-%     \vspace{-20pt}
-%     \centering
-%     \includegraphics[width=2in]{T60p_knowles_position.JPG}
-%     \vspace{-20pt}
-%     \caption{The Knowles Ultrasonic SPU0410LR5H~\cite{knowles_spec} microphone position when recording close to the CPU on the Lenovo T60p.}
-%     \vspace{-20pt}
-%     \label{fig:T60p_knowles_position}
-% \end{wrapfigure}
+\begin{wrapfigure}{r}{1\textwidth}
+  \centering
+  \includegraphics[width=0.5\linewidth]{T60p_knowles_position.JPG}
+  \caption{Microphone position while recording the CPU of the Lenovo T60p, using the Knowles Ultrasonic SPU0410LR5H~\cite{url:knowles_spec}.}
+  \label{fig:T60p_knowles_position}
+\end{wrapfigure}
 

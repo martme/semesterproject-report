@@ -6,7 +6,7 @@ This chapter will describe how we force predictable CPU activity, and also how w
 
 \section{Selection of Test Cases}
 We will use several test cases, where the aim is to gradually record more and more subtle variations in CPU activity, and use this as a basis for our acoustic analysis.
-We will start by oscillating between unnaturally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
+We will start by oscillating between abnormally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
 
 The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
 Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
@@ -21,7 +21,7 @@ However, if the user executes a program that will make all cores on the CPU work
 To achieve this, we installed the cpuburn collection which can be installed using the debian package manager using
 apt-get install cpuload. 
 
-To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm descibed in \autoref{lst:cpuburn_loop_utility}.
+To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm described in \autoref{lst:cpuburn_loop_utility}.
 
 \begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
 for i in {1..3}
@@ -67,15 +67,15 @@ The following subsections will go into further detail on how timely and predicta
 
 The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
 If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM.
-\todo{cite DataGK book}
 We want to achieve is a program where the CPU constantly has to go all the way to the RAM to fetch values.
-This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
-This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
+As it turns out, list access loads and stride access loads are a good generator of cache misses~\cite{DBLP:conf/micro/OzawaKN95}.
+Unfortunately, modern processors are putting great effort into predict memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
+For this reason, we cannot rely on simple mechanisms such as sequential memory access using a stride bigger than the size of the cache.
 
-Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution\cite{url:perf_wiki}.
+Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution~\cite{url:perf_wiki}.
 
 We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
-During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
+During the course of execution, \(A\) should to suffer approximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
 If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
 
 \todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
