@@ -1,4 +1,4 @@
-\chapter{Predictable Execution and Software for Analysis}\label{chp:predictable_execution} 
+\chapter{Predictable Execution and Software for Analysis}\label{chp4:predictable_execution} 
 A prerequisite to analysis of acoustic fingerprints is that you have some idea of what you are recording, and thus be able to look at the correlation between what is observed, and what was going on at the time.
 In our case this means that we need to know what is going on in the CPU during the timespan of our recordings.
 If we possess this knowledge, we should be more able draw conclusions regarding the correlation between what is observed in the acoustic fingerprint and distinct CPU activity.
@@ -6,13 +6,13 @@ This chapter will describe how we force predictable CPU activity, and also how w
 
 \section{Selection of Test Cases}
 We will use several test cases, where the aim is to gradually record more and more subtle variations in CPU activity, and use this as a basis for our acoustic analysis.
-We will start by oscillating between unnaturally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
+We will start by oscillating between abnormally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
 
 The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
 Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
 
 
-\section{CPU load}\label{chp4:cpu_load}
+\section{CPU load}\label{chp4:sec:cpu_load}
 
 Our first choice of distinguishable CPU activity is in the form of a CPU burn utility. 
 The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
@@ -21,7 +21,7 @@ However, if the user executes a program that will make all cores on the CPU work
 To achieve this, we installed the cpuburn collection which can be installed using the debian package manager using
 apt-get install cpuload. 
 
-To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm descibed in \autoref{lst:cpuburn_loop_utility}.
+To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm described in \autoref{lst:cpuburn_loop_utility}.
 
 \begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
 for i in {1..3}
@@ -37,7 +37,7 @@ By recording while executing this utility we hope to be able to distinguish betw
 For the Raspberry Pi, we used the used the sysbench\cite{url:sysbench_wiki} package to generate cpu load. 
 This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. 
 
-\section{Microinstructions}\label{chp4:microinstructions}
+\section{Microinstructions}\label{chp4:sec:microinstructions}
 
 With our next test utility we want to look at the acoustic fingerprint of different microinstructions. 
 The original \todo{Cite} research suggests that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each instruction.
@@ -63,19 +63,19 @@ The CPU operation will will loop are the MUL, ADD and NOP microinstructions as w
 The following subsections will go into further detail on how timely and predictable execution was achieved in all four cases for both ARM and x86 architectures.
 
 \subsection{Memory Access and Predictable Cache Miss}
-\label{subsec:MEM_operation}
+\label{chp4:subsec:MEM_operation}
 
 The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
 If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM.
-\todo{cite DataGK book}
 We want to achieve is a program where the CPU constantly has to go all the way to the RAM to fetch values.
-This is unfortunately not trivial, as effort is taken to predict future memory accesses, such that these can be resolved from cache.
-This mechanism is called hardware prefetching\todo{cite web: ece.lsu.edu/tca/papers/vanderwiel-00.pdf}, and our utility needs to bypass stride prediction and thus cannot rely on mechanisms such as sequential memory access using a stride bigger than the size of the L2 cache.
+As it turns out, list access loads and stride access loads are a good generator of cache misses~\cite{DBLP:conf/micro/OzawaKN95}.
+Unfortunately, modern processors are putting great effort into predict memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
+For this reason, we cannot rely on simple mechanisms such as sequential memory access using a stride bigger than the size of the cache.
 
-Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution\cite{url:perf_wiki}.
+Luckily the existence of hardware performance counters allow us to evaluate our approach to the MEM operation. Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution~\cite{url:perf_wiki}.
 
 We make two programs; \(A\) which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\) which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
-During the course of execution, \(A\) should to suffer aproximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
+During the course of execution, \(A\) should to suffer approximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction. 
 If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
 
 \todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
@@ -121,7 +121,7 @@ The results are given in \autoref{fig:mem_benchmark}, and clearly show that the 
 Our MEM utility program is successfully bypassing the CPUs best efforts of hardware prefetching and stride prediction.
 
 \subsection{MUL, ADD and NOP execution on Different Architectures}
-\label{subsec:MUL_ADD_NOP_instructions}
+\label{chp4:subsec:MUL_ADD_NOP_instructions}
 
 The three native microinstructions that we look at are MUL, ADD, and NOP. 
 To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in each loop pass, thus reducing the impact from the microinstructions used to perform the actual loop. 
@@ -165,14 +165,14 @@ The NOP instruction was simply rep; nop; repeated \(1000\) times; for the MEM an
 
 \subsection{Expectations regarding acoustic fingerprints}
 
-Our finished utility is combining the MEM operation, as described in \autoref{subsec:MEM_operation} and the MUL, ADD and NOP-loops which are described in \autoref{subsec:MUL_ADD_NOP_instructions}.
+Our finished utility is combining the MEM operation, as described in \autoref{chp4:subsec:MEM_operation} and the MUL, ADD and NOP-loops which are described in \autoref{chp4:subsec:MUL_ADD_NOP_instructions}.
 Executing the four operations in the pattern given in \autoref{lst:microinstruction_loop_utility}, we are able to look for for repeating patterns in the acoustic fingerprint of the CPUs executing the utility.
 More precisely, we will look for periodic patterns that represent an interval in time \(t\) of \(0.33\) seconds. 
 If we see such patterns with a period of \(4t = 1.33\) seconds, they could possibly be caused by the fact that the CPU is performing the operations caused by our utility, and argue that we are in fact able to distinguish between such low level operations based purely on the acoustic fingerprint. 
 
 
 
-\section{Decryption}\label{chp4:decryption}
+\section{Decryption}\label{chp4:sec:decryption}
 
 The original research clearly states that it is possible to distinguish when a decryption with a 4096-bit RSA key is used, and also differentiate between when the CPU is using \(p\) and \(q\).
 At first glance we want to distinguish when a decryption is done, and hopefully when \(p\) and \(q\) are used. 
