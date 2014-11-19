@@ -74,7 +74,7 @@ The WAV file contains a mono signal. In the WAV format, frames representing each
 For a stereo signal this means that \( f \in \left [ 1, 2 \right ]  \), and thus the samples are ordered  \( s_{0,0}, s_{0,1}, s_{1,0}, s_{1,1}, ... , s_{n,0}, s_{n,1} \). 
 Since we want to work on a mono signal, we simply ignore all frames where \( f \neq 0 \), which with our setup means that we use all samples in the stored file.
 
-The captured sound file is Fourier transformed using a window size of 4096 samples, and the hamming window function. The resulting power spectra are studied, with emphasis on how they are evolving in the time domain, and how they correlate to the expected effects of the software described in \autoref{chp:predictable_execution}
+The captured sound file is Fourier transformed using a window size of 4096 samples, and the hamming window function. The resulting power spectra are studied, with emphasis on how they are evolving in the time domain, and how they correlate to the expected effects of the software described in \autoref{chp4:predictable_execution}
 
 \section{Capturing audio fingerprint}\label{ch3:sec:capturing_audio_fingerprint}
 
