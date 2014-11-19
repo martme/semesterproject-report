@@ -1,7 +1,32 @@
-\chapter{Discussion}
-\label{chp6:discussion} 
+\chapter{Discussion}\label{chp6:discussion}
 
-\section{Possible attack scenarios}\label{chp6:sec:attack_scenarios}
+In this chapter we will discuss the viability of the low frequency acoustic emanations, and how current guidelines for shielding of information systems are helping in protecting against this potential threat.
+We will also look at the cost involved in building a setup able to process these emanations, and the implications of this.
+Lastly we will look at use cases where the analysis of these emanations will be useful.
+
+\section{Viability of Extracted Information}
+We have not obtained a basis for drawing a conclusion as to whereas the emanations are observing in the previous chapters are in fact caused by the CPU.
+However, we have tried to capture the effect at different positions on our Lenovo T60p laptop, and for this specific computer experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the CPU.
+We also found that slight disposition of the microphone, still hovering the CPU cooling block, notably impact the signal strength.\todo{Acoustic or not??}
+
+In our experiments, we were able to distinguish between different extremes in CPU activity based strictly on acoustic leakage. 
+We do not use any mathematical models, but rely on empirical analysis of the power spectra. 
+This is a limiting factor in the sense that we are only able to draw conclusions based on clear patterns in the resulting data, that are visible to the human eye, when presented in the way done here and in~\cite{DBLP:conf/crypto/GenkinST14}.
+None of the experiments we performed included real time analysis of the leakage, hence we were limited to look for patterns resulting from static programs being executed, to be able to relate the information captured to the time domain in our offline analysis.
+Real time analysis, together with mathematical models for correlation, would allow a more statistical approach to distinguishing between distinct fingerprints.
+
+\section{TODO}
+Write about the following:
+\begin{enumerate}
+	\item What are we recording? Source of the sound?
+	\item Potential of extracted signal
+	\item Tempest Shielding
+	\item Cost / Size of a minimal viable covert setup
+\end{enumerate}
+
+
+\section{Possible Attack Scenarios}\label{chp6:sec:attack_scenarios}
+
 
 \section{Applicability}\label{chp6:sec:applicability}
 
@@ -10,3 +35,5 @@ Other electronic devices such as mobile phones and personal laptops should not b
 
 
 In the guidence paper about protection against eavesdropping~\cite{NSM_avlytting} published by Norges Sikkerhetsmyndigheter (NSM), it is recommended in section 9-8 (page 7) that one should follow the TEMPEST guidance when installing an informationsystem.
+
+\section{Future Work}\label{chp6:sec:future_work}
