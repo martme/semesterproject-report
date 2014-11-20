@@ -4,7 +4,7 @@ Further we will go into detail about the limitations and possibilities introduce
 
 \label{chp:experimental_setup} 
 
-\section{Microphone selection}\label{ch3:sec:microphone_selection}
+\section{Microphone selection}\label{chp3:sec:microphone_selection}
 
 We want to do frequency spectrum analysis on the recordings, hence we are limited by the Nyquist frequency, given by \autoref{eq:nyquist_frequency}.
 Our initial setup uses a Knowles Ultrasonic microphone, connected to a National Instruments myDAQ. 
@@ -21,7 +21,7 @@ Hence, this is a very portable setup, that can be hidden and used in covert oper
 The low cost of the parts used, less the myDAQ, also makes it disposable.
 A small microphone also enables the possibility to hide the whole setup inside the casing of a desktop computer or a server, thus possibly making side channel attacks easier due to a better signal-to-noise ration due to the reduced distance between the source and the microphone.
 
-\subsection{Knowles Ultrasonic SPU0410LR5H Configuration}\label{ch3:sec:knowles_configuration}
+\subsection{Knowles Ultrasonic SPU0410LR5H Configuration}\label{chp3:sec:knowles_configuration}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
     \vspace{-20pt}
@@ -55,7 +55,7 @@ With an input voltage of +-10mV, the nominal output is +-1V as illustrated in \a
 \end{figure}
 
 
-\subsection{Brüel\&Kjær 4939 Configuration}\label{ch3:sec:bruel_kjaer_configuration}
+\subsection{Brüel\&Kjær 4939 Configuration}\label{chp3:sec:bruel_kjaer_configuration}
 
 Much like one of the lab setups~\ref{sec:lab_setup} from the original paper we use a Brüel\&Kjær 4939 microphone that is able to do precise measurements up to frequencies around 100kHz~\cite{url:bk4939_spec}.
 The microphone is then connected to a Norsonic 1201 preamplifier~\cite{url:norsonic1201_spec} that is then connected to a Norsonic type 336 microphone amplifier and power supply. 
@@ -64,7 +64,7 @@ The output signal from the Norsonic is then led into a Krohn-Hite Corporation 39
 After the filtering, the signal will be led in to the \gls{NI} myDAQ and further in to our computer. 
 
 
-\section{Processing and signal extraction}\label{ch3:sec:processing_signal_extraction}
+\section{Processing and signal extraction}\label{chp3:sec:processing_signal_extraction}
 
 The captured sound is stored in a WAV file.
 This file is processed in our self written software, which utilizes libraries such as FFTW~\cite{url:fftw} and libsndfile~\cite{url:libsndfile}.
@@ -76,7 +76,7 @@ Since we want to work on a mono signal, we simply ignore all frames where \( f \
 
 The captured sound file is Fourier transformed using a window size of 4096 samples, and the hamming window function. The resulting power spectra are studied, with emphasis on how they are evolving in the time domain, and how they correlate to the expected effects of the software described in \autoref{chp4:predictable_execution}
 
-\section{Capturing audio fingerprint}\label{ch3:sec:capturing_audio_fingerprint}
+\section{Capturing audio fingerprint}\label{chp3:sec:capturing_audio_fingerprint}
 
 Our guess, based on the original paper~\cite{DBLP:conf/crypto/GenkinST14}, is that the sound derives much likely from some coil whine around the CPU. 
 Therefore we are positioning the microphones as close to the CPU as possible. 
