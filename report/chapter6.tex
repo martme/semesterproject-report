@@ -15,6 +15,19 @@ This is a limiting factor in the sense that we are only able to draw conclusions
 None of the experiments we performed included real time analysis of the leakage, hence we were limited to look for patterns resulting from static programs being executed, to be able to relate the information captured to the time domain in our offline analysis.
 Real time analysis, together with mathematical models for correlation, would allow a more statistical approach to distinguishing between distinct fingerprints.
 
+
+\section{Significance of Results}
+Using the acoustic side channel, we are able to distinguish between the MEM operation and the other microinstruction loops.
+The results given in~\cite[Fig.~2]{DBLP:conf/crypto/GenkinST14} suggest that it is possible to observe a difference, even between the different microinstructions ADD, MUL and NOP, but the most obvious difference is in a frequency range much higher than the hard limit imposed on us due to the lower sampling rate.
+Our results are therefore inconclusive when it comes down to distinguishing between the NOP, MUL and ADD instructions.
+We are also using different hardware, and as expected we observe very different acoustic fingerprints for the different computers. 
+An interesting side note is how the acoustic fingerprint of the Lenovo T60p laptop is changing depending on if the computer is running on battery power or with a power adapter.
+The noise introduced by the power adapter is not coming from the power adapter itself, as we have experimented with the positioning of the adapter, without seeing any impact on the resulting acoustic fingerprints.
+
+We did not do any experiments to explore if the captured signals are in fact acoustic, or if they are caused by electromagnetic 
+
+\section{ARM Processors}
+
 \section{TODO}
 Write about the following:
 \begin{enumerate}
@@ -34,6 +47,12 @@ Red/Black Engineering-Installation Guidelines~\cite{MIL_HDBK_232} created by the
 Other electronic devices such as mobile phones and personal laptops should not be permitted to areas where RED equipment is installed. 
 
 
-In the guidence paper about protection against eavesdropping~\cite{NSM_avlytting} published by Norges Sikkerhetsmyndigheter (NSM), it is recommended in section 9-8 (page 7) that one should follow the TEMPEST guidance when installing an informationsystem.
+In the guidance paper about protection against eavesdropping~\cite{NSM_avlytting} published by Norges Sikkerhetsmyndigheter (NSM), it is recommended in section 9-8 (page 7) that one should follow the TEMPEST guidance when installing an informationsystem.
 
 \section{Future Work}\label{chp6:sec:future_work}
+\begin{enumerate}
+	\item ADD loops of different lengths
+	\item Statistical models for correlation
+	\item Real time analysis
+	\item Experiments on the proposed attack against RSA
+\end{enumerate}
