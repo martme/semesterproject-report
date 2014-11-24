@@ -1,27 +1,27 @@
 \chapter{Predictable Execution and Software for Analysis}\label{chp4:predictable_execution} 
-A prerequisite to analysis of acoustic fingerprints is that you have some idea of what you are recording, and thus be able to look at the correlation between what is observed, and what was going on at the time.
-In our case this means that we need to know what is going on in the CPU during the timespan of our recordings.
-If we possess this knowledge, we should be more able draw conclusions regarding the correlation between what is observed in the acoustic fingerprint and distinct CPU activity.
-This chapter will describe how we force predictable CPU activity, and also how we tailor the software run during the recordings for different architectures to achieve comparable results.
+A prerequisite to analysis of acoustic fingerprints to have some idea of what is being recording, hence be able to look at the correlation between what is happening, and what was being observed during the same period of time.
+In our case this means that we need to know what is going on in the CPU for the duration of our recordings.
+With this knowledge, we should be able to perform analysis regarding the correlation between what is observed in the acoustic emanations and distinct CPU activity.
+This chapter will describe how we force predictable CPU activity during experiments, and also how we tailor the software run on different architectures to achieve comparable results.
+We will also outline our expectations regarding analysis of the acoustic emanations from for of the experiments.
 
 \section{Selection of Test Cases}
-We will use several test cases, where the aim is to gradually record more and more subtle variations in CPU activity, and use this as a basis for our acoustic analysis.
-We will start by oscillating between abnormally high CPU loads and a minimal load, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions.
+We use several test cases, where the aim is to gradually record increasingly subtle variations in CPU activity, and the recordings of these will makes the basis for analysis.
+Each of these cases are represented by a utility; a program that is specifically tailored to force the desired CPU activity during the experiment.
+We will start by oscillating between abnormally high CPU loads and a idle system, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions and specific CPU operations.
 
-The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministically looped pattern to be used in later analysis, thus relating the CPU behavior to the time domain. 
-Additionally, we will note our expectations, being a description of the expected impact our tests should have on the acoustic fingerprint.
+The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministic repeated patterns to be used in later analysis, hence relating the CPU behavior to the time domain. 
 
 
 \section{CPU load}\label{chp4:sec:cpu_load}
-
 Our first choice of distinguishable CPU activity is in the form of a CPU burn utility. 
 The idea is that when no programs are running, save the operating system, the activity level of the CPU us low. 
 However, if the user executes a program that will make all cores on the CPU work at close to their full capacity, the internal activity of the CPU will change drastically as a consequence of the increased load.
+Additionally, the temperature of the CPU will increase, hence the name.
 
-To achieve this, we installed the cpuburn collection which can be installed using the debian package manager using
-apt-get install cpuload. 
-
-To be able to relate this to the time domain, we will execute the CPU burn tool according to the algorithm described in \autoref{lst:cpuburn_loop_utility}.
+All these desired properties are available in the cpuburn collection which can be installed using the debian package manager (using
+apt-get install cpuload).\todo{Some citation here (manpage?)} 
+To be able to relate this to the time domain, we execute the CPU burn tool in the pattern described in \autoref{lst:cpuburn_loop_utility}.
 
 \begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
 for i in {1..3}
@@ -31,11 +31,12 @@ do
 done
 \end{lstlisting}
 
-This simple loop will let us search for distinct one second intervals in the acoustic fingerprints, as the CPU will operate at close to full capacity, then sleep for a second each, representing the heavy load state and the idle state.
-By recording while executing this utility we hope to be able to distinguish between the two states, and to be able to observe a repeating pattern with a period of \(1\) second.
+In a loop, the CPU will operate at close to full capacity, then sleep for a second, representing the heavy load state and the idle state.
+By recording during execution of this utility, we hope to be able to distinguish between the two states, heavy load and idle, thus be able to observe a repeating pattern with a period of \(3\) seconds, representing the loop.
 
-For the Raspberry Pi, we used the used the sysbench\cite{url:sysbench_wiki} package to generate cpu load. 
-This package has a benchmarking tool for ARM CPUs, which was used to generate the CPU load. 
+For the Raspberry Pi, we use the used the sysbench\cite{url:sysbench_wiki} package to generate cpu load. 
+This package has a benchmarking tool for ARM CPUs, which is used to generate CPU load. 
+
 
 \section{Microinstructions}\label{chp4:sec:microinstructions}
 
