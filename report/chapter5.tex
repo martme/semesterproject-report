@@ -3,7 +3,7 @@
 In this chapter we present our results we have gained from our empirical research. 
 All executions that we present are described in~\autoref{chp4:predictable_execution} unless else specified. 
 Generally we have three different executions; microinstructions described in~\autoref{chp4:sec:microinstructions}, CPU load described in~\autoref{chp4:sec:cpu_load} and decryption described in~\autoref{chp4:sec:decryption}. 
-We are working with two different microphone configurations, the Knowles microphone and the Brüel\&Kjær microphone, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
+We are working with two different microphone configurations, the Knowles microphone and the Brüel\&Kjær 4939 microphone, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
 First we present our result from the Knowles microphone.
 
 After the Knowles results, we list the results that are produced with the Brüel\&Kjær 4939 configuration in accordance with the experimental plan in~\autoref{apx:experiment_plan}. 
@@ -68,7 +68,7 @@ In the case of this plot, we are taking the fourier transform of windows of size
 Additionally, the plot shows the 10th logarithm of the frequency responses, and only values between the median value (min) and 0 (max) are indicated with the colors (in a linear scale, as in the other plots). 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.6\linewidth]{T60p-knowles-micro-ips-0_description.png}
+    \includegraphics[width=1\linewidth]{T60p-knowles-micro-ips-0_description.png}
     \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running microinstructions. The recording was made in an office environment using the Knowles configuration and running on battery power. }
     \label{fig:T60p-knowles-micro-ips-0}
 \end{figure}
@@ -80,7 +80,7 @@ The result in~\autoref{fig:T60p-knowles-cpuload-ips-0} has been produced running
 In~\autoref{fig:T60p-knowles-cpuload-ips-0} is the result gained from running a full CPU load in the Lenovo T60p computer. 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.6\linewidth]{T60p-knowles-cpuload-ips-0_description.png}
+    \includegraphics[width=1\linewidth]{T60p-knowles-cpuload-ips-0_description.png}
     \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load. The recording was made in an office environment using the Knowles configuration and running on battery power. }
     \label{fig:T60p-knowles-cpuload-ips-0}
 \end{figure}
@@ -135,7 +135,7 @@ The~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} and the~\autoref{fig:T60p-ekkofr
 % T60p CPULOAD
 %==============
 \subsection{Results from Lenovo T60p - CPU load}\label{chp5:subsec:t60p_bk_results_cpuload}
-The~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps-4} and the~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips-0} is the results from the running CPU load on the Lenovo T60p in the anechoic chamber. 
+The~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps-4} and the~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips-0} is the results from the running CPU load on the Lenovo T60p in the anechoic chamber. For the equivalent results from a normal office environment, see the~\autoref{apx:results}.
 %===============================
 % T60p Anechoic chamber CPULOAD
 %===============================
@@ -156,26 +156,6 @@ The~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps-4} and the~\autoref{fig:T60p-ekko
     \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration.}
 	\label{fig:T60p-ekkofritt-bk-cpuload}
 \end{figure}
-%==========================
-% T60p Normal room CPULOAD
-%==========================
-The~\autoref{fig:T60p-bk-cpuload-eps-1-1a} and the~\autoref{fig:T60p-bk-cpuload-ips-0-1b} is the results from the running CPU load on the Lenovo T60p in an office environment. 
-\begin{figure}[ht]
-	\begin{subfigure}{0.5\textwidth}
-	    \centering
-	    \includegraphics[width=1\linewidth]{T60p-bk-cpuload-eps-1_description.png}
-	    \caption{With power adopter}
-	    \label{fig:T60p-bk-cpuload-eps-1-1a}
-    \end{subfigure}
-    \begin{subfigure}{0.5\textwidth}
-	    \centering
-	    \includegraphics[width=1\linewidth]{T60p-bk-cpuload-ips-0_description.png}
-	    \caption{Running on battery power}
-	    \label{fig:T60p-bk-cpuload-ips-0-1b}
-    \end{subfigure}
-    \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load described in~\autoref{chp4:sec:cpu_load}. The recordings was made using the Brüel\&Kjær 4939 configuration. }
-	\label{fig:T60p-bk-cpuload}
-\end{figure}
 
 
 %==============
@@ -189,7 +169,7 @@ The~\autoref{fig:T60p-bk-cpuload-eps-1-1a} and the~\autoref{fig:T60p-bk-cpuload-
 The~\autoref{fig:D430-ekkofritt-bk-cpuload-eps-1} is the result from the running CPU load on the Dell 430 in the anechoic chamber. 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{D430-ekkofritt-bk-cpuload-eps-1_description.png}
+    \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-cpuload-eps-1_description.png}
     \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Dell D430 when running a full CPU load. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration. }
     \label{fig:D430-ekkofritt-bk-cpuload-eps-1}
 \end{figure}
@@ -206,7 +186,7 @@ The~\autoref{fig:D430-ekkofritt-bk-cpuload-eps-1} is the result from the running
 The~\autoref{fig:T60p-ekkofritt-bk-decrypt-ips-3} is the result from the running decryption on the Lenovo T60p in the anechoic chamber. 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{T60p-ekkofritt-bk-decrypt-ips-3_description.png}
+    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-decrypt-ips-3_description.png}
     \caption{Acoustic recording (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a decryption. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration. }
     \label{fig:T60p-ekkofritt-bk-decrypt-ips-3}
 \end{figure}
@@ -222,22 +202,10 @@ The~\autoref{fig:T60p-ekkofritt-bk-decrypt-ips-3} is the result from the running
 The~\autoref{fig:D430-ekkofritt-bk-decrypt-eps-0} is the result from the running decryption on the Dell 430 in the anechoic chamber. 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\linewidth]{D430-ekkofritt-bk-decrypt-eps-0_description.png}
+    \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-decrypt-eps-0_description.png}
     \caption{Acoustic recording (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Dell D430 when running a decryption. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration.}
     \label{fig:D430-ekkofritt-bk-decrypt-eps-0}
 \end{figure}
-
-
-%=============================
-% D430 Anechoic chamber  IDLE
-%=============================
-%The~\autoref{fig:D430-ekkofritt-bk-idle-eps-1} is the result from the running idle on the Dell 430 in the anechoic chamber. 
-%\begin{figure}[ht]
-%    \centering
-%    \includegraphics[width=0.7\linewidth]{D430-ekkofritt-bk-idle-eps-1.png}
-%    \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Dell D430 when idle. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration specified in~\autoref{chp3:sec:bruel_kjaer_configuration}. }
-%    \label{fig:D430-ekkofritt-bk-idle-eps-1}
-%\end{figure}
 
 %=====================
 % Raspberry PI
