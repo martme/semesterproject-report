@@ -21,9 +21,7 @@ The recordings are done in a try-and-fail approach rather than according to an e
 In~\autoref{fig:T60p-knowles-decrypt-ips} we ran the decryption. 
 In~\autoref{fig:T60p-knowles-decrypt-ips-2} we ran a different decryption setup, described in~\autoref{lst:decryption_loop}.
 
-\begin{lstlisting}[
-language=BASH, 
-caption={Decryption of an image file.}, 
+\begin{lstlisting}[language=BASH, caption={Decryption of an image file.}, 
 label={lst:decryption_loop}]
 sleep 1             
 gpg --output tmp/image_de.png --decrypt img.gpg
