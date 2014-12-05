@@ -5,10 +5,10 @@ We will also look at the cost involved in building a setup able to process these
 Last, we will look at use cases where the analysis of these emanations will be useful.
 
 \section{Viability of Extracted Information}
-We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the CPU.
+We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the \gls{CPU}.
 However, we have tried to capture the effect at different positions on our Lenovo T60p laptop. 
-For this specific computer we experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the CPU.
-We also found that slight disposition of the microphone, still hovering the CPU cooling block, notably impact the signal strength.
+For this specific computer we experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the \gls{CPU}.
+We also found that slight disposition of the microphone, still hovering the \gls{CPU} cooling block, notably impact the signal strength.
 
 
 \section{Significance of Results}
@@ -73,7 +73,7 @@ We did not do any experiments to explore if the captured signals are in fact aco
 \end{figure}
 
 \section{Analysis Beyond Extremes}
-In our experiments, we were able to distinguish between different extremes in CPU activity based strictly on acoustic leakage. 
+In our experiments, we were able to distinguish between different extremes in \gls{CPU} activity based strictly on acoustic leakage. 
 We do not use any mathematical models, but rely on empirical analysis of the power spectra. 
 This is a limiting factor in the sense that we are only able to draw conclusions based on clear patterns in the resulting data that are visible to the human eye, when presented in the way done here and by Genkin et al.
 None of the experiments we performed included real time analysis of the leakage, hence we were limited to look for patterns resulting from static programs being executed, to be able to relate the information captured to the time domain in our offline analysis.
@@ -82,7 +82,8 @@ Real time analysis, together with mathematical models for correlation, would all
 
 \section{ARM Processors and Possible Attack Vectors}
 We chose to conduct experiments on a Lenovo laptop computer similar to what is used by Genkin et al., and also on an even older Dell laptop, as it was suggested that older processors had more explicit acoustic fingerprints.
-In addition, we conducted the same experiments for a Raspberry Pi, which is equipped with an ARM CPU.
+In addition, we conducted the same experiments for a Raspberry Pi, which is equipped with an ARM \gls{CPU}.
+
 A motivation for looking at ARM processors is that a lot of electronic equipment today is running on the ARM architecture.
 The potential of analyzing network traffic by looking at routers is just one of several interesting approaches to exploit the potential of low frequency acoustic emanations.
 Unfortunately, we found it much harder to distinguish between operations on the Raspberry Pi, than for the laptops running on x86/x64 Intel processors.
