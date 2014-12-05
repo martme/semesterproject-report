@@ -3,14 +3,14 @@
 \section{Motivation}
 In 2014, Genkin et al. presented their work on exploiting low-bandwidth acoustic emanations to extract a full 4096 bit RSA key~\cite{DBLP:conf/crypto/GenkinST14}.
 This novel approach opens for a whole new attack vector that has unexplored potential, as the emanations are allegedly able to leak information about what is being executed on the CPU.
-In this paper\todo{Paper? Report?} is to verify some of the claims presented by Genkin et al., by setting up and performing the experiments that are outlined, and possibly reproduce the results presented.
+In this paper we will verify some of the claims presented by Genkin et al., by setting up and performing the experiments that are outlined, and possibly reproduce the results presented.
 
 \section{Problem and Scope}
 The main goal of this paper is to verify the existence of the acoustic side channel, and reproduce some of the results of~\cite{DBLP:conf/crypto/GenkinST14}.
 We will build a similar setup as to what is presented, and use it to record computer devices running in different states.
 Then we will analyze the recorded acoustic emanations, and attempt to relate them to CPU operations and states of the computer to the acoustic emanations.
 
-We will diverge from the original project description in that we will not emphasize on applications with regard to cryptanalysis.
+We will diverge from the original project description in which we will not emphasize on applications with regard to cryptanalysis.
 Rather we will explore extremes of CPU operations, to be able to verify the initial results of Genkin et al.
 We are relying strictly on empiric evaluation of our results during analysis, and are using no statistical correlation models.
 This approach is deemed viable due to the results presented in~\cite{DBLP:conf/crypto/GenkinST14}, and leads to a more simple setup.

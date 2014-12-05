@@ -1,11 +1,11 @@
 \chapter{Discussion}\label{chp6:discussion}
 
-In this chapter we will discuss the viability of the low frequency acoustic emanations, and how current guidelines for shielding of information systems are helping in protecting against this potential threat.
+In this chapter we will discuss the viability of the low frequency acoustic emanations, and how current guidelines for shielding information systems are helping in protecting against this potential threat.
 We will also look at the cost involved in building a setup able to process these emanations, and the implications of this.
-Lastly we will look at use cases where the analysis of these emanations will be useful.
+Last, we will look at use cases where the analysis of these emanations will be useful.
 
 \section{Viability of Extracted Information}
-We have not obtained a basis for drawing a conclusion as to whereas the emanations are observing in the previous chapters are in fact caused by the CPU.
+We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the CPU.
 However, we have tried to capture the effect at different positions on our Lenovo T60p laptop. 
 For this specific computer we experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the CPU.
 We also found that slight disposition of the microphone, still hovering the CPU cooling block, notably impact the signal strength.
@@ -13,15 +13,16 @@ We also found that slight disposition of the microphone, still hovering the CPU 
 
 \section{Significance of Results}
 Using the acoustic side channel, we are able to distinguish between the MEM operation and the other microinstruction loops.
-The results given in~\cite[Fig.~2]{DBLP:conf/crypto/GenkinST14} suggest that it is possible to observe a difference, even between the different microinstructions ADD, MUL and NOP, but the most visible difference is in a frequency range much higher than the hard limit imposed on us by the sampling rate of our setup.
+The results given in~\cite[Fig.~2]{DBLP:conf/crypto/GenkinST14} suggest that it is possible to observe a difference, even between the different microinstructions ADD, MUL and NOP. 
+The most visible difference is in a frequency range much higher than the hard limit imposed on us by the sampling rate of our setup.
 Results given here are therefore inconclusive when it comes down to distinguishing between the NOP, MUL and ADD instructions.
 ~\autoref{fig:T60p-knowles-micro-ips-0}
 
-We have conducted experiments using different configurations of hardware, and as we observe big variations in acoustic fingerprints for the different computers, as seen in~\autoref{fig:comparison_micorinstructions}.
+We have conducted experiments using different configurations of hardware and observe big variations in acoustic fingerprints for the different computers, as seen in~\autoref{fig:comparison_micorinstructions}.
 An interesting side note is how the acoustic emanations of the Lenovo T60p laptop is changing depending on if the computer is running on battery power (\autoref{fig:comparison_T60p-ekkofritt-bk-micro-ips-3}) or with a power adapter (\autoref{fig:comparison_T60p-ekkofritt-bk-micro-eps-1}).
 The noise introduced by the power adapter is not coming from the power adapter itself, as we have experimented with the positioning of the adapter, without seeing any impact on the resulting acoustic fingerprints.
 
-We did not do any experiments to explore if the captured signals are in fact acoustic, or if they are caused by electromagnetic 
+We did not do any experiments to explore if the captured signals are in fact acoustic, or if they are caused by electromagnetic signals.
 
 \begin{figure}[ht]
     \centering
@@ -80,12 +81,12 @@ Real time analysis, together with mathematical models for correlation, would all
 
 
 \section{ARM Processors and Possible Attack Vectors}
-We chose to conduct experiments on a Lenovo laptop computer similar to what is used by Genkin et al, and also on an even older Dell laptop, as it was suggested that older processors had more explicit acoustic fingerprints.
+We chose to conduct experiments on a Lenovo laptop computer similar to what is used by Genkin et al., and also on an even older Dell laptop, as it was suggested that older processors had more explicit acoustic fingerprints.
 In addition, we conducted the same experiments for a Raspberry Pi, which is equipped with an ARM CPU.
 A motivation for looking at ARM processors is that a lot of electronic equipment today is running on the ARM architecture.
 The potential of analyzing network traffic by looking at routers is just one of several interesting approaches to exploit the potential of low frequency acoustic emanations.
 Unfortunately, we found it much harder to distinguish between operations on the Raspberry Pi, than for the laptops running on x86/x64 Intel processors.
-It is still worth noting that the findings of Genkin et al suggest that distinguishing between different RSA keys used for decryption can be done using this side channel; in the case of a router, this means that the approach could be a viable way to analyze ongoing IPSec sessions, where the router is performing encryption or decryption, without being connected to the network at all.
+It is still worth noting that the findings of Genkin et al. suggest that distinguishing between different RSA keys used for decryption can be done using this side channel; in the case of a router, this means that the approach could be a viable way to analyze ongoing IPSec sessions, where the router performs encryption or decryption, without being connected to the network at all.
 
 
 \section{Possible Attack Scenarios}\label{chp6:sec:attack_scenarios}

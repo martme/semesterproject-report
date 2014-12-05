@@ -1,16 +1,16 @@
 \chapter{Predictable Execution and Software for Analysis}\label{chp4:predictable_execution} 
-A prerequisite to analysis of acoustic fingerprints to have some idea of what is being recording, hence be able to look at the correlation between what is happening, and what was being observed during the same period of time.
-In our case this means that we need to know what is going on in the CPU for the duration of our recordings.
+A prerequisite to analysis of acoustic fingerprints is to have some idea of what is being recorded, to be able to look at the correlation between what is happening, and what was being observed during the same period of time.
+In our case this means that we need to know what happening on in the CPU for the duration of our recordings.
 With this knowledge, we should be able to perform analysis regarding the correlation between what is observed in the acoustic emanations and distinct CPU activity.
 This chapter will describe how we force predictable CPU activity during experiments, and also how we tailor the software run on different architectures to achieve comparable results.
-We will also outline our expectations regarding analysis of the acoustic emanations from for of the experiments.
+We will also outline our expectations regarding analysis of the acoustic emanations from the experiments.
 
 \section{Selection of Test Cases}
 We use several test cases, where the aim is to gradually record increasingly subtle variations in CPU activity, and the recordings of these will makes the basis for analysis.
 Each of these cases are represented by a utility; a program that is specifically tailored to force the desired CPU activity during the experiment.
 We will start by oscillating between abnormally high CPU loads and a idle system, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions and specific CPU operations.
 
-The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministic repeated patterns to be used in later analysis, hence relating the CPU behavior to the time domain. 
+The following sections will in detail describe the different utilities we use to inflict this CPU behavior, and how we wrap the different tokens of predictable executions in a deterministic repeated pattern to be used in later analysis, hence relating the CPU behavior to the time domain. 
 
 
 \section{CPU load}\label{chp4:sec:cpu_load}
@@ -34,7 +34,7 @@ done
 In a loop, the CPU will operate at close to full capacity, then sleep for a second, representing the heavy load state and the idle state.
 By recording during execution of this utility, we hope to be able to distinguish between the two states, heavy load and idle, thus be able to observe a repeating pattern with a period of \(3\) seconds, representing the loop.
 
-For the Raspberry Pi, we use the used the sysbench\cite{url:sysbench_wiki} package to generate CPU load. 
+For the Raspberry Pi, we use the sysbench\cite{url:sysbench_wiki} package to generate CPU load. 
 This package has a benchmarking tool for ARM CPUs, which is used to generate CPU load. 
 
 
@@ -64,13 +64,13 @@ do
 done
 \end{lstlisting}
 
-The CPU operation will will loop are the MUL, ADD and NOP microinstructions as well as memory access with forced L1 and L2 cache miss.
+The CPU operation will loop are the MUL, ADD and NOP microinstructions as well as memory access with forced L1 and L2 cache miss.
 The following subsections will go into further detail on how timely and predictable execution is achieved in all four cases for both ARM and x86 architectures.
 
 
 \subsection{Memory Access and Predictable Cache Miss}\label{chp4:subsec:MEM_operation}
 The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
-If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value has to be read from the RAM\todo{Use acronym?}.
+If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value is read from the RAM\todo{Use acronym?}.
 We want to achieve an execution sequence where the CPU constantly has to go all the way to the RAM to fetch values.
 
 As it turns out, list access loads and stride access loads are a good generator of cache misses~\cite{DBLP:conf/micro/OzawaKN95}.
@@ -82,7 +82,7 @@ Therefore, we are able to benchmark our approach, and verify if we successfully 
 
 We make two programs; \(A\), which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\), which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
 During the course of execution, \(A\) should to suffer approximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction.
-Here \(k\) represents the baseline cache misses suffered for running the parts of part of the program required to set up the loop, and \(n\) represents the amount of cache misses suffered from resolving indexes in the array.
+Here \(k\) represents the baseline cache misses suffered for running the parts in some section of the program required to set up the loop, and \(n\) represents the amount of cache misses suffered from resolving indexes in the array.
 If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
 
 \todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
@@ -121,7 +121,7 @@ Our MEM utility program is successfully bypassing the CPUs best efforts of hardw
 
 \subsection{MUL, ADD and NOP execution on Different Architectures}\label{chp4:subsec:MUL_ADD_NOP_instructions}
 The three native microinstructions that we look at are MUL, ADD, and NOP.
-To achieve the repeated execution of this these instructions over time, we repeat the assembly code for each instruction \(1000\) times in a loop.
+To achieve the repeated execution of these instructions over time, we repeat the assembly code for each instruction \(1000\) times in a loop.
 This ensures that the targeted instructions are prevalent, and reduce the impact of the required instructions to perform the eventual loop, and tracking the overall duration.
 
 \newsavebox{\MEMfigure}
@@ -153,7 +153,7 @@ This ensures that the targeted instructions are prevalent, and reduce the impact
         \usebox{\ADDfigure}
         \caption{ADD}
     \end{subfigure}
-	\caption{The setup code for the NOP and MEM instructions. The instruction on line number 3 is repeated \(1000\) times.}
+	\caption{The setup code for the NOP and MEM instructions. The instruction on line no. 3 is repeated \(1000\) times.}
 	\label{lst:x86_add_mem}
 \end{figure}
 
@@ -172,10 +172,10 @@ Thus we can argue that we are in fact able to distinguish between such low level
 \section{Decryption}\label{chp4:sec:decryption}
 Genkin et al. suggest that it is possible to distinguish between the different steps involved in a decryption using a 4096-bit RSA key.
 For our decryption utility, we will use the same key size, and perform decryption. 
-We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as it has the suggested some vulnerabilities found in GnuPG versions up to 1.4.15\cite{DBLP:conf/crypto/GenkinST14}. 
+We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as it has the suggested vulnerabilities found in GnuPG versions up to 1.4.15\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
 The cipher text being decrypted is the result of encrypting a 4.2MB WAV format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
-Essentially are using the same encryption and decryption method, key-size and key generation as what is described in this work. 
+Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 
 
 To be able to relate the decryption to the time domain, we execute the decryption according to the pattern given in \autoref{lst:decryption_loop_utility}
 
@@ -192,4 +192,4 @@ done
 
 The pause between each decryption may resolve in a pattern that can be observed during analysis of the acoustic emanations, by allowing us to relate what is happening to the time domain, in the sense that we know the duration of each sleep.
 The duration of a single decryption can also be measured, although it will differ on different computers.
-Thus we are left with a clear idea of what to search for during analysis.
+Therefore we are left with a clear idea of what to search for during analysis.
