@@ -7,7 +7,7 @@ Further we will go into detail about the limitations and possibilities introduce
 \section{Recording and Sampling}\label{chp3:sec:microphone_selection}
 
 \subsection{Sampling and Encoding}
-We want to analyze the acoustic emanations from \gls{CPU}s in the frequency domain, and look at power spectra representing a period of time.
+We want to analyze the acoustic emanations from a \gls{CPU} in the frequency domain, and look at power spectra representing a period of time.
 The sampling frequency has a big impact on the range of frequencies that can be analyzed, as it is limited by the Nyquist frequency given in~\autoref{eq:nyquist_frequency}.
 Genkin et al. present results that suggest that one should be able to observe phenomenons related to acoustic emanations from computer systems for frequencies below \(100\)kHz; our setup relies on \gls{NI} myDAQ that is capable of sampling at a sampling rate \({F_{s}}\) of \(200\)kHz~\footnotemark.
 Thus by only looking at~\autoref{eq:nyquist_frequency}, we are able to analyze frequencies ranging up to \(100\)kHz.

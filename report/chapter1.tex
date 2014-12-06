@@ -5,6 +5,7 @@ In 2014, Genkin et al. presented their work on exploiting low-bandwidth acoustic
 This novel approach opens for a whole new attack vector that has unexplored potential, as the emanations are allegedly able to leak information about what is being executed on the CPU.
 In this paper we will verify some of the claims presented by Genkin et al., by setting up and performing the experiments that are outlined, and possibly reproduce the results presented.
 
+
 \section{Problem and Scope}
 The main goal of this paper is to verify the existence of the acoustic side channel, and reproduce some of the results of~\cite{DBLP:conf/crypto/GenkinST14}.
 We will build a similar setup as to what is presented, and use it to record computer devices running in different states.
@@ -13,10 +14,11 @@ Then we will analyze the recorded acoustic emanations, and attempt to relate the
 We will diverge from the original project description in which we will not emphasize on applications with regard to cryptanalysis.
 Rather we will explore extremes of CPU operations, to be able to verify the initial results of Genkin et al.
 We are relying strictly on empiric evaluation of our results during analysis, and are using no statistical correlation models.
-This approach is deemed viable due to the results presented in~\cite{DBLP:conf/crypto/GenkinST14}, and leads to a more simple setup.
-This is done despite the fact that it introduces some limitations in our exploration of the side channel, as the proposed attack on the vulnerable RSA implementation would require such a model.
+This is done despite the fact that it introduces some limitations to our exploration of the side channel, as the proposed attack on the vulnerable RSA implementation would require such a model.
+However, the approach is deemed viable due to the results presented in~\cite{DBLP:conf/crypto/GenkinST14}, and it requires a more simple setup.
 Thus RSA key extraction is beyond the scope of this paper.
 
+Using this setup we will show that we were indeed successful in reproducing some of the results presented by Genkin et al., by being able to distinguish between different CPU activities based on the acoustic fingerprint and computer assisted empiric evaluation.
 
 %Write about changes in scope. Redefine and explain why it has changed.
 %\section{Limitations}
