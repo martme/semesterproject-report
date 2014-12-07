@@ -86,37 +86,61 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
 
 \todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
 \begin{figure}
-    \centering
-    %\resizebox{\linewidth}{!}{
-        \begin{tikzpicture}
-            \begin{axis}[
-                title={Cache Miss Probability Distribution},
-                xlabel={$\Delta C$},
-                ylabel={$p$},
-                legend pos=south east,
-                legend style={font=\tiny},
-                grid style=dashed,
-                ymajorgrids=true,
-                ymode=log,
-                %ymin=0, ymax=1,
-            ]
-            \addplot table [smooth,dotted,mark=none,y=p,x=D430,col sep=comma] {data/mem-benchmark-cdf.csv};
-            \addlegendentry{Dell Latitude D430}
-            \addplot table [dashed,mark=none,y=p,x=T60p,col sep=comma] {data/mem-benchmark-cdf.csv};
-            \addlegendentry{Lenovo Thinkpad T60p}
-            \end{axis}
-        \end{tikzpicture}
-    %}
-    \caption{Probability \(p\) of observing less than \(\Delta C\) cache misses when running the MEM benchmark.}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \resizebox{0.9\textwidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    %title={Cache Miss Probability Distribution},
+                    xlabel={$\Delta C$},
+                    ylabel={$p$},
+                    legend pos=north east,
+                    legend style={font=\tiny},
+                    grid style=dashed,
+                    ymajorgrids=true,
+                    ymode=log,
+                    %ymin=0, ymax=1,
+                ]
+                \addplot table [smooth,dotted,mark=none,y=p,x=C,col sep=comma] {data/prob-density-dell.dat};
+                \addlegendentry{Dell Latitude D430}
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Dell Latitude D430}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \resizebox{0.9\textwidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    %title={Cache Miss Probability Distribution},
+                    xlabel={$\Delta C$},
+                    ylabel={$p$},
+                    legend pos=north east,
+                    legend style={font=\tiny},
+                    grid style=dashed,
+                    ymajorgrids=true,
+                    ymode=log,
+                    %ymin=0, ymax=1,
+                ]
+                \addplot table [dashed,mark=none,y=p,x=C,col sep=comma] {data/prob-density-lenovo.dat};
+                \addlegendentry{Lenovo Thinkpad T60p}
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Lenovo Thinkpad T60p}
+    \end{subfigure}
+    \caption{Empirical probability distribution of suffered cache misses - \(\Delta C\) - when running the MEM benchmark.}
     \label{fig:mem_benchmark}
 \end{figure}
 
 We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\).
 Then we look at the difference in cache misses \(\Delta C_i = c_{A_i} - c_{B_i}\) for every run \(i \in [1, 1000]\).
 The results are given in \autoref{fig:mem_benchmark}, and represent the results for our two target laptops; a Lenovo T60p laptop with a Intel Centrino Duo \gls{CPU}; and a Dell Latitude D430 laptop also with a Intel Centrino Duo \gls{CPU}.
-They clearly show that the probability of observing the expected \(\Delta C\) close to \(1000\) is about \(90\%\) for both of the computers.
+They clearly show that the probability of observing the expected \(\Delta C\) close to \(1000\) prevalent for both of the computers.
 This is good enough to satisfy our condition, as the amount of cache misses suffered also strictly higher in \(A\) as compared to \(B\).
 Our MEM utility program is successfully bypassing the \gls{CPU}s best efforts of hardware prefetching and stride prediction.
+For code-level details as to how the benchmark was conducted, see~\autoref{apx:mem_benchmark}.
 
 
 
