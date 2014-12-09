@@ -33,8 +33,7 @@ done
 In a loop, the \gls{CPU} will operate at close to full capacity, then sleep for a second, representing the heavy load state and the idle state.
 By recording during execution of this utility, we hope to be able to distinguish between the two states, heavy load and idle, thus be able to observe a repeating pattern with a period of \(3\) seconds, representing the loop.
 
-For the Raspberry Pi, we use the sysbench~\cite{url:sysbench_wiki} package to generate CPU load. 
-This package has a benchmarking tool for ARM \gls{CPU}s, which is used to generate \gls{CPU} load.
+For the Raspberry Pi, we use the sysbench~\cite{url:sysbench_wiki} benchmarking tool to generate \gls{CPU} load.
 
 \section{Microinstructions}\label{chp4:sec:microinstructions}
 \todo{Ingress}
@@ -84,7 +83,6 @@ During the course of execution, \(A\) should to suffer approximately \(k+n\) cac
 Here \(k\) represents the baseline cache misses suffered for running the parts in some section of the program required to set up the loop, and \(n\) represents the amount of cache misses suffered from resolving indexes in the array.
 If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
 
-\todo{Make inverse CDF and fix dotted line. Do flat lower limit removal in data set.}
 \begin{figure}
     \begin{subfigure}{0.5\textwidth}
         \centering
@@ -99,14 +97,12 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
                     grid style=dashed,
                     ymajorgrids=true,
                     ymode=log,
-                    %ymin=0, ymax=1,
                 ]
-                \addplot table [smooth,dotted,mark=none,y=p,x=C,col sep=comma] {data/prob-density-dell.dat};
-                \addlegendentry{Dell Latitude D430}
+                \addplot table [only marks, dotted,y=p,x=C,col sep=comma] {data/prob-density-dell.dat};
                 \end{axis}
             \end{tikzpicture}
         }
-        \caption{Dell Latitude D430}
+        \caption{Dell Latitude D430, $\bar{\Delta C} = 960, s=21$ }
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
@@ -121,16 +117,14 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
                     grid style=dashed,
                     ymajorgrids=true,
                     ymode=log,
-                    %ymin=0, ymax=1,
                 ]
-                \addplot table [dashed,mark=none,y=p,x=C,col sep=comma] {data/prob-density-lenovo.dat};
-                \addlegendentry{Lenovo Thinkpad T60p}
+                \addplot table [only marks, dashed,y=p,x=C,col sep=comma] {data/prob-density-lenovo.dat};
                 \end{axis}
             \end{tikzpicture}
         }
-        \caption{Lenovo Thinkpad T60p}
+        \caption{Lenovo Thinkpad T60p, $\bar{\Delta C} = 992, s=43$ }
     \end{subfigure}
-    \caption{Empirical probability distribution of suffered cache misses - \(\Delta C\) - when running the MEM benchmark.}
+    \caption{Sample distribution of suffered cache misses - probability of observing \(\Delta C\) cache misses from sample size $n=1000$ obtained by running the MEM benchmark described in \autoref{apx:mem_benchmark}.}
     \label{fig:mem_benchmark}
 \end{figure}
 
@@ -198,7 +192,7 @@ Thus we can argue that we are in fact able to distinguish between such low level
 \section{Decryption}\label{chp4:sec:decryption}
 Genkin et al. suggest that it is possible to distinguish between the different steps involved in a decryption using a 4096-bit RSA key.
 For our decryption utility, we will use the same key size, and perform decryption. 
-We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as it has the suggested vulnerabilities found in GnuPG versions up to 1.4.15\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
+We use the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
 The cipher text being decrypted is the result of encrypting a 4.2MB WAV format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
 Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 

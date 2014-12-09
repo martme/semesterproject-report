@@ -26,35 +26,17 @@ Implications are discussed in detail in~\autoref{chp4:predictable_execution}.
 
 \subsection{Experimental Recording Setup}\label{chp3:sec:knowles_configuration}
 For our first round of experiments we use the Knowles Ultrasonic SPU0410LR5H microphone.
-The microphone is able to respond to frequencies up to 80kHz, with a -4dB sensitivity\cite{url:knowles_spec}.
+The microphone has a flat frequency response up to 80kHz, with a -4dB sensitivity~\cite{url:knowles_spec}.
 To power the microphone we use a 4.5V battery.
 \gls{NI} myDAQ is used for sampling, connecting the microphone directly into the Analog Input 0 on the myDAQ device.
 
-Because the microphone is specked for maximum frequencies below the sampling frequency grounds that the captured signal is polluted by a vast amount of aliasing\todo{Find citation}.
-Additionally, we are not using a high-pass filter in this setup which could remove some of the aliasing.
-
-The \todo{Need to discuss this more if included} myDAQ device has a built in an amplifier (OPA1642) as seen in the myDAQ user guide~\cite[p. 4]{url:NI_myDAQ_userguide}. 
-The OPA1642 has a gain of 60 dB at 10kHz and 40 dB at 100kHz ~\cite[p. 5 fig. 5]{url:TI_opa1642}.
-With an input voltage of +-10mV, the nominal output is +-1V as illustrated in \autoref{fig:op_amp_illustration}
-\todo{Check with Tim Cat}
-
-\begin{figure}[h]
-  \begin{circuitikz} 
-    \draw 
-    (0,0) node[op amp] (opamp1) {}
-    (opamp1.+) node[left ] {10mV @100kHz $v_+$}
-    (opamp1.-) node[left ] {$v_-$}(1,0)
-    (1,0) to[voltmeter, l=1<\volt>] (4,0);
-  \end{circuitikz}
-  \caption{Op Amp illustration}
-  \label{fig:op_amp_illustration}
-\end{figure}
-
+The fact that the sampled signal is not bandlimited, i.e there are no low-pass filter in this setup, the sampling theorem suggest that we should observe distortion due to aliasing~\cite{proakis2007digital}.
 
 There are interesting implications of this setup; the the microphone itself is very small as well as being very cheap, costing only a few dollars. 
 Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, for instance in a side channel attack against a vulnerable RSA implementation, as suggested in~\cite{DBLP:conf/crypto/GenkinST14}.
 The low cost of the parts used, less the myDAQ, also makes it disposable.
 A small microphone also enables the possibility to hide the whole setup inside the casing of a desktop computer or a server, thus possibly making side channel attacks easier because of a better signal-to-noise ratio due to reducing distance between the source and the microphone.
+
 
 \subsection{Lab Grade Recording Setup}\label{chp3:sec:bruel_kjaer_configuration}
 With our second setup we are aiming to come close to what Genkin et al. used for their lab grade setup.
@@ -65,13 +47,18 @@ We use 40 dB gain in all of our recordings.
 The output signal from the Norsonic is led into a Krohn-Hite Corporation 3945 filter~\cite{url:krohn-hite3945_spec} which provides a 1kHz high-pass filter as well as a 80kHz low-pass filter.
 The filtered signal is sent to the \gls{NI} myDAQ, and lastly encoded in a WAV file using a laptop computer. 
 
-The inclusion of the band-pass filter is removing some of the aliasing suffered in the experimental recording setup, but even here the relation between sampling frequency and low-pass frequency suggest that we still suffer from aliasing\todo{Suggested by Tim Cato}.
+\begin{equation}\label{eq:sampling_theorem}
+B \leq \frac{F_{s}}{2}
+\end{equation}
+
+The sampling theorem, given in~\autoref{eq:sampling_theorem}, gives that the ability to uniquely recover frequencies $B$ is from a sampled signal is bound by the sampling frequency, given a bandlimited continuous-time signal~\cite{proakis2007digital}.
+Since the inclusion of a band-pass filter gives such a signal for this setup, and we have $B = 80kHz$ and $F_s = 200kHz$, the condition of the sampling theorem holds.
+Thus, we should experience far less distortion resulting from aliasing using this setup.
 
 
 \section{Processing and Signal Extraction}\label{chp3:sec:processing_signal_extraction}
 The captured sound is stored in a WAV file.
 This file is processed in using a piece of self written software, which utilizes libraries such as FFTW~\cite{url:fftw} and libsndfile~\cite{url:libsndfile} to ensure correct processing of the sound files.
-The code is included in \autoref{apx:code}
 %The samples are divided into windows \( W \), where \( \lvert W \rvert = 2^{n} \) where \( n \) is a non-zero positive integer.
 
 The WAV files produced by the setups explained in this chapter contain a mono signal. 
@@ -79,12 +66,13 @@ In the WAV format, frames representing each sample is stored subsequently, such 
 For a stereo signal this means that \( f \in \left [ 1, 2 \right ] \), thus the samples are ordered  \( s_{0,0}, s_{0,1}, s_{1,0}, s_{1,1}, ... , s_{n,0}, s_{n,1} \).
 Since we want to work on a mono signal, we simply ignore all frames where \( f \neq 0 \), which with our setup means that we use all frames in the stored file.
 
-The captured signal is Fourier transformed using a window size of 4096 frames, and the hamming window function. The power spectra results are studied, with emphasis on how they are evolving in the time domain, and how they correlate to the expected effects of the software described in \autoref{chp4:predictable_execution}
+The captured signal is Fourier transformed using a window size of 4096 frames, and the hamming window function. The power spectra results are studied, with emphasis on how they are evolving in the time domain, and how they correlate to the expected effects of the software described in \autoref{chp4:predictable_execution}.
+Source code for these steps are included in~\autoref{apx:code}.
 
 \section{Positioning Relative to Source of Emanations}\label{chp3:sec:capturing_audio_fingerprint}
 The theory is that the acoustic emanations of interest are emanating from within the \gls{CPU}.
 Therefore we are positioning the microphones as close to the \gls{CPU} as possible. 
-When experimenting with a Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling block for the \gls{CPU} as illustrated in ~\autoref{fig:T60p_knowles_position}. 
+When experimenting with a Lenovo T60p, we unmounted the keyboard letting us position the microphone on top of the cooling block for the \gls{CPU} as illustrated in ~\autoref{fig:T60p_knowles_position}.
 
 \begin{figure}[ht]
   \centering
@@ -94,3 +82,16 @@ When experimenting with a Lenovo T60p, we unmounted the keyboard letting us posi
 \end{figure}
 
 For the other target computers we use in the research, we strive to position the microphones as close to the CPU as possible, without breaking or dismantling the chassis.
+A full list of all target computers and devices is given in \autoref{tbl:target_computers}.
+
+\begin{table}[h]
+  \begin{tabular}{lll}
+  Computer                  & Operating System      & Processor                    \\ \hline
+  Lenovo ThinkPad T60p      & 64-bit Linux Mint 17  & Intel Core 2 T7400 @ 2.16GHz \\ %\hline
+  Dell Latitude D430        & 64-bit Linux Mint 17  & Intel Core 2 U7600 @ 1.20GHz \\ %\hline
+  Raspberry Pi Model B      & Raspbian Wheezy       & ARM1176JZF-S @ 700MHz        \\ %\hline
+  \end{tabular}
+  \caption{Computers used during experiments.}
+  \label{tbl:target_computers}
+\end{table}
+
