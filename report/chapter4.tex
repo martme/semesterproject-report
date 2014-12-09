@@ -99,14 +99,12 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
                     grid style=dashed,
                     ymajorgrids=true,
                     ymode=log,
-                    %ymin=0, ymax=1,
                 ]
-                \addplot table [smooth,dotted,mark=none,y=p,x=C,col sep=comma] {data/prob-density-dell.dat};
-                \addlegendentry{Dell Latitude D430}
+                \addplot table [only marks, dotted,y=p,x=C,col sep=comma] {data/prob-density-dell.dat};
                 \end{axis}
             \end{tikzpicture}
         }
-        \caption{Dell Latitude D430}
+        \caption{Dell Latitude D430, $\bar{\Delta C} = 960, s=21$ }
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
@@ -121,16 +119,14 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
                     grid style=dashed,
                     ymajorgrids=true,
                     ymode=log,
-                    %ymin=0, ymax=1,
                 ]
-                \addplot table [dashed,mark=none,y=p,x=C,col sep=comma] {data/prob-density-lenovo.dat};
-                \addlegendentry{Lenovo Thinkpad T60p}
+                \addplot table [only marks, dashed,y=p,x=C,col sep=comma] {data/prob-density-lenovo.dat};
                 \end{axis}
             \end{tikzpicture}
         }
-        \caption{Lenovo Thinkpad T60p}
+        \caption{Lenovo Thinkpad T60p, $\bar{\Delta C} = 992, s=43$ }
     \end{subfigure}
-    \caption{Empirical probability distribution of suffered cache misses - \(\Delta C\) - when running the MEM benchmark.}
+    \caption{Sample distribution of suffered cache misses - Probability of observing \(\Delta C\) cache misses from sample size $n=1000$ from running the MEM benchmark.}
     \label{fig:mem_benchmark}
 \end{figure}
 
