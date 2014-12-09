@@ -5,10 +5,10 @@ TEXFILE = main
 default: full
 
 full:
-	pdflatex $(TEXFILE) && \
-	bibtex $(TEXFILE) && \
-	makeglossaries $(TEXFILE) &&\
-	pdflatex $(TEXFILE) && \
+	pdflatex $(TEXFILE) ; \
+	bibtex $(TEXFILE) ; \
+	makeglossaries $(TEXFILE) ; \
+	pdflatex $(TEXFILE) ; \
 	pdflatex $(TEXFILE)
 
 
