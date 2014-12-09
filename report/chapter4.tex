@@ -193,7 +193,7 @@ Thus we can argue that we are in fact able to distinguish between such low level
 \section{Decryption}\label{chp4:sec:decryption}
 Genkin et al. suggest that it is possible to distinguish between the different steps involved in a decryption using a 4096-bit RSA key.
 For our decryption utility, we will use the same key size, and perform decryption. 
-We use the GnuPG 1.4.15~\cite{url:GnuPG_1.4.15} library as it has the suggested vulnerabilities found in GnuPG versions up to 1.4.15\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
+We use the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
 The cipher text being decrypted is the result of encrypting a 4.2MB WAV format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
 Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 
