@@ -1,30 +1,30 @@
-\chapter{Results}\label{apx:results}
-This appendix will present some of the results not presented in the paper.
+\chapter{Miscellaneous Results}\label{apx:results}
+This appendix will present miscellaneous results not presented in the paper.
 All executions presented in the results in this section are described in~\autoref{chp4:predictable_execution} unless else specified. 
-Generally we have three different executions; microinstructions described in~\autoref{chp4:sec:microinstructions}, CPU load described in~\autoref{chp4:sec:cpu_load} and decryption described in~\autoref{chp4:sec:decryption}. 
-We are working with two different microphone configurations, the Knowles microphone and the Brüel\&Kjær 4939 microphone, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
+Generally we have three different executions; CPU operations described in~\autoref{chp4:sec:microinstructions}, CPU load described in~\autoref{chp4:sec:cpu_load} and decryption described in~\autoref{chp4:sec:decryption}. 
+We are working with two different microphone configurations, the portable setup and the lab grade setup, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
 
 \section{Normal office environment}
 
 %==========================
 % T60p Normal room CPULOAD
 %==========================
-~\autoref{fig:T60p-bk-cpuload-eps-1-1a} and~\autoref{fig:T60p-bk-cpuload-ips-0-1b} is the results from the running CPU load on the Lenovo T60p in an office environment. 
+~\autoref{fig:appendix_T60p-bk-cpuload-eps-1-1a} and~\autoref{fig:appendix_T60p-bk-cpuload-ips-0-1b} is the results from the running CPU load on the Lenovo T60p in an office environment. 
 \begin{figure}[ht]
-	\begin{subfigure}{0.5\textwidth}
+	\begin{subfigure}{1\textwidth}
 	    \centering
 	    \includegraphics[width=1\linewidth]{T60p-bk-cpuload-eps-1_description.png}
-	    \caption{With power adopter}
-	    \label{fig:T60p-bk-cpuload-eps-1-1a}
+	    \caption{With AC power adopter}
+	    \label{fig:appendix_T60p-bk-cpuload-eps-1-1a}
     \end{subfigure}
-    \begin{subfigure}{0.5\textwidth}
+    \begin{subfigure}{1\textwidth}
 	    \centering
 	    \includegraphics[width=1\linewidth]{T60p-bk-cpuload-ips-0_description.png}
 	    \caption{Running on battery power}
-	    \label{fig:T60p-bk-cpuload-ips-0-1b}
+	    \label{fig:appendix_T60p-bk-cpuload-ips-0-1b}
     \end{subfigure}
-    \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load described in~\autoref{chp4:sec:cpu_load}. The recordings was made using the Brüel\&Kjær 4939 configuration. }
-	\label{fig:T60p-bk-cpuload}
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Lenovo T60p when running a high CPU load described in~\autoref{chp4:sec:cpu_load}. Recorded in an anechoic chamber using the lab-grade setup. }
+	\label{fig:appendix_T60p-bk-cpuload}
 \end{figure}
 
 %=============================
@@ -37,3 +37,18 @@ We are working with two different microphone configurations, the Knowles microph
 %    \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Dell D430 when idle. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration specified in~\autoref{chp3:sec:bruel_kjaer_configuration}. }
 %    \label{fig:D430-ekkofritt-bk-idle-eps-1}
 %\end{figure}
+
+%==============
+% Raspberry PI
+%==============
+
+\section{Raspberry PI}\label{apx:sec:raspberry}
+All of our recordings of the Raspberry PI is more or less equal and inconclusive, empirically speaking. 
+~\autoref{fig:appendix_RB-ekkofritt-bk-micro-0} is the inconclusive result gained from running the CPU operations. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{RB-ekkofritt-bk-micro-0.png}
+    \caption{Acoustic signature (6 sec, 0-100kHz) of the Raspberry PI running the CPU operations.
+        Recorded in an anechoic chamber using the lab-grade setup.}
+    \label{fig:appendix_RB-ekkofritt-bk-micro-0}
+\end{figure}
