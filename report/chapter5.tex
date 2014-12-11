@@ -1,213 +1,188 @@
 \chapter{Results}
-\label{chp5:results} 
-In this chapter we present the results we have obtained from our empirical research. 
-All executions that we present are described in~\autoref{chp4:predictable_execution} unless else specified. 
-Generally we have three different executions; microinstructions described in~\autoref{chp4:sec:microinstructions}, CPU load described in~\autoref{chp4:sec:cpu_load} and decryption described in~\autoref{chp4:sec:decryption}. 
-We are working with two different microphone configurations, the Knowles microphone and the Brüel\&Kjær 4939 microphone, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
-First, we present our results from the Knowles microphone.
+\label{chp5:results}
+The following chapter will give an overview of the significant results obtained during empirical evaluation of recordings obtained during our experiments.
 
-After the Knowles results, we list the results that are produced with the Brüel\&Kjær 4939 configuration in accordance with the experimental plan in~\autoref{apx:experiment_plan}. 
-These results are from the anechoic chamber and the associated results from an office environment.  
-We will first present the results gained from the microinstructions, followed by the results from CPU load and decryption. 
+\section{Understanding the Figures}
+All results are obtained by recording one of the computers mentioned in \autoref{tbl:target_computers}.
+While recording, the target computers were running the utilities described in \autoref{chp4:predictable_execution}, and the computation patterns are allowing us to relate the 
+patterns in the acoustic fingerprints to the different states of execution.
+
+The recordings obtained using the lab grade setup, explained in detail in~\autoref{chp3:sec:bruel_kjaer_configuration}  were collected following the experiment plan given in~\autoref{apx:experiment_plan}. 
+The all results are derived from one of the following experiment setups.
+
+\begin{description}
+    \item[CPU load] forced high CPU activity as described in~\autoref{chp4:sec:cpu_load}
+    \item[Micro-operations] repeating NOP, MEM, MUL and ADD instructions as described in~\autoref{chp4:sec:microinstructions}
+    \item[Decryption] running a RSA decryption as described in~\autoref{chp4:sec:decryption}.
+\end{description}
+
+We also give some results from our experimental setup, described in~\autoref{chp3:sec:knowles_configuration}.
+
+% In this chapter we present the results we have obtained from our empirical research. 
+% All executions that we present are described in~\autoref{chp4:predictable_execution} unless else specified. 
+% Generally we have three different executions; microinstructions described in~\autoref{chp4:sec:microinstructions}, CPU load described in~\autoref{chp4:sec:cpu_load} and decryption described in~\autoref{chp4:sec:decryption}. 
+% We are working with two different microphone configurations, the Knowles microphone and the Brüel\&Kjær 4939 microphone, which is explained more in detail respectively in~\autoref{chp3:sec:knowles_configuration} and~\autoref{chp3:sec:bruel_kjaer_configuration}.
+% First, we present our results from the Knowles microphone.
+
+% After the Knowles results, we list the results that are produced with the Brüel\&Kjær 4939 configuration in accordance with the experimental plan in~\autoref{apx:experiment_plan}. 
+% These results are from the anechoic chamber and the associated results from an office environment.  
+% We will first present the results gained from the microinstructions, followed by the results from CPU load and decryption. 
 
 %===================================================================================================================
 %                                               Knowles microphone
 %===================================================================================================================
-\section{Results from Knowles}\label{chp5:sec:knowles_results}
-The results presented in this section are all gained from the Knowles microphone and different types of setups.
-The recordings are done in a try-and-fail approach rather than according to an experimental plan. 
+\section{Recordings Using the Experimental Setup}\label{chp5:sec:knowles_results}
+The results presented in this section are all captured using the experimental setup including the Knowles microphone, as explained in~\autoref{chp3:sec:knowles_configuration}.
+Recordings were taken using a try-and-fail approach, over a period of several weeks, as a step in evaluating our experimental plan and selecting experiments for further recordings with our lab grade setup.
+All recordings are done in an office environment, with no means taken to reduce background noise.
+Additionally, all of the results in this section are derived from recordings of the Lenovo T60p laptop.
 
-\subsection{Results from Lenovo T60p - decryption}\label{chp5:subsec:t60p_knowles_results_decryption}
-In~\autoref{fig:T60p-knowles-decrypt-ips} we ran the decryption. 
-In~\autoref{fig:T60p-knowles-decrypt-ips-2} we ran a different decryption setup, described in~\autoref{lst:decryption_loop}.
+\subsection{CPU load}\label{chp5:subsec:t60p_knowles_results_cpuload}
+In in~\autoref{fig:T60p-knowles-cpuload-ips-0} we see the effects of alternating between idle states and high \gls{CPU} loads, using the \gls{CPU} load experiment setup.
+The result serves as a baseline for distinguishing between effects simply caused by a higher load, and anomalies in the acoustic signature caused by specific operations.
 
-\begin{lstlisting}[language=BASH, caption={Decryption of an image file.}, 
-label={lst:decryption_loop}]
-sleep 1             
-gpg --output tmp/image_de.png --decrypt img.gpg
-sleep 1
-gpg --output tmp/image_de2.png --decrypt img.gpg
-sleep 1
-gpg --output tmp/image_de3.png --decrypt img.gpg
-gpg --output tmp/image_de4.png --decrypt img.gpg    
-gpg --output tmp/image_de5.png --decrypt img.gpg
-gpg --output tmp/image_de6.png --decrypt img.gpg
-\end{lstlisting}
-
-%================
-% T60p deryption
-%================
-\begin{figure}[ht]
-    \begin{subfigure}{1\textwidth}
-        \centering
-        \includegraphics[width=1\linewidth]{T60p-knowles-decrypt-ips_description.png}
-        \caption{}
-        \label{fig:T60p-knowles-decrypt-ips}
-    \end{subfigure}
-    \begin{subfigure}{1\textwidth}
-        \centering
-        \includegraphics[width=1\linewidth]{T60p-knowles-decrypt-ips-2_description.png}
-        \caption{}
-        \label{fig:T60p-knowles-decrypt-ips-2}
-    \end{subfigure}
-    \caption{Acoustic recording (Vertical axis: 7 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running decryption.
-    Both recordings was made in an office environment using the Knowles configuration and running on battery power. }
-    \label{fig:T60p-knowles-decrypt-ips}
-\end{figure}
-
-%================
-% T60p micro
-%================
-\subsection{Results from Lenovo T60p - microinstructions}\label{chp5:subsec:t60p_knowles_results_micro}
-The results presented in~\autoref{fig:T60p-knowles-micro-ips-0} has been produced when running microinstructions.
-The plotting of this result is achieved by using a different approach with regard to the signal processing. 
-Since we are not required to transform the sound file back to the time domain, we are able to sample overlapping windows.
-In the case of this plot, we are taking the fourier transform of windows of size 2048 samples, but only moving the sliding window \({W/2}\) samples.
-Additionally, the plot shows the 10th logarithm of the frequency responses, and only values between the median value (min) and 0 (max) are indicated with the colors (in a linear scale, as in the other plots). 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\linewidth]{T60p-knowles-micro-ips-0_description.png}
-    \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running microinstructions. The recording was made in an office environment using the Knowles configuration and running on battery power. }
-    \label{fig:T60p-knowles-micro-ips-0}
-\end{figure}
-%================
-% T60p CPU load
-%================
-\subsection{Results from Lenovo T60p - CPU load}\label{chp5:subsec:t60p_knowles_results_cpuload}
-The result in~\autoref{fig:T60p-knowles-cpuload-ips-0} has been produced running full CPU load. The plotting of this result is achieved with the same approach as described in~\autoref{chp5:subsec:t60p_knowles_results_micro}. 
-In~\autoref{fig:T60p-knowles-cpuload-ips-0} is the result gained from running a full CPU load in the Lenovo T60p computer. 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{T60p-knowles-cpuload-ips-0_description.png}
-    \caption{Acoustic recording (Vertical axis: 5 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load. The recording was made in an office environment using the Knowles configuration and running on battery power. }
+    \caption{Acoustic signature of a battery powered Lenovo T60p, alternating between a full \gls{CPU} load and an idle state.
+        The vertical axis is time (5 sec) while the horizontal axis is frequency (0-100kHz).
+        The intensity is proportional to the energy in that frequency band at that time.
+        Recorded using the experimental setup.}
     \label{fig:T60p-knowles-cpuload-ips-0}
 \end{figure}
+
+The difference in acoustic signature of the idle state and the high \gls{CPU} load state is clearly visible in the plot, and the pattern corresponds to the execution pattern of the CPU load utility. 
+Note that at the time of the recording, our \gls{CPU} load utility had the burn duration set to a single second, resulting in this pattern.
+
+The signal processing resulting in the power spectra making up this plot differs slightly from what is described in~\autoref{chp3:sec:processing_signal_extraction}
+Since we are not interested in transforming the frequency spectra back to the time domain, we are able to work with overlapping windows.
+We compute the Fourier transform using a sliding windows with a size of 4096 frames, while moving the sliding window \({W/2}\) samples at the time.
+This results in a better granularity on the time axis of the frequency spectra plot.
+Additionally, the z-axis represents the 10th logarithm of the frequency responses, where only values between the median value (min) and 0 (max) are indicated with different intensities.
+
+
+\subsection{Decryption}\label{chp5:subsec:t60p_knowles_results_decryption}
+In~\autoref{fig:T60p-knowles-decrypt-ips} we can see the resulting acoustic signature from running the decryption utility using the decryption experiment setup.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{T60p-knowles-decrypt-ips_description.png}
+    \caption{Acoustic signature (7 sec, 0-100kHz) of the decryption utility using running on a battery powered Lenovo T60p.
+        Recorded using the experimental setup.}
+    \label{fig:T60p-knowles-decrypt-ips}
+\end{figure}
+
+The pattern is representing portions of time when the decryption was executed.
+We see that the duration of each decryption, as well as the duration of the pause between each decryption, is according to the execution pattern of the utility.
+
+
+\subsection{Micro-Operations}\label{chp5:subsec:t60p_knowles_results_micro}
+The acoustic signature given in~\autoref{fig:T60p-knowles-micro-ips-0} has been produced when running microinstructions.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{T60p-knowles-micro-ips-0_description.png}
+    \caption{Acoustic signature (5 sec, 0-100kHz) of running the microinstructions utility on a battery-powered Lenovo T60p.
+        Recorded using the experimental setup.}
+    \label{fig:T60p-knowles-micro-ips-0}
+\end{figure}
+
+The data processing behind this plot is the same as what is described in~\autoref{chp5:subsec:t60p_knowles_results_cpuload}.
+Clearly, there is a noticeable anomaly in the time period representing the MEM operation at several frequencies.
+Additionally, it is easy to see the change between different operations, as it results in repeating patterns in the plot.
+Note that the microinstruction utility at the time of this recording stared with NOP operations, instead of a idle period.
+
+
 
 %===================================================================================================================
 %                                               Brüel&Kjær microphone
 %===================================================================================================================
-%=============
-% T60p MICRO
-%=============
-\section{Results from Brüel\&Kjær}\label{chp5:sec:bk_results}
-In this section we present the results gained from the Brüel\&Kjær configuration. 
-In contrast to the results presented in~\autoref{chp5:sec:knowles_results}, these experiments are carefully done according to the experimental plan described in in~\autoref{apx:experiment_plan}. 
+\section{Recordings Using the Experimental Setup}\label{chp5:sec:bk_results}
+In this section we present the results from the recordings obtained with our lab-grade setup.
+The experiences from using the experimental setup resulted in the final structure of our utilities, as well as an experimental plan that was carefully followed to obtain these recordings.
+The experimental plan can be found in~\autoref{apx:experiment_plan}.
+Experiments were conducted on all the devices listed in~\autoref{tbl:target_computers}, and recordings were done both in an office environment as well as in an anechoic chamber, to eliminate at the effects of background noise.
 
-\subsection{Results from Lenovo T60p - microinstructions}\label{chp5:subsec:t60p_bk_results_micro}
-The~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} is the result from doing the microinstructions in the anechoic chamber on the Lenovo T60p computer.
-%===================================================
-% T60p Anechoic chamber & normal room MICRO
-%===================================================
+\subsection{CPU load}\label{chp5:subsec:t60p_bk_results_cpuload}
+In the anechoic chamber we performed the \gls{CPU} load experiment on all of the target computers.
+The resulting frequency spectrograms are given for the Lenovo T60p and the Dell D430 in~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps} and ~\autoref{fig:D430-ekkofritt-bk-cpuload-eps-1} accordingly.
+Both of these recordings were done with the computers connected to AC power supplies.
+We also ran the experiment on the Lenovo T60p running on battery power; the frequency spectrogram for this recording is given in~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips}.
+For more related results recorded in an office environment, see the~\autoref{apx:results}.
+
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-micro-eps-1_description.png}
-    \caption{Acoustic recordings (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running microinstructions using the Brüel\&Kjær 4939 configuration. The recording was made in an anechoic chamber.}
-    \label{fig:T60p-ekkofritt-bk-micro-eps-1}
+    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-cpuload-eps-4_description.png}
+    \caption{Connected to an AC power supply}
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Lenovo T60p alternating between high CPU loads and idle state while connected to an AC power supply. 
+        Recorded in an anechoic chamber using the lab-grade setup.}
+    \label{fig:T60p-ekkofritt-bk-cpuload-eps}
 \end{figure}
 
-% \begin{figure}[ht]
-% 	\begin{subfigure}{0.32\textwidth}
-% 	    \centering
-% 	    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-micro-eps-1_description.png}
-% 	    \caption{With power adapter}
-% 	    \label{fig:T60p-ekkofritt-bk-micro-eps-1}
-%     \end{subfigure}
-%     \begin{subfigure}{0.32\textwidth}
-% 	    \centering
-%     	\includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-micro-ips-3.png}
-%     	\caption{Running on battery power}
-%     	\label{fig:T60p-ekkofritt-bk-micro-ips-3}
-%     \end{subfigure}
-%     \begin{subfigure}[ht]{0.32\textwidth}
-%         \centering
-%         \includegraphics[width=1\linewidth]{T60p-bk-micro-ips-0.png}
-%         \caption{}
-%         \label{fig:T60p-bk-micro-ips-0}
-%     \end{subfigure}
-%     \caption{Acoustic recordings (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running microinstructions. All three using the Brüel\&Kjær 4939 configuration. ~\autoref{fig:T60p-ekkofritt-bk-micro-ips-3} and~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} recordings was made in an anechoic chamber. The~\autoref{fig:T60p-bk-micro-ips-0} is done in a normal office environment. }
-% 	\label{fig:T60p-ekkofritt-bk-micro}
-% \end{figure}
-
-%==============
-% T60p CPULOAD
-%==============
-\subsection{Results from Lenovo T60p - CPU load}\label{chp5:subsec:t60p_bk_results_cpuload}
-The results from running CPU load on the Lenovo T60p in the anechoic chamber are shown in~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps-4} and~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips-0}. For the equivalent results from a normal office environment, see the~\autoref{apx:results}.
-%===============================
-% T60p Anechoic chamber CPULOAD
-%===============================
 
 \begin{figure}[ht]
-	\begin{subfigure}{1\textwidth}
-	    \centering
-	    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-cpuload-eps-4_description.png}
-	    \caption{With power adapter}
-	    \label{fig:T60p-ekkofritt-bk-cpuload-eps-4}
-    \end{subfigure}
-    \begin{subfigure}{1\textwidth}
-	    \centering
-	    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-cpuload-ips-0_description.png}
-	    \caption{Running on battery power}
-	    \label{fig:T60p-ekkofritt-bk-cpuload-ips-0}
-    \end{subfigure}
-    \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a full CPU load. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration.}
-	\label{fig:T60p-ekkofritt-bk-cpuload}
+    \centering
+    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-cpuload-ips-0_description.png}
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Lenovo T60p alternating between high CPU loads and idle state while running on battery power. 
+        Recorded in an anechoic chamber using the lab-grade setup.}
+    \label{fig:T60p-ekkofritt-bk-cpuload-ips}
 \end{figure}
 
 
-%==============
-% D430 CPULOAD
-%==============
-\subsection{Result from Dell D430 - CPU load}\label{chp5:subsec:d430_bk_results_cpuload}
-
-%================================
-% D430 Anechoic chamber  CPULOAD
-%================================
-~\autoref{fig:D430-ekkofritt-bk-cpuload-eps-1} is the result from the running CPU load on the Dell 430 in the anechoic chamber. 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-cpuload-eps-1_description.png}
-    \caption{Acoustic recording (Vertical axis: 10 sec. Horizontal axis: 0-100kHz) of the Dell D430 when running a full CPU load. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration. }
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Dell D430 alternating between high CPU loads and idle state while connected to an AC power supply
+        Recorded in an anechoic chamber using the lab-grade setup.}
     \label{fig:D430-ekkofritt-bk-cpuload-eps-1}
 \end{figure}
 
+The differences between~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps} and~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips} show how the fact that the computer is connected to an AC power supply or not has a big impact on the acoustic signature.
+We are able to distinguish between the different states due to the execution pattern, where the CPU load state lasts for $2$ seconds, while the idle state has a duration of $1$ second.
 
-%=================
-% T60p Decryption
-%=================
-\subsection{Result from Lenovo T60p - Decryption}\label{chp5:subsec:t60p_bk_results_decryption}
 
-%===============================
-% T60p Anechoic chamber DECRYPT
-%===============================
-~\autoref{fig:T60p-ekkofritt-bk-decrypt-ips-3} is the result from the running decryption on the Lenovo T60p in the anechoic chamber. 
+\subsection{Decryption}\label{chp5:subsec:t60p_bk_results_decryption}
+In~\autoref{fig:T60p-ekkofritt-bk-decrypt-ips-3} we can see the resulting acoustic signatures from running the decryption utility with the lab-grade setup.
+~\autoref{fig:D430-ekkofritt-bk-decrypt-eps-0} gives the resulting frequency spectrogram for the Dell D430.
+Both recordings are done in an anechoic chamber.
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-decrypt-ips-3_description.png}
-    \caption{Acoustic recording (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Lenovo T60p when running a decryption. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration. }
+    \caption{Acoustic signature (6 sec, 0-100kHz) of the Lenovo T60p running the decryption experiment while powered by the internal battery. 
+    Recorded in an anechoic chamber using the lab-grade setup. }
     \label{fig:T60p-ekkofritt-bk-decrypt-ips-3}
 \end{figure}
 
-%=================
-% D430 Decryption
-%=================
-\subsection{Result from Dell D430 - Decryption}\label{chp5:subsec:d430_bk_results_cpuload}
 
-%================================
-% D430 Anechoic chamber  DECRYPT
-%================================
 ~\autoref{fig:D430-ekkofritt-bk-decrypt-eps-0} is the result from the running decryption on the Dell 430 in the anechoic chamber. 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-decrypt-eps-0_description.png}
-    \caption{Acoustic recording (Vertical axis: 6 sec. Horizontal axis: 0-100kHz) of the Dell D430 when running a decryption. The recording was made in an anechoic chamber using the Brüel\&Kjær 4939 configuration.}
+    \caption{Acoustic signature (6 sec, 0-100kHz) of the Dell D430 connected to an AC power supply running the decryption experiment.
+        Recorded in an anechoic chamber using the lab-grade setup.}
     \label{fig:D430-ekkofritt-bk-decrypt-eps-0}
 \end{figure}
 
-%=====================
-% Raspberry PI
-%=====================
+
+
+\subsection{Micro-operations}\label{chp5:subsec:t60p_bk_results_micro}
+In~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} we see the resulting frequency spectrogram of different \gls{CPU} operations using the lab-grade setup on the Lenovo T60p laptop connected to an AC power supply.
+The recording was done in an anechoic chamber.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-micro-eps-1_description.png}
+    \caption{Acoustic signature (6 sec, 0-100kHz) of the Lenovo T60p when running different \gls{CPU} operations.
+        Recorded using the lab-grade setup in an anechoic chamber, while the computer was connected to an AC power supply.}
+    \label{fig:T60p-ekkofritt-bk-micro-eps-1}
+\end{figure}
+
+The anomaly at a little over 20kHz is also present in~\autoref{fig:T60p-knowles-micro-ips-0}, which suggests that this period in time corresponds to the MEM operation.
+Also, the duration of the anomalies, as well as the period between each time they occur, match the pattern of execution of the microinstructions utility.
+
+
 \subsection{Results from Raspberry PI}\label{chp5:subsec:rb_bk_results}
-All results from the Raspberry PI are inconclusive. 
-I.e. we are not able to interpret any of the recordings and relate them to the operations we performed.
+All results from the Raspberry PI are inconclusive.
+We are not able to empirically correlate any of the frequency spectrograms to the experiments, the same way we have done for the two laptop computers.
