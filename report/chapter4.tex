@@ -1,89 +1,95 @@
 \chapter{Predictable Execution and Mapping to Time Domain}\label{chp4:predictable_execution} 
-A prerequisite to analysis of acoustic fingerprints is to have some idea of what is being recorded, to be able to look at the correlation between what is happening, and what was being observed during the same period of time.
-In our case this means that we need to know what happening on in the \gls{CPU} for the duration of our recordings.
-With this knowledge, we should be able to perform analysis regarding the correlation between what is observed in the acoustic emanations and distinct \gls{CPU} activity.
+A prerequisite to analyze a acoustic recording is to possess an idea of what has been recorded. 
+This allows us to look at the correlation between different actions, and their effect on the recording.
+In our case this means that we need to know what is happening in the \gls{CPU} for the duration of our recordings.
+With this knowledge, we should be able to perform analysis on the correlation between what is observed in the acoustic emanations and distinct \gls{CPU} activity.
 This chapter will describe how we force predictable \gls{CPU} activity during experiments, and also how we tailor the software run on different architectures to achieve comparable results.
 We will also outline our expectations regarding analysis of the acoustic emanations from the experiments.
 
 \section{Selection of Test Cases}
-We use several test cases, where the aim is to gradually record increasingly subtle variations in \gls{CPU} activity, and the recordings of these will makes the basis for analysis.
-Each of these cases are represented by a utility; a program that is specifically tailored to force the desired \gls{CPU} activity during the experiment.
-We will start by oscillating between abnormally high \gls{CPU} loads and a idle system, and eventually we will try to distinguish between the execution of the repeated execution of different distinct microinstructions and specific \gls{CPU} operations.
+We use several test cases, where the aim is to gradually record increasingly subtle variations in \gls{CPU} activity, and the recordings of these will make the basis for analysis.
+Each of these cases is represented by a utility program that is specifically tailored to force the desired \gls{CPU} activity during the experiment.
+We will start by oscillating between abnormally high \gls{CPU} loads and an idle system, and eventually we will try to distinguish between the execution of different distinct low-level \gls{CPU} operations.
 
 The following sections will in detail describe the different utilities we use to inflict this \gls{CPU} behavior, and how we wrap the different tokens of predictable executions in a deterministic repeated pattern to be used in later analysis, hence relating the \gls{CPU} behavior to the time domain.
 
-\section{CPU load}\label{chp4:sec:cpu_load}
+\section{CPU Load}\label{chp4:sec:cpu_load}
 Our first choice of distinguishable \gls{CPU} activity is in the form of a \gls{CPU} burn utility. 
-The idea is that when no programs are running, save the operating system, the activity level of the \gls{CPU} us low. 
-However, if the user executes a program that will make all cores on the \gls{CPU} work at close to their full capacity, the internal activity of the \gls{CPU} will change drastically as a consequence of the increased load.
+The idea is that when no programs are running, save the operating system, the activity level of the \gls{CPU} is low. 
+However, if the user executes a program that makes all cores on the \gls{CPU} work at close to their full capacity, the internal activity of the \gls{CPU} will change drastically.
 Additionally, the temperature of the \gls{CPU} will increase, hence the name.
 
-All these desired properties are available in the cpuburn collection which can be installed using the debian package manager (using
-apt-get install cpuload).\todo{Some citation here (manpage?) potentially http://www.hecticgeek.com/2012/03/cpuburn-cpu-stress-test-ubuntu-linux/}
+All these desired properties are available in the \texttt{cpuburn} collection which can be installed using the debian package manager\footnotemark.
 To be able to relate this to the time domain, we execute the \gls{CPU} burn tool in the pattern described in \autoref{lst:cpuburn_loop_utility}.
+
+\footnotetext{\texttt{cpuburn} can be installed using \texttt{apt-get install cpuload}. See \url{http://www.hecticgeek.com/2012/03/cpuburn-cpu-stress-test-ubuntu-linux/} for further details.}
 
 \begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU Burn Utility}, label={lst:cpuburn_loop_utility}]
 for i in {1..3}
 do
-	# burn all cores for 2 seconds
+	burn all cores for 2 seconds
 	sleep 1
 done
 \end{lstlisting}
 
-In a loop, the \gls{CPU} will operate at close to full capacity, then sleep for a second, representing the heavy load state and the idle state.
-By recording during execution of this utility, we hope to be able to distinguish between the two states, heavy load and idle, thus be able to observe a repeating pattern with a period of \(3\) seconds, representing the loop.
+In the loop, the \gls{CPU} will operate at close to full capacity for two seconds, then sleep for a second, representing the heavy load state and the idle state.
+By recording emanations during execution of this utility, we hope to be able to distinguish between the two states, heavy load and idle, thus be able to observe a repeating pattern with a period of \(3\) seconds, representing the loop.
 
-For the Raspberry Pi, we use the sysbench~\cite{url:sysbench_wiki} benchmarking tool to generate \gls{CPU} load.
+For the Raspberry Pi, we use the \texttt{sysbench}\footnotemark{} benchmarking tool to generate \gls{CPU} load.
+\footnotetext{\texttt{sysbench} is a benchmarking tool available on Raspbian Wheezy. See \url{http://wiki.gentoo.org/wiki/Sysbench} for further details.}
 
-\section{Microinstructions}\label{chp4:sec:microinstructions}
-\todo{Ingress}
 
+\section{CPU Operations}\label{chp4:sec:microinstructions}
+
+The CPU operations utility program is used to force reliable execution of different CPU operations at the microinstruction level.
 
 \subsection{Mapping to Time Domain}\label{chp4:sec:mapping_to_time_domain}
-The next utility is used to force reliable execution of different microinstructions and \gls{CPU} operations.
-Genkin et al. suggest that looping through a set of microinstructions that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each \gls{CPU} operation.
-We want an utility that lets us do a similar experiment, and possibly achieve similar results.
+Genkin et al. suggest that looping through a set of low-level CPU operations that are repeated over an observable period of time, should result in a distinguishable acoustic fingerprint for each \gls{CPU} operation.
+We want a utility that lets us do a similar experiment, and possibly achieve similar results.
 
 Since we are using sampling frequencies in the kHz-range and processors operate on frequencies in the GHz-range, it is futile to try to capture the fingerprint of a single clock cycle representing the execution of a specific microinstruction. 
-This limitation can be overcome by repeating the same instruction for a longer period of time, such that every \(\Delta t\) seconds, a new instruction will start executing, and this instruction will execute in a loop until it is replaced after another \(\Delta t\) seconds.
+This limitation can be overcome by repeating the same instruction for a longer period of time, such that every \(\Delta t\) seconds, a new instruction will be chosen, and this instruction will be repeated in a loop until it is replaced after another \(\Delta t\) seconds.
 With \(n\) different instructions, one pass through all instructions will take \(T = n \times \Delta t\) seconds.
 We want to repeat the loop more than once, so that we can look not only for a change from one lastingly stable signal every \(\Delta t\) seconds, but also a repeating pattern every \(T\) seconds, representing the loop over all instructions.
 
-The microinstruction repetition pattern used in this utility is given in \autoref{lst:microinstruction_loop_utility}
+The repetition pattern used in this utility is given in \autoref{lst:microinstruction_loop_utility}
 
-\begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: Microinstruction loop utility.}, label={lst:microinstruction_loop_utility}]
+\begin{lstlisting}[language=BASH, caption={Mapping execution to the time domain: CPU operation loop utility.}, label={lst:microinstruction_loop_utility}]
 for i in {1..3}
 do
 	for j in {1..n}
 	do
-		# run instruction j for 0.33 seconds
+	   run CPU operation j for 0.33 seconds
 	done
 done
 \end{lstlisting}
 
-The \gls{CPU} operations we will loop are the MUL, ADD and NOP microinstructions as well as memory access with forced L1 and L2 cache miss.
+The \gls{CPU} operations we will observe are the \texttt{MUL}, \texttt{ADD} and \texttt{NOP} microinstructions as well as memory access with forced L1 and L2 cache miss.
 The following subsections will go into further detail on how timely and predictable execution is achieved in all four cases for both ARM and x86 architectures.
 
 
 \subsection{Memory Access and Predictable Cache Miss}\label{chp4:subsec:MEM_operation}
-The memory dereference (MEM) operation's performance with regard to speed depends heavily on if the target is cached or not. 
-If cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value is read from the \gls{RAM}.
-We want to achieve an execution sequence where the \gls{CPU} constantly has to go all the way to the RAM to fetch values.
-
+The memory dereference (\texttt{MEM}) operation's performance with regard to speed depends heavily on if the target is cached or not. 
+If a cache hit occurs in the L1 or L2 cache, the lookup time is much lower than if the value is read from \gls{RAM}.
+We want to achieve an execution sequence where the \gls{CPU} constantly has to go all the way to RAM to fetch values.
 
 As it turns out, list access loads and stride access loads are a good generator of cache misses~\cite{DBLP:conf/micro/OzawaKN95}.
-Unfortunately, modern processors are putting great effort into predict memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
+Unfortunately, modern processors are putting great effort into predicting memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
 For this reason, we cannot rely on simple mechanisms such as sequential memory access using a stride bigger than the size of the cache.
-Luckily the existence of hardware performance counters made available in the Linux operating system allow us to evaluate our approach to the MEM operation. 
+Luckily, the existence of hardware performance counters made available in the Linux operating system allow us to evaluate our approach to the \texttt{MEM} operation. 
 Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution~\cite{url:perf_wiki}.
 Therefore, we are able to benchmark our approach, and verify if we successfully bypass prediction and prefetching mechanisms.
 
-We make two programs; \(A\), which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted CPU; and \(B\), which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
+We make two programs; \(A\), which randomly resolves \(n = 1000\) indexes in an array that is several orders of magnitude bigger than the L2 cache of the targeted \gls{CPU}; and \(B\), which is identical to \(A\), save the fact that it deterministically resolves subsequent indexes.
 During the course of execution, \(A\) should to suffer approximately \(k+n\) cache misses, while \(B\) should suffer only \(k\), due to successful stride prediction.
-Here \(k\) represents the baseline cache misses suffered for running the parts in some section of the program required to set up the loop, and \(n\) represents the amount of cache misses suffered from resolving indexes in the array.
-If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the MEM operation. 
+Here \(k\) represents the baseline cache misses suffered for running the parts in some section of the program required to set up the loop, and \(n\) represents the amount of cache misses suffered from resolving indexes in the array, due to having to perform the memory dereference in RAM.
+If this condition holds, we can argue that the program \(A\) should cause \(n\) more cache misses than \(B\) and thus reliably executes the \texttt{MEM} operation. 
 
-\begin{figure}
+We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\).
+Then we look at the difference in cache misses \(\Delta C_i = c_{A_i} - c_{B_i}\) for every run \(i \in [1, 1000]\).
+The results are given in \autoref{fig:mem_benchmark}, and represent the results for our two target laptops; a Lenovo T60p laptop with a Intel Centrino Duo \gls{CPU}; and a Dell Latitude D430 laptop also with a Intel Centrino Duo \gls{CPU}.
+
+\begin{figure}[ht]
     \begin{subfigure}{0.5\textwidth}
         \centering
         \resizebox{0.9\textwidth}{!}{
@@ -128,24 +134,22 @@ If this condition holds, we can argue that the program \(A\) should cause \(n\) 
     \label{fig:mem_benchmark}
 \end{figure}
 
-We ran \(A\) and \(B\) \(1000\) times, measuring the number of cache misses \(c_A\) and \(c_B\) suffered by \(A\) and \(B\).
-Then we look at the difference in cache misses \(\Delta C_i = c_{A_i} - c_{B_i}\) for every run \(i \in [1, 1000]\).
-The results are given in \autoref{fig:mem_benchmark}, and represent the results for our two target laptops; a Lenovo T60p laptop with a Intel Centrino Duo \gls{CPU}; and a Dell Latitude D430 laptop also with a Intel Centrino Duo \gls{CPU}.
-They clearly show that the probability of observing the expected \(\Delta C\) close to \(1000\) prevalent for both of the computers.
+\autoref{fig:mem_benchmark} clearly show that the probability of observing the expected \(\Delta C\) close to \(1000\) prevalent for both of the computers.
+Note that the results contain values that are both significantly bigger and smaller than the expected value of \(1000\), and this is caused by the fact that the value \(k\) is subject to a big variance.
 This is good enough to satisfy our condition, as the amount of cache misses suffered also strictly higher in \(A\) as compared to \(B\).
-Our MEM utility program is successfully bypassing the \gls{CPU}s best efforts of hardware prefetching and stride prediction.
+Our \texttt{MEM} operation is successfully bypassing the \gls{CPU}s best efforts of hardware prefetching and stride prediction.
 For code-level details as to how the benchmark was conducted, see~\autoref{apx:mem_benchmark}.
 
 
-
-
-\subsection{MUL, ADD and NOP execution on Different Architectures}\label{chp4:subsec:MUL_ADD_NOP_instructions}
-The three native microinstructions that we look at are MUL, ADD, and NOP.
-To achieve the repeated execution of these instructions over time, we repeat the assembly code for each instruction \(1000\) times in a loop.
+\subsection{\texttt{MUL}, \texttt{ADD} and \texttt{NOP} Execution on Different Architectures}\label{chp4:subsec:MUL_ADD_NOP_instructions}
+The three native microinstructions that we look at are \texttt{MUL}, \texttt{ADD}, and \texttt{NOP}.
+To achieve persistent execution of these instructions over time, we repeat the assembly code for each instruction \(1000\) times in a loop.
 This ensures that the targeted instructions are prevalent, and reduce the impact of the required instructions to perform the eventual loop, and tracking the overall duration.
+Note that we could have extended the length of each assembly to take the frequency of the repeating runs to the kHz range that is observable with our setup.
+Genkin et al. have experimented and with various lengths of such loops, finding differences in the acoustic signatures resulting from different lengths~\cite[Section 3.2]{DBLP:journals/iacr/GenkinST13}.
 
-\newsavebox{\MEMfigure}
-	\begin{lrbox}{\MEMfigure}%store first listing
+\newsavebox{\MULfigure}
+	\begin{lrbox}{\MULfigure}%store first listing
 	\begin{lstlisting}[language={[x86masm]Assembler}]
 		mov $0, %eax;
 		mov $1, $ebx;
@@ -165,36 +169,35 @@ This ensures that the targeted instructions are prevalent, and reduce the impact
 \begin{figure}[h]
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \usebox{\MEMfigure}
-        \caption{MEM}
+        \usebox{\MULfigure}
+        \caption{\texttt{MUL}}
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
         \usebox{\ADDfigure}
-        \caption{ADD}
+        \caption{\texttt{ADD}}
     \end{subfigure}
-	\caption{The setup code for the NOP and MEM instructions. The instruction on line no. 3 is repeated \(1000\) times.}
+	\caption{The setup code for the \texttt{MUL} and \texttt{ADD} instructions. The instruction on line no. 3 is repeated \(1000\) times.}
 	\label{lst:x86_add_mem}
 \end{figure}
 
-The NOP operation is represented by rep; nop; repeated \(1000\) times; for the MEM and ADD instructions, see \autoref{lst:x86_add_mem}.
+The \texttt{NOP} operation is represented by \texttt{rep nop} repeated \(1000\) times.
+For the \texttt{MEM} and \texttt{ADD} instructions, see \autoref{lst:x86_add_mem}.
 
 
 \subsection{Expectations regarding acoustic fingerprints}
-The utility is combining the MEM operation, as described in \autoref{chp4:subsec:MEM_operation} and the MUL, ADD and NOP-loops which are described in \autoref{chp4:subsec:MUL_ADD_NOP_instructions}.
+The utility is combining the \texttt{MEM} operation, as described in \autoref{chp4:subsec:MEM_operation} and the \texttt{MUL}, \texttt{ADD} and \texttt{NOP}-loops which are described in \autoref{chp4:subsec:MUL_ADD_NOP_instructions}.
 Executing the four operations in the pattern given in \autoref{lst:microinstruction_loop_utility}, the goal is to observe repeating patterns in the acoustic emanations of the \gls{CPU}s during execution of the utility.
-More precisely, we will look for periodic patterns that with a duration in time \(t\) of \(0.33\) seconds, representing individual operations. 
+More precisely, we will look for periodic patterns with a duration in time \(t\) of \(0.33\) seconds, representing individual operations. 
 If we can see such patterns with a period of \(4t = 1.33\) seconds, the same as that of our outer loop, it would suggest that the emanations are be caused by the \gls{CPU} performing the operations forced by our utility.
 Thus we can argue that we are in fact able to distinguish between such low level operations based purely on the acoustic fingerprint. 
 
 
-
 \section{Decryption}\label{chp4:sec:decryption}
-Genkin et al. suggest that it is possible to distinguish between the different steps involved in a decryption using a 4096-bit RSA key.
-For our decryption utility, we will use the same key size, and perform decryption. 
-We use the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
+Genkin et al. suggest that it is possible to distinguish between the different steps involved in decryption with a 4096-bit RSA key.
+For our decryption utility, we use the same key size, the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
-The cipher text being decrypted is the result of encrypting a 4.2MB WAV format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
+The cipher text being decrypted is the result of encrypting a 4.2MB WAV-format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
 Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 
 
 To be able to relate the decryption to the time domain, we execute the decryption according to the pattern given in \autoref{lst:decryption_loop_utility}
@@ -206,10 +209,10 @@ label={lst:decryption_loop_utility}]
 for i in {1..3}
 do
     sleep 1
-    # perform decryption
+    decrypt
 done
 \end{lstlisting}
 
-The pause between each decryption may resolve in a pattern that can be observed during analysis of the acoustic emanations, by allowing us to relate what is happening to the time domain, in the sense that we know the duration of each sleep.
+The pause between each decryption may resolve in a pattern that can be observed during analysis of the acoustic emanations, allowing us to relate what is happening to the time domain, since we know the duration of each sleep.
 The duration of a single decryption can also be measured, although it will differ on different computers.
 Therefore we are left with a clear idea of what to search for during analysis.
