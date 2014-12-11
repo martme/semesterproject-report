@@ -1,25 +1,27 @@
 \chapter{Background}\label{chp:background} 
-In this chapter we will look at how side channels have been used earlier, and look at current research on the field of low-bandwidth acoustic cryptanalysis.
+In this chapter we will look at how side-channels have been used earlier, and look at current research on the field of low-bandwidth acoustic cryptanalysis.
 
 
 \section{Side-Channels}\label{chp2:sec:side_channel}
 Computer systems can in theory achieve security, as code can be secure from a mathematical perspective.
 However, these systems are realized in a physical form which introduces unintended channels where information is leaked.
-These channels include electricity consumption, time taken to compute and electromagnetic emanations. 
-All of these have to be taken into consideration when transforming a system from the theoretical model to a physical realization, as even computer code need to be executed on a physical circuit.
-Failure to consider this information leakage can enable an attacker to break the systems, e.g. by extracting cryptographic keys.
+These channels include electricity consumption, time taken to compute, and electromagnetic emanations. 
+All of these have to be taken into consideration when transforming a system from a theoretical model to a physical realization, as even computer code needs to be executed on a physical circuit.
+Failing to consider this information leakage can enable an attacker to break the system, e.g. by extracting cryptographic keys.
 
 \subsection{Acoustic Cryptanalysis of Mechanical Systems}\label{chp2:subsec:acoustic_cryptanalysis}
-The acoustic side channel has been known as a potential attack vector for mechanical systems since the second world war, where phone taps were used to find the keys of mechanical cipher machines, as the code was renewed every day, producing a mechanical click sound which enabled an eavesdropper to derive yesterdays key~\cite{wright1988spycatcher}
+The acoustic side channel has been known as a potential attack vector for mechanical systems since the second world war, where phone taps were used to find the keys of mechanical cipher machines. 
+The codes were renewed every day, producing a mechanical click sound which enabled an eavesdropper to derive yesterdays key~\cite{wright1988spycatcher}.
 
-In 2005, some Asonov et al. were able to reconstruct what was typed on a keyboard by analyzing the acoustic emanations, using a neural network~\cite{DBLP:conf/sp/AsonovA04}. 
-They also showed that phones and ATMs with mechanical keyboards can be vulnerable to this king of acoustic side channel attacks.
+In 2005, Asonov et al. were able to reconstruct what was typed on a keyboard by analyzing the acoustic emanations, using a neural network~\cite{DBLP:conf/sp/AsonovA04}. 
+They also showed that phones and ATMs with mechanical keyboards can be vulnerable to this kind of acoustic side-channel attacks.
 
 \subsection{Timing Attacks}\label{chp2:subsec:timing_attacks}
-The devastating result of not taking side channels into consideration in cryptographic implementations was shown by Paul Kocher in 1996, when he presented his findings in how measuring the amount of time required by an operation enabled an attacker to break cryptosystems such as RSA and Diffie-Hellman~\cite{DBLP:conf/crypto/Kocher96}.
+The devastating result of not taking side channels into consideration in cryptographic implementations was shown by Paul Kocher in 1996. 
+He presented his findings in how measuring the amount of time required by an operation enabled an attacker to break cryptosystems such as RSA and Diffie-Hellman~\cite{DBLP:conf/crypto/Kocher96}.
 
 In 2011, Brumley et al. published a paper describing a timing attack vulnerability in OpenSSL allowing an attacker to ultimately extract private keys~\cite{DBLP:conf/esorics/BrumleyT11}.
-This is a display of how known side channels can be hard to silence.
+This is a good example of how hard known side-channels can be to silence.
 
 
 \subsection{Power Analysis}\label{chp2:subsec:power_analysis}
@@ -29,13 +31,13 @@ These kinds of attacks can be empowered by using statistical models, using \gls{
 
 
 \subsection{Electromagnetic Emanation Analysis}\label{chp2:subsec:electromagnetic_attacks}
-An adversary can, if located within range, intercept electromagnetic signals emitted by all electronic devices. 
-It is not possible to detect this attack, and also hard to prevent. 
-One of the known attacks is extracting the electromagnetic signals from a computer monitor to reproduce the screen output.
+An adversary can, intercept electromagnetic signals emitted by all electronic devices, given that he is within range of the emanations. 
+It is not possible to detect this attack, and also hard to prevent.
+One known attack extracts the electromagnetic signals from a computer monitor to reproduce the screen output.
 These signals originate from the electron gun that manipulates each pixel~\cite{url:tempest_sans}. 
 The stronger a pixel is, the stronger the signal.
 PGP include a secure viewer that prevents these exact high frequency signals by making softened edges in the fonts.
-However, it is said to be very difficult, thus expensive to extract the signals emitted by a computer monitor. 
+However, it is said to be very difficult, and thus expensive, to extract the signals emitted by a computer monitor.
 
 
 \section{Related Work}\label{chp2:sec:related_work}
@@ -45,11 +47,11 @@ The acoustic side channel is the basis for this paper, and the research done in 
 In a rump session at the Eurocrypt 2004, Eran Tromer and Adi Shamir presented~\cite{tromer2004acoustic} a new concept of listening to CPU's searching for acoustic emanation. 
 They managed to detect HLT instructions, the only one detectable at that time, on a certain computer and used this result for further research on extracting information used in acoustic cryptanalysis~\cite{tromer2007hardware}.
 
-\subsection{Low-Frequency Acoustic Cryptanalysis}\label{chp2:subsec:original_research}
+\subsection{Low-Bandwidth Acoustic Cryptanalysis}\label{chp2:subsec:original_research}
 We base our project on the work of Daniel Genkin, Adi Shamir and Eran Tromer.
 The research they have done is the RSA Key Extraction via Low-Bandwidth Acoustic Cryptanalysis~\cite{DBLP:conf/crypto/GenkinST14}, based on their earlier work~\cite{tromer2004acoustic, tromer2007hardware}.
 Their claim is that computers produce low frequency acoustic emanations from their electronic components, possibly caused by vibrations in transistors or electronic components.
 The frequency range of the allegedly viable emanations lie in the sub 100kHz range.
 Genkin et al. were able to extract a 4096-bit RSA key using this side channel and exploiting a vulnerability in an implementation of RSA.
 The claim that the acoustic emanations in this frequency range from a computer system carries information about the state of the computer, is new.
-Earlier, acoustic cryptanalysis has been limited to mechanical systems, hence the discovery of this attack vector may open for a whole new range of new attacks.
+Earlier, acoustic cryptanalysis has been limited to mechanical systems, hence the discovery of this attack vector may open for a whole new range of attacks.
