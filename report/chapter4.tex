@@ -74,7 +74,7 @@ If a cache hit occurs in the L1 or L2 cache, the lookup time is much lower than 
 We want to achieve an execution sequence where the \gls{CPU} constantly has to go all the way to RAM to fetch values.
 
 As it turns out, list access loads and stride access loads are a good generator of cache misses~\cite{DBLP:conf/micro/OzawaKN95}.
-Unfortunately, modern processors are putting great effort into predicting memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
+However, modern processors are putting great effort into predicting memory accesses; constant stride load patterns can easily be detected in hardware~\cite{DBLP:journals/taco/LeeKV12}, and the data can be prefetched causing few to zero cache misses.
 For this reason, we cannot rely on simple mechanisms such as sequential memory access using a stride bigger than the size of the cache.
 Luckily, the existence of hardware performance counters made available in the Linux operating system allow us to evaluate our approach to the \texttt{MEM} operation. 
 Performance counters are a set of hardware registers that can be used to count events such as cache misses during the execution of a program, without impacting the execution~\cite{url:perf_wiki}.
