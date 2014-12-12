@@ -15,16 +15,16 @@ We also found that slight disposition of the microphone of a couple of centimete
 
 We did not do any experiments to verify whether the captured signatures are in fact acoustic, or if they are caused by electromagnetic emanations.
 However, we rely on the work by Genkin et al., who discuss this question in detail~\cite[Section 3.3]{DBLP:journals/iacr/GenkinST13}.
-Using the acoustic side channel, we are able to distinguish between the MEM operation and the other microinstruction loops.
+Using the acoustic side channel, we are able to distinguish between the \texttt{MEM} operation and the other microinstruction loops.
 ~\autoref{fig:T60p-knowles-micro-ips-0} is a display of how this is difference is visible for many frequencies in the frequency range.
-The results given in~\cite[Fig.~2]{DBLP:conf/crypto/GenkinST14} suggest that it is possible to observe a difference, even between the different microinstructions ADD, MUL and NOP. 
+The results given in~\cite[Fig.~2]{DBLP:conf/crypto/GenkinST14} suggest that it is possible to observe a difference, even between the different microinstructions \texttt{ADD}, \texttt{MUL} and \texttt{NOP}. 
 However, the most visible difference they present is in a frequency range much higher than the hard limit imposed on us by the sampling rate of our setup.
 Result presented in \autoref{chp5:results} are therefore inconclusive when it comes to distinguishing between the \texttt{NOP}, \texttt{MUL} and \texttt{ADD} operations.
 
 
 We have conducted experiments using different configurations of hardware and observe big variations in acoustic fingerprints for the different computers, as seen in~\autoref{fig:comparison_micorinstructions}.
 An interesting side note is how the acoustic emanations of the Lenovo T60p laptop is changing depending on if the computer is running on battery power (\autoref{fig:comparison_T60p-ekkofritt-bk-micro-ips-3}) or with a power adapter (\autoref{fig:comparison_T60p-ekkofritt-bk-micro-eps-1}).
-We believe that the noise introduced by the AC power adapter is not emanating from the power adapter itself, as we have experimented with the positioning of the adapter, without seeing any impact on the resulting acoustic signatures.
+We believe that the noise introduced by the \gls{AC} power adapter is not emanating from the power adapter itself, as we have experimented with the positioning of the adapter, without seeing any impact on the resulting acoustic signatures.
 
 \begin{figure}[ht]
     \centering
@@ -65,7 +65,7 @@ We believe that the noise introduced by the AC power adapter is not emanating fr
         \label{fig:comparison_RB-ekkofritt-bk-micro-x-8vr-0}
     \end{subfigure}
     \caption{ Acoustic signatures when running the CPU operations experiment on following devices:
-    (a) T60p with AC power adopter (lab-grade setup).
+    (a) T60p with \gls{AC} power adopter (lab-grade setup).
     (b) T60p on battery power (lab-grade setup).
     (c) Raspberry PI recording the CPU (lab-grade setup).
     (d) D430 on battery power (lab-grade setup).
@@ -107,7 +107,7 @@ In the guidance paper about protection against eavesdropping published by the \g
 However, the shielding requirement for a TEMPEST certified equipment is made with respect to electromagnetic signals.
 Thus TEMPEST requirements for shielding (e.g. a Faraday cage) might not protect against acoustic emanations. 
 
-The Red/Black Engineering-Installation Guidelines~\cite[Section 30.1, page 91]{url:Red/Black/Engineering} created by the \gls{DoD}, states that unauthorized (BLACK) and authorized (RED) equipment should at least be separated with 3 feet (roughly 0.9 m).
+The Red/Black Engineering-Installation Guidelines~\cite[Section 30.1, page 91]{url:Red/Black/Engineering} created by the \gls{DoD}, states that unauthorized (BL\gls{AC}K) and authorized (RED) equipment should at least be separated with 3 feet (roughly 0.9 m).
 Other electronic devices such as mobile phones and personal laptops should not be permitted to areas where RED equipment is installed. 
 Genkin et al. were able to recover a 4096-bit RSA key from a distance of 10 meters, thus an air gap of 0.9 meters will not suffice in canceling the acoustic side-channel itself.
 
