@@ -32,7 +32,7 @@ The microphone has a flat frequency response up to 80kHz, with a -4dB sensitivit
 To power the microphone we use a 4.5V battery.
 \gls{NI} myDAQ is used for sampling, connecting the microphone directly into the Analog Input 0 on the myDAQ device.
 
-The fact that the sampled signal is not bandlimited, i.e there are no low-pass filter in this setup, the sampling theorem suggest that we should observe distortion due to aliasing~\cite{proakis2007digital}.
+The fact that the sampled signal is not bandlimited, i.e there are no low-pass filter in this setup, the sampling theorem suggest that we should observe distortion due to aliasing~\cite[pp. 384-394]{proakis2007digital}.
 
 There are interesting implications of this setup; the microphone itself is very small as well as being very cheap, costing only a few dollars. 
 Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, for instance in a side-channel attack against a vulnerable RSA implementation, as suggested in~\cite{DBLP:conf/crypto/GenkinST14}.
@@ -53,7 +53,7 @@ The filtered signal is sent to the \gls{NI} myDAQ, and lastly encoded in a WAV f
 B \leq \frac{F_{s}}{2}
 \end{equation}
 
-The sampling theorem, given in~\autoref{eq:sampling_theorem}, gives that the ability to uniquely recover frequencies $B$ from a sampled signal is bound by the sampling frequency, given a bandlimited continuous-time signal~\cite{proakis2007digital}.
+The sampling theorem, given in~\autoref{eq:sampling_theorem}, gives that the ability to uniquely recover frequencies $B$ from a sampled signal is bound by the sampling frequency, given a bandlimited continuous-time signal~\cite[pp. 384-394]{proakis2007digital}.
 Since the inclusion of a band-pass filter gives such a signal for this setup, and we have $B = 80kHz$ and $F_s = 200kHz$, the condition of the sampling theorem holds.
 Thus, we should experience far less distortion resulting from aliasing using this setup.
 
