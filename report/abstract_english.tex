@@ -1,13 +1,12 @@
 \pagestyle{empty}
 \begin{abstract}
-Computers emit low bandwidth acoustic signals, i.e. sounds audibly by the human ear and up to several hundred kHz. 
-This phenomena exposes several computers for acoustic side-channel attacks by adversaries who wants to gain information about what operations the CPU is performing, and possibly extracting cryptographic keys.
+Computers allegedly emit low-bandwidth acoustic signals, i.e. acoustic emanations from the audible range of the human ear and up to several hundred kHz. 
+This phenomenon exposes computers to acoustic side-channel attacks, as adversaries can obtain information about internal operations on the CPU, which can possibly be used to extract cryptographic keys.
 
-In this paper we build a portable and a lab grade setup that we use to verify the existence of the acoustic side-channel found in numerous computers.
+In this paper we build a portable and a lab-grade setup, and use them to analyze the information in the suggested side-channel for several computers.
 
-Our empirical observations clearly enhances the suspicion of the existence of interpretable acoustic emanations from the range 0-100kHz. 
-We find it easy to distinguish between some CPU operations and generally the CPUs workload.
-We also demonstrate that the acoustic fingerprints vary a lot depending on the processor, thus the signal can be indistinguishable on some newer CPUs. 
+Our empirical analysis of frequency spectrograms resulting from our experiments enhance the suspicion that there exist information leakage through an acoustic side-channel in the frequency range 0-100kHz.
 
-
+We are able to distinguish between different CPU operations and variations in CPU workload by evaluating frequency spectrograms.
+We also demonstrate that the acoustic signatures of different hardware configurations vary significantly.
 \end{abstract}
