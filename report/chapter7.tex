@@ -4,7 +4,7 @@
 In this paper we have conducted independent experiments with an aim on verifying the claims of Genkin et al. 
 The experiments have touched a part of the results presented in~\cite{DBLP:conf/crypto/GenkinST14}, as they have aimed to verify the bare existence of the acoustic side channel as a viable medium to extract information leakage.
 
-Our research show that we are able to support the claims that the acoustic side channel conveys enough information to distinguish between different modes of low-level CPU operations.
+Our research show that we are able to support the claims that the acoustic side channel conveys enough information to distinguish between different low-level CPU operations.
 We display that the \gls{SNR} in some cases is strong enough to easily spot such differences using simple plots of the frequency spectra.
 
 The most significant result obtained is the clear display of difference in the acoustic fingerprint of the MEM operation and looping other microinstructions.
@@ -13,18 +13,14 @@ Additionally, this suggests that low-cost equipment can be sufficient for inform
 
 Results presented in this paper support the claims by Genkin et al.; low-bandwidth acoustic emanations from computers carry information about the internal state of the \gls{CPU}.
 Moreover, extracting this information can be done with a relatively cheap setup, under sub-optimal conditions.
-Our experiments show that recording in an anechoic chamber is in no way a necessity, and that the \gls{SNR} while recording in a room full of other people and different computer equipment is sufficient to clearly see differences in the acoustic fingerprints of distinct \gls{CPU} operations.
-
-
+Our experiments show that recording in an anechoic chamber is in no way a necessity, and that the \gls{SNR} while recording in a room full of other people and different computer equipment is sufficient to clearly see differences in the acoustic fingerprint of distinct \gls{CPU} operations.
 
 \section{Future Work}\label{chp7:sec:future_work}
 An assumption taken in our work is that the emanations observed during the experiments are in fact acoustic.
 This question is discussed by Genkin et al., and they have conducted experiments to support their claim.
 We have not reproduced any of these experiments, as we have merely looked at information leakage from CPUs operating under very specific conditions.
-Future work will aim to support the theory that the emanations are acoustic.
-Additionally, understanding the phenomenons causing the emanations, and identifying the source is a subject to research in the future.
-
-
+Future work should aim to support the theory that the emanations are indeed acoustic.
+Additionally, understanding the phenomenons causing the emanations, and identifying the source should be subject to future research.
 
 
 \begin{enumerate}
