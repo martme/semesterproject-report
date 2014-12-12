@@ -5,12 +5,7 @@ import numpy as np
 from pylab import *
 
 def main(argv):
-
-    if (len(argv) > 0):
-        foo = double(argv[0])
-    else:
-        foo = 50;
-
+    
     title   = sys.stdin.readline().strip()          # filepath to sndfile
     overlap = float(sys.stdin.readline().rstrip())  # window overlap
     W       = float(sys.stdin.readline().rstrip())  # window size

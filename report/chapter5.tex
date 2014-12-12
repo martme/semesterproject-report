@@ -78,9 +78,9 @@ The acoustic signature given in~\autoref{fig:T60p-knowles-micro-ips-0} has been 
 \end{figure}
 
 The data processing behind this plot is the same as what is described in~\autoref{chp5:subsec:t60p_knowles_results_cpuload}.
-Clearly, there is a noticeable anomaly in the time period representing the MEM operation at several frequencies.
+Clearly, there is a noticeable anomaly in the time period representing the \texttt{MEM} operation at several frequencies.
 Additionally, it is easy to see the change between different operations, as it results in repeating patterns in the plot.
-Note that the CPU operations utility at the time of this recording stared with NOP operations, instead of a idle period.
+Note that the CPU operations utility at the time of this recording stared with \texttt{NOP} operations, instead of a idle period.
 
 
 
@@ -96,7 +96,7 @@ Experiments were conducted on all the devices listed in~\autoref{tbl:target_comp
 \subsection{CPU Load}\label{chp5:subsec:t60p_bk_results_cpuload}
 In the anechoic chamber we performed the \gls{CPU} load experiment on all of the target computers.
 The resulting frequency spectrograms are given for the Lenovo T60p and the Dell D430 in~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps} and ~\autoref{fig:D430-ekkofritt-bk-cpuload-eps-1} accordingly.
-Both of these recordings were done with the computers connected to AC power supplies.
+Both of these recordings were done with the computers connected to \gls{AC} power supplies.
 We also ran the experiment on the Lenovo T60p running on battery power; the frequency spectrogram for this recording is given in~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips}.
 For more related results recorded in an office environment, see~\autoref{apx:results}.
 
@@ -104,7 +104,7 @@ For more related results recorded in an office environment, see~\autoref{apx:res
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-cpuload-eps-4_description.png}
-    \caption{Acoustic signature (10 sec, 0-100kHz) of the Lenovo T60p alternating between high CPU loads and idle state while connected to an AC power supply. 
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Lenovo T60p alternating between high CPU loads and idle state while connected to an \gls{AC} power supply. 
         Recorded in an anechoic chamber using the lab-grade setup.}
     \label{fig:T60p-ekkofritt-bk-cpuload-eps}
 \end{figure}
@@ -122,15 +122,13 @@ For more related results recorded in an office environment, see~\autoref{apx:res
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-cpuload-eps-1_description.png}
-    \caption{Acoustic signature (10 sec, 0-100kHz) of the Dell D430 alternating between high CPU loads and idle state while connected to an AC power supply
+    \caption{Acoustic signature (10 sec, 0-100kHz) of the Dell D430 alternating between high CPU loads and idle state while connected to an \gls{AC} power supply
         Recorded in an anechoic chamber using the lab-grade setup.}
     \label{fig:D430-ekkofritt-bk-cpuload-eps-1}
 \end{figure}
 
-The differences between~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps} and~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips} show that whether the computer is connected to an AC power supply or not has a big impact on the acoustic signature.
+The differences between~\autoref{fig:T60p-ekkofritt-bk-cpuload-eps} and~\autoref{fig:T60p-ekkofritt-bk-cpuload-ips} show that whether the computer is connected to an \gls{AC} power supply or not has a big impact on the acoustic signature.
 We are able to distinguish between the different states due to the execution pattern, where the CPU load state lasts for $2$ seconds, while the idle state has a duration of $1$ second.
-\todo{Discuss why!}
-
 
 \subsection{Decryption}\label{chp5:subsec:t60p_bk_results_decryption}
 In~\autoref{fig:T60p-ekkofritt-bk-decrypt-ips-3} we can see the resulting acoustic signatures from running the decryption utility with the lab-grade setup.
@@ -150,7 +148,7 @@ Both recordings are done in an anechoic chamber.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{D430-ekkofritt-bk-decrypt-eps-0_description.png}
-    \caption{Acoustic signature (6 sec, 0-100kHz) of the Dell D430 connected to an AC power supply running the decryption experiment.
+    \caption{Acoustic signature (6 sec, 0-100kHz) of the Dell D430 connected to an \gls{AC} power supply running the decryption experiment.
         Recorded in an anechoic chamber using the lab-grade setup.}
     \label{fig:D430-ekkofritt-bk-decrypt-eps-0}
 \end{figure}
@@ -158,18 +156,18 @@ Both recordings are done in an anechoic chamber.
 
 
 \subsection{CPU Operations}\label{chp5:subsec:t60p_bk_results_micro}
-In~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} we see the resulting frequency spectrogram of different \gls{CPU} operations using the lab-grade setup on the Lenovo T60p laptop connected to an AC power supply.
+In~\autoref{fig:T60p-ekkofritt-bk-micro-eps-1} we see the resulting frequency spectrogram of different \gls{CPU} operations using the lab-grade setup on the Lenovo T60p laptop connected to an \gls{AC} power supply.
 The recording was done in an anechoic chamber.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{T60p-ekkofritt-bk-micro-eps-1_description.png}
     \caption{Acoustic signature (6 sec, 0-100kHz) of the Lenovo T60p when running different \gls{CPU} operations.
-        Recorded using the lab-grade setup in an anechoic chamber, while the computer was connected to an AC power supply.}
+        Recorded using the lab-grade setup in an anechoic chamber, while the computer was connected to an \gls{AC} power supply.}
     \label{fig:T60p-ekkofritt-bk-micro-eps-1}
 \end{figure}
 
-The anomaly at a little over 20kHz is also present in~\autoref{fig:T60p-knowles-micro-ips-0}, which suggests that this period in time corresponds to the MEM operation.
+The anomaly at a little over 20kHz is also present in~\autoref{fig:T60p-knowles-micro-ips-0}, which suggests that this period in time corresponds to the \texttt{MEM} operation.
 Also, the duration of the anomalies, as well as the period between each time they occur, match the pattern of execution of the CPU operations utility.
 
 

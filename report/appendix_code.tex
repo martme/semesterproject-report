@@ -3,7 +3,7 @@
 \section{Processing Sound Files}
 The following program written in C was used to process the sound files recorded in our experiments. 
 The reason for writing the program this way is because we were more comfortable with writing in C than using i.e. Matlab.
-Additionally, we think this code is very adoptable, and can easily be adjusted to process real time recordings.
+Additionally, we think this code is very adoptable, and can easily be reworked to process real-time recordings as well as being used in combination with automated statistical analysis in future work.
 
 \section{Usage}
 The output from \autoref{lst:main.c} is piped to \autoref{lst:plot.py}, to produce a plot representing the frequency response for the duration of the recording. 
@@ -11,7 +11,7 @@ The output from \autoref{lst:main.c} is piped to \autoref{lst:plot.py}, to produ
 
 \section{Signal Processing in C}
 The signal processing is done with \autoref{lst:main.c}, a routine written in C.
-The frequency responses resulting from each Fourier transformed window is passed to the standard output, as well as some meta data.
+The frequency responses resulting from each Fourier transformed window is written to standard output, as well as some metadata.
 
 \begin{lstinputlisting}[language=C, caption={main.c - Compute Power Spectrum of a Sound File}, label={lst:main.c}]{code/main.c}
 \end{lstinputlisting}
@@ -20,7 +20,7 @@ The frequency responses resulting from each Fourier transformed window is passed
 \section{Plotting in Python}
 Plotting is done using the Python script given in \autoref{lst:plot.py}.
 The data is read from standard input, i.e. the output from the signal processing routine.
-Simple operations, such as applying a logarithmic scale to the spectra, and setting thresholds for the plot is done by tuning parameters in this script.
+Simple operations, such as applying a logarithmic scale to the spectra, and setting thresholds for the plot, is done by tuning parameters in this script.
 
 \begin{lstinputlisting}[language=Python, caption={plot.py - Plot frequency spectra on time axis}, label={lst:plot.py}]{code/plot.py}
 \end{lstinputlisting}

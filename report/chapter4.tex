@@ -1,4 +1,4 @@
-\chapter{Predictable Execution and Mapping to Time Domain}\label{chp4:predictable_execution} 
+\chapter{Predictable Execution Patterns}\label{chp4:predictable_execution} 
 A prerequisite to analyze a acoustic recording is to possess an idea of what has been recorded. 
 This allows us to look at the correlation between different actions, and their effect on the recording.
 In our case this means that we need to know what is happening in the \gls{CPU} for the duration of our recordings.
@@ -130,7 +130,7 @@ The results are given in \autoref{fig:mem_benchmark}, and represent the results 
         }
         \caption{Lenovo Thinkpad T60p, $\bar{\Delta C} = 992, s=43$ }
     \end{subfigure}
-    \caption{Sample distribution of suffered cache misses - probability of observing \(\Delta C\) cache misses from sample size $n=1000$ obtained by running the MEM benchmark described in \autoref{apx:mem_benchmark}.}
+    \caption{Sample distribution of suffered cache misses - probability of observing \(\Delta C\) cache misses from sample size $n=1000$ obtained by running the \texttt{MEM} benchmark described in \autoref{apx:mem_benchmark}.}
     \label{fig:mem_benchmark}
 \end{figure}
 
@@ -197,7 +197,7 @@ Thus we can argue that we are in fact able to distinguish between such low level
 Genkin et al. suggest that it is possible to distinguish between the different steps involved in decryption with a 4096-bit RSA key.
 For our decryption utility, we use the same key size, the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
-The cipher text being decrypted is the result of encrypting a 4.2MB WAV-format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
+The cipher text being decrypted is the result of encrypting a 4.2MB \gls{WAV}-format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
 Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 
 
 To be able to relate the decryption to the time domain, we execute the decryption according to the pattern given in \autoref{lst:decryption_loop_utility}

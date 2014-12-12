@@ -1,13 +1,18 @@
 \chapter{Conclusion and Future Work}\label{chp7:conclusion}
 
 \section{Conclusion}
+
+An assumption taken in our work is that the emanations observed during the experiments are in fact acoustic.
+This question is discussed by Genkin et al., and they have conducted experiments to support their claim stating that this is true.
+All our research rely on the validity of this claim.
+
 In this paper we have conducted independent experiments with an aim on verifying the claims of Genkin et al. 
 The experiments have touched a part of the results presented in~\cite{DBLP:conf/crypto/GenkinST14}, as they have aimed to verify the bare existence of the acoustic side channel as a viable medium to extract information leakage.
 
-Our research show that we are able to support the claims that the acoustic side channel conveys enough information to distinguish between different low-level CPU operations.
+Our research show that we are able to support the claims that the acoustic side channel conveys enough information to distinguish between different low-level \gls{CPU} operations.
 We display that the \gls{SNR} in some cases is strong enough to easily spot such differences using simple plots of the frequency spectra.
 
-The most significant result obtained is the clear display of difference in the acoustic fingerprint of the MEM operation and looping other microinstructions.
+The most significant result obtained is the clear display of difference in the acoustic fingerprint of the \texttt{MEM} operation and looping other microinstructions.
 Differences can even be observed at frequencies in the audible range, which supports the claim made by Genkin et al., that a mobile phone's microphone can be used to extract viable information from the side channel.
 Additionally, this suggests that low-cost equipment can be sufficient for information extraction over this side-channel, something which is supported by our results using our portable recording setup as described in~\autoref{chp3:sec:knowles_configuration}.
 
@@ -16,17 +21,10 @@ Moreover, extracting this information can be done with a relatively cheap setup,
 Our experiments show that recording in an anechoic chamber is in no way a necessity, and that the \gls{SNR} while recording in a room full of other people and different computer equipment is sufficient to clearly see differences in the acoustic fingerprint of distinct \gls{CPU} operations.
 
 \section{Future Work}\label{chp7:sec:future_work}
-An assumption taken in our work is that the emanations observed during the experiments are in fact acoustic.
-This question is discussed by Genkin et al., and they have conducted experiments to support their claim.
-We have not reproduced any of these experiments, as we have merely looked at information leakage from CPUs operating under very specific conditions.
-Future work should aim to support the theory that the emanations are indeed acoustic.
-Additionally, understanding the phenomenons causing the emanations, and identifying the source should be subject to future research.
+We have not reproduced any of the experiments to verify the claim that the emanations observed are in fact acoustic.
+Future work should aim to support this theory.
+Understanding the phenomenons causing the emanations, and identifying the source should also be subject to future research.
 
-
-\begin{enumerate}
-	\item ADD loops of different lengths
-	\item Statistical models for correlation
-	\item Real time analysis
-	\item Experiments on the proposed attack against RSA
-	\item Listening to GPU for reproducing display
-\end{enumerate}
+In this paper we have have merely looked at information leakage from CPUs operating under very specific extreme conditions.
+Building statistical correlation models to look at more subtle changes of acoustic signatures should also be a goal for future work, as the work presented in this paper is limited by the methodology chosen.
+This approach, combined with real-time analysis, would allow for experiments with suggested applications in cryptanalysis, such as the proposed side-channel attack on the vulnerable RSA implementation.

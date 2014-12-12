@@ -61,7 +61,7 @@ int process_sndfile (char * sndfilepath)
         return 1;
     }
 
-    /* Check channels - sterio */
+    /* Check channels - stereo */
     if (sndinfo.channels > 2) {
         fprintf(stderr, "Wrong number of channels; got more than two.\n");
         sf_close(sndfile);
