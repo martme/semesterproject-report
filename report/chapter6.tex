@@ -94,9 +94,13 @@ It is still worth noting that the findings of Genkin et al. suggest that disting
 
 Our portable setup (\autoref{chp3:sec:knowles_configuration}) could be made even smaller and mounted with a small transmitter. 
 This makes the setup mountable on stationary computers, where it could be used for eavesdropping. 
+
+Manufacturers with malicious intentions can mount a small ultrasound microphone on a selection of devices from a batch, which in many cases will not be discovered.
+
+
 \todo{write further}
 
-Genkin et al. introduces some possible attack scenarios that could exploit the acoustic emanations in~\cite[Section 1.2 and Appendix B]{DBLP:journals/iacr/GenkinST13}
+Genkin et al. introduces some possible attack scenarios that could exploit the acoustic emanations in~\cite[Section 1.2 and Appendix B]{DBLP:journals/iacr/GenkinST13}, like an acoustic attack app and self-eavesdropping.
 
 \section{Countermeasures}\label{chp6:sec:countermeasures}
 
@@ -108,6 +112,6 @@ The Red/Black Engineering-Installation Guidelines~\cite[Section 30.1, page 91]{u
 Other electronic devices such as mobile phones and personal laptops should not be permitted to areas where RED equipment is installed. 
 Genkin et al. showed that they can recover a 4096-bit RSA key from 4 meters, in which 0.9 meter will not be sufficient distance depending on the acoustic signal strength. 
 
-The strength of the acoustic signals we discovered is significantly high (audibly by the human ear) and will be hard to shield on a small laptop.
+The strength of the acoustic signals we discovered is significantly strong (audibly by the human ear) and will be hard to shield on a small laptop.
 However, our observations enhances Genkin et al. suspicion of that the signal quality seems correlated to the computer's age, hence newer computers might be protected sufficiently. 
 
