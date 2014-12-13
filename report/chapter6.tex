@@ -2,16 +2,7 @@
 In this chapter we will discuss the viability of the low frequency acoustic emanations.
 We will also look at the cases where the analysis of these emanations can be useful and how current guidelines for shielding information systems are helping against this threat.
 
-
-\section{Viability of Extracted Information}
-We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the \gls{CPU}.
-However, we have tried to capture the effect at different positions on our Lenovo T60p laptop. 
-For this specific computer we experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the \gls{CPU}.
-We also found that slight disposition of the microphone of a couple of centimeters, while still hovering the \gls{CPU} cooling block, notably impact the signal strength.
-
-
 \section{Significance of Results}
-
 We did not do any experiments to verify whether the captured signatures are in fact acoustic, or if they are caused by electromagnetic emanations.
 However, we rely on the work by Genkin et al., who discuss this question in detail~\cite[Section 3.3]{DBLP:journals/iacr/GenkinST13}.
 Using the acoustic side channel, we are able to distinguish between the \texttt{MEM} operation and the other microinstruction loops.
@@ -69,9 +60,24 @@ We believe that the noise introduced by the \gls{AC} power adapter is not emanat
     (c) Raspberry PI recording the CPU (lab-grade setup).
     (d) D430 on battery power (lab-grade setup).
     (e) T60p on battery power (portable setup).
-    (f) Raspberry PI recording the CPU (lab-grade setup).}
+    (f) Raspberry PI recording the CPU (lab-grade setup).
+    All recordings, save (e), is done in an anechoic chamber.}
     \label{fig:comparison_micorinstructions}
 \end{figure}
+
+
+We have conducted experiments both inside an anechoic chamber and in an office environment.
+The results show that eliminating background noise is not required to observe the phenomenons.
+Our portable setup was able to make the same distinctions between the \texttt{MEM} operation and the other operations in the CPU operations experiment, under conditions of significant noise, i.e. in an office environment.
+\autoref{fig:T60p-knowles-cpuload-ips-0} and \autoref{fig:T60p-ekkofritt-bk-micro-eps-1} show how the difference is visible in both scenarios.
+
+
+\section{Localization of Source}
+We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the \gls{CPU}.
+However, we have tried to capture the effect at different positions on our Lenovo T60p laptop. 
+For this specific computer we experienced that it is far easier to find the patterns we are looking for in the resulting power spectra when the recordings are done right above the \gls{CPU}.
+We also found that slight disposition of the microphone of a couple of centimeters, while still hovering the \gls{CPU} cooling block, notably impact the signal strength.
+
 
 \section{Analysis Beyond Extremes}
 In our experiments, we were able to distinguish between different extremes in \gls{CPU} activity based visual representation of the acoustic leakage. 
