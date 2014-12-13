@@ -1,8 +1,7 @@
 \chapter{Discussion}\label{chp6:discussion}
+In this chapter we will discuss the viability of the low frequency acoustic emanations.
+We will also look at the cases where the analysis of these emanations can be useful and how current guidelines for shielding information systems are helping against this threat.
 
-In this chapter we will discuss the viability of the low frequency acoustic emanations, and how current guidelines for shielding information systems are helping against this threat.
-We will also look at the cost involved in building a setup able to process these emanations, and the implications of this.
-Lastly we will look at use cases where the analysis of these emanations can be useful.
 
 \section{Viability of Extracted Information}
 We have not obtained a basis for drawing a conclusion as to whereas the emanations as presented in the previous chapters are in fact caused by the \gls{CPU}.
@@ -94,8 +93,10 @@ It is still worth noting that the findings of Genkin et al. suggest that disting
 
 \section{Possible Attack Scenarios}\label{chp6:sec:attack_scenarios}
 
-Our portable setup (\autoref{chp3:sec:knowles_configuration}) could be made even smaller and mounted with a small transmitter. 
-This makes the setup mountable on stationary computers, where it could be used for eavesdropping. 
+There are interesting implications of the portable setup (\autoref{chp3:sec:knowles_configuration}); the microphone itself is very small as well as being very cheap, costing only a few dollars. 
+Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, for instance in a side-channel attack against a vulnerable RSA implementation, as suggested in~\cite{DBLP:conf/crypto/GenkinST14}.
+The low cost of the parts used, less the myDAQ, also makes it disposable.
+A small microphone also enables the possibility to hide the whole setup inside the casing of a desktop computer or a server, thus possibly making side channel attacks easier because of a better signal-to-noise ratio due to reducing the distance between the source and the microphone.
 
 Manufacturers with malicious intentions can mount a small ultrasound microphone on a selection of devices from a batch, which in many cases will not be discovered.
 

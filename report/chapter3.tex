@@ -34,12 +34,6 @@ To power the microphone we use a 4.5V battery.
 
 The fact that the sampled signal is not bandlimited, i.e there are no low-pass filter in this setup, the sampling theorem suggest that we should observe distortion due to aliasing~\cite[pp. 384-394]{proakis2007digital}.
 
-There are interesting implications of this setup; the microphone itself is very small as well as being very cheap, costing only a few dollars. 
-Hence, this is a very portable setup, that can be hidden and used in covert operations against unsuspecting targets, for instance in a side-channel attack against a vulnerable RSA implementation, as suggested in~\cite{DBLP:conf/crypto/GenkinST14}.
-The low cost of the parts used, less the myDAQ, also makes it disposable.
-A small microphone also enables the possibility to hide the whole setup inside the casing of a desktop computer or a server, thus possibly making side channel attacks easier because of a better signal-to-noise ratio due to reducing the distance between the source and the microphone.
-
-
 \subsection{Lab Grade Recording Setup}\label{chp3:sec:bruel_kjaer_configuration}
 With our second setup we are aiming to come close to what Genkin et al. used for their lab-grade setup.
 We use a Brüel\&Kjær 4939 microphone that is able to do precise measurements up to frequencies around 100kHz~\cite{url:bk4939_spec}.
