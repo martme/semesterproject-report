@@ -1,12 +1,13 @@
 \chapter{Predictable Execution Patterns}\label{chp4:predictable_execution} 
-A prerequisite to analyze a acoustic recording is to possess an idea of what has been recorded. 
-This allows us to look at the correlation between different actions, and their effect on the recording.
-In our case this means that we need to know what is happening in the \gls{CPU} for the duration of our recordings.
-With this knowledge, we should be able to perform analysis on the correlation between what is observed in the acoustic emanations and distinct \gls{CPU} activity.
 This chapter will describe how we force predictable \gls{CPU} activity during experiments, and also how we tailor the software run on different architectures to achieve comparable results.
 We will also outline our expectations regarding analysis of the acoustic emanations from the experiments.
 
 \section{Selection of Test Cases}
+A prerequisite to analyze a acoustic recording is to possess an idea of what has been recorded. 
+This allows us to look at the correlation between different actions, and their effect on the recording.
+In our case this means that we need to know what is happening in the \gls{CPU} for the duration of our recordings.
+With this knowledge, we should be able to perform analysis on the correlation between what is observed in the acoustic emanations and distinct \gls{CPU} activity.
+
 We use several test cases, where the aim is to gradually record increasingly subtle variations in \gls{CPU} activity, and the recordings of these will make the basis for analysis.
 Each of these cases is represented by a utility program that is specifically tailored to force the desired \gls{CPU} activity during the experiment.
 We will start by oscillating between abnormally high \gls{CPU} loads and an idle system, and eventually we will try to distinguish between the execution of different distinct low-level \gls{CPU} operations.
@@ -195,7 +196,7 @@ Thus we can argue that we are in fact able to distinguish between such low level
 
 \section{Decryption}\label{chp4:sec:decryption}
 Genkin et al. suggest that it is possible to distinguish between the different steps involved in decryption with a 4096-bit RSA key.
-For our decryption utility, we use the same key size, the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
+For our decryption utility, we use the GnuPG 1.4.15 library as it contains the vulnerability suggested in~\cite[Sec.~9.1]{DBLP:conf/crypto/GenkinST14}. 
 
 The cipher text being decrypted is the result of encrypting a 4.2MB \gls{WAV}-format sound file, using a 4096-bit RSA key with the vulnerable version of GnuPG.
 Essentially we are using the same encryption and decryption method, key-size and key generation as Genkin et al. 
